@@ -8,18 +8,13 @@ import EditBill from '../Bills/EditBill';
 function App() {
   return (
     <BrowserRouter>
-    <Navbar />
+      <Navbar />
       <Routes>
-        <Route path="/signin" element={<SignIn />} />
+        <Route path="/login" element={<SignIn />} />
         <Route path="/bills/create" element={<CreateBill />} />
-
-        <Route path="/bills/1" element={<ViewBill />}/>
-        {/* <Route index element={<ViewBill />} /> */}
-        <Route path="/bills/1/edit" element={<EditBill />}/>
-       
-
+        <Route path="/bills/1" element={<ViewBill />} />
+        <Route path="/bills/1/edit" element={<EditBill />} />
       </Routes>
-
     </BrowserRouter>
   );
 }
