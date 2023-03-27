@@ -5,6 +5,9 @@ import SignIn from './signInForm';
 import CreateBill from '../Bills/CreateBill';
 import ViewBill from '../Bills/ViewBill';
 import EditBill from '../Bills/EditBill';
+
+import BillReview from '../Bills/BillReview/BillReview';
+
 function App() {
   return (
     <BrowserRouter>
@@ -14,6 +17,7 @@ function App() {
         <Route path="/bills/create" element={<CreateBill />} />
         <Route path="/bills/1" element={<ViewBill />} />
         <Route path="/bills/1/edit" element={<EditBill />} />
+        <Route path="/bills/create/billReview" element={<BillReview />} />
       </Routes>
     </BrowserRouter>
   );
