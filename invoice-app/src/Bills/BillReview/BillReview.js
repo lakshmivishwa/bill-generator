@@ -52,9 +52,9 @@ function BillReview() {
                             <CTableHead>
                                 <CTableRow active>
                                     <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col">Class</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col">Heading</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col">Heading</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">Product Name</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">Qty</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">Price</CTableHeaderCell>
                                 </CTableRow>
                             </CTableHead>
 
@@ -62,24 +62,30 @@ function BillReview() {
                                 <CTableRow active>
                                     <CTableHeaderCell scope="row">1</CTableHeaderCell>
                                     <CTableDataCell>Mark</CTableDataCell>
-                                    <CTableDataCell>Otto</CTableDataCell>
-                                    <CTableDataCell>@mdo</CTableDataCell>
+                                    <CTableDataCell>1</CTableDataCell>
+                                    <CTableDataCell>100</CTableDataCell>
                                 </CTableRow>
                                 <CTableRow active>
                                     <CTableHeaderCell scope="row">2</CTableHeaderCell>
                                     <CTableDataCell>Jacob</CTableDataCell>
-                                    <CTableDataCell>Thornton</CTableDataCell>
-                                    <CTableDataCell>@fat</CTableDataCell>
+                                    <CTableDataCell>1</CTableDataCell>
+                                    <CTableDataCell>100</CTableDataCell>
                                 </CTableRow>
                                 <CTableRow active>
-                                    <CTableHeaderCell scope="row">3</CTableHeaderCell>
-                                    <CTableDataCell colSpan={2} active>
-                                        Larry the Bird
-                                    </CTableDataCell>
-                                    <CTableDataCell>@twitter</CTableDataCell>
+                                    <CTableHeaderCell scope="row">2</CTableHeaderCell>
+                                    <CTableDataCell>Jacob</CTableDataCell>
+                                    <CTableDataCell>1</CTableDataCell>
+                                    <CTableDataCell>100</CTableDataCell>
+                                </CTableRow>
+                                <CTableRow active style={styles.Total}>
+                                    <CTableHeaderCell scope="row" >Total</CTableHeaderCell>
+                                    <CTableDataCell></CTableDataCell>
+                                    <CTableDataCell>3</CTableDataCell>
+                                    <CTableDataCell>300</CTableDataCell>
                                 </CTableRow>
                             </CTableBody>
                         </CTable>
+
                     </Grid>
                 </CardContent>
             </Card>

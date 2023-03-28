@@ -1,0 +1,31 @@
+[
+  {
+    "id": "1",
+    "billTo": {
+      "invoiceTo": "",
+      "emailAddress": "",
+      "billingAddress": ""
+    },
+    "billFrom": {
+      "invoiceFrom": "",
+      "emailAddress": "",
+      "address": ""
+    },
+
+    "item": {
+      "itemName": "",
+      "itemDescription": ""
+    },
+
+    "qty": {
+      "qty": ""
+    },
+
+    "rate": {
+      "rate": ""
+    },
+    "price": {
+      "price": ""
+    }
+  }
+]

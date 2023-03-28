@@ -18,6 +18,10 @@ const styles = {
         textAlign: "center",
 
     },
+    Total: {
+        marginTop: "5px",
+        paddingTop: "5px",
+    },
 
 }
 
