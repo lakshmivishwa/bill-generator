@@ -10,6 +10,14 @@ export default function CreateBill() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
+  const [price, setPrice] = useState(0);
+  console.log(price);
+
+  const changeValue = (data) => {
+    console.log(data)
+    setPrice(2)
+  }
+
   const [addItem, setAddItem] = useState([
     { addItemList: "" },
   ]);
@@ -30,7 +38,6 @@ export default function CreateBill() {
   };
 
   return (
-
     <Container maxWidth="md">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
@@ -66,11 +73,11 @@ export default function CreateBill() {
               id="fullWidth"
               error={errors.billingAddress}
               helperText={errors.billingAddress?.message} />
+
           </Grid>
+
           <Grid item xs={6} md={6}>
             <Typography mt={3} mb={2} variant="h6" component="h5">Bill From:-</Typography>
-
-
             <TextField fullWidth label="Who is this invoice from?"
               {...register('invoiceFrom', {
                 required: "**This Field is required**",
@@ -137,7 +144,8 @@ export default function CreateBill() {
                 size="small"
                 id="fullWidth"
                 error={errors.qty}
-                helperText={errors.qty?.message} />
+                helperText={errors.qty?.message}
+              />
 
             </Grid>
             <Grid item xs={2} md={2}>
@@ -146,16 +154,20 @@ export default function CreateBill() {
                 {...register('rate', {
                   required: "**Please Enter rate value**",
                 })}
+
                 margin="dense"
                 size="small"
                 id="fullWidth"
                 error={errors.rate}
-                helperText={errors.rate?.message} />
+                helperText={errors.rate?.message}
+                onChange={changeValue}
+              />
             </Grid>
 
             <Grid item xs={2} md={2}>
               <Typography mt={3} mb={2} variant="h6" component="h5">Price</Typography>
-              < TextField fullWidth label="" id="fullWidth" margin="dense" size="small" />
+              <Typography mt={3} mb={2} variant="h6" component="h5">{price}</Typography>
+
             </Grid>
 
 
