@@ -9,14 +9,19 @@ import { useForm } from "react-hook-form"
 export default function CreateBill() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
-
-  const [price, setPrice] = useState(0);
-  console.log(price);
-
-  const changeValue = (data) => {
-    console.log(data)
-    setPrice(2)
-  }
+  const [billDetails, setBillDetails] = useState({
+    name: "",
+    email: "",
+    billingAddress: "",
+    invoiceFrom: "",
+    companyEmail: "",
+    CompanyAddress: "",
+    itemName: "",
+    itemDescription: "",
+    qty: "",
+    rate: "",
+    notes: ""
+  });
 
   const [addItem, setAddItem] = useState([
     { addItemList: "" },
@@ -31,11 +36,44 @@ export default function CreateBill() {
     setAddItem(list)
   }
 
-  const navigate = useNavigate();
-  const onSubmit = (data) => {
-    console.log(data);
-    navigate('/bills/create/billReview');
+  // const navigate = useNavigate();
+  async function onSubmit() {
+
+    const { name, email, billingAddress, invoiceFrom, companyEmail, CompanyAddress, itemName, itemDescription, qty, rate, notes
+    } = billDetails;
+
+    const res = await fetch("/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name, email, billingAddress, invoiceFrom, companyEmail, CompanyAddress, itemName, itemDescription, qty, rate, notes
+      })
+    });
+console.log(res);
+    const data = await res.json();
+    
+    if (data.status === 422 || !data) {
+      window.alert("invalid");
+      console.log("invalid");
+    } else {
+      window.alert("successful");
+      console.log("successful");
+    }
+
+    // navigate('/bills/create/billReview');
   };
+
+  let value;
+  let name;
+  const handleInput = (e) => {
+    name = e.target.name;
+    value = e.target.value;
+    console.log(billDetails);
+    setBillDetails({ ...billDetails, [name]: value })
+
+  }
 
   return (
     <Container maxWidth="md">
@@ -52,9 +90,11 @@ export default function CreateBill() {
               id="fullWidth"
               error={errors.name}
               helperText={errors.name?.message}
+              value={billDetails.name}
+              onChange={handleInput}
             />
 
-            <TextField fullWidth label="Email Address"
+            <TextField name="email" fullWidth label="Email Address"
               {...register('email', {
                 required: "**This Field is required**",
               })}
@@ -62,9 +102,11 @@ export default function CreateBill() {
               size="small"
               id="fullWidth"
               error={errors.email}
-              helperText={errors.email?.message} />
+              helperText={errors.email?.message}
+              value={billDetails.email}
+              onChange={handleInput} />
 
-            <TextField fullWidth label="Billing Address"
+            <TextField name="billingAddress" fullWidth label="Billing Address"
               {...register('billingAddress', {
                 required: "**This Field is required**",
               })}
@@ -72,23 +114,28 @@ export default function CreateBill() {
               size="small"
               id="fullWidth"
               error={errors.billingAddress}
-              helperText={errors.billingAddress?.message} />
+              helperText={errors.billingAddress?.message}
+              value={billDetails.billingAddress}
+              onChange={handleInput} />
 
           </Grid>
 
           <Grid item xs={6} md={6}>
             <Typography mt={3} mb={2} variant="h6" component="h5">Bill From:-</Typography>
-            <TextField fullWidth label="Who is this invoice from?"
+            <TextField name="invoiceFrom" fullWidth label="Who is this invoice from?"
               {...register('invoiceFrom', {
                 required: "**This Field is required**",
               })}
+
               margin="dense"
               size="small"
               id="fullWidth"
               error={errors.invoiceFrom}
-              helperText={errors.invoiceFrom?.message} />
+              helperText={errors.invoiceFrom?.message}
+              value={billDetails.invoiceFrom}
+              onChange={handleInput} />
 
-            <TextField fullWidth label="Email Address"
+            <TextField name="companyEmail" fullWidth label="Email Address"
               {...register('companyEmail', {
                 required: "**This Field is required**",
               })}
@@ -96,8 +143,11 @@ export default function CreateBill() {
               size="small"
               id="fullWidth"
               error={errors.companyEmail}
-              helperText={errors.companyEmail?.message} />
-            <TextField fullWidth label="Address"
+              helperText={errors.companyEmail?.message}
+              value={billDetails.companyEmail}
+              onChange={handleInput} />
+
+            <TextField name="CompanyAddress" fullWidth label="Address"
               {...register('CompanyAddress', {
                 required: "**This Field is required**",
               })}
@@ -105,7 +155,9 @@ export default function CreateBill() {
               size="small"
               id="fullWidth"
               error={errors.CompanyAddress}
-              helperText={errors.CompanyAddress?.message} />
+              helperText={errors.CompanyAddress?.message}
+              value={billDetails.CompanyAddress}
+              onChange={handleInput} />
           </Grid>
         </Grid>
 
@@ -113,7 +165,7 @@ export default function CreateBill() {
           <Grid container spacing={2} mt={3} mb={3}>
             <Grid item xs={4} md={6} key={index}>
               <Typography mt={3} mb={2} variant="h6" component="h5">Item</Typography>
-              <TextField fullWidth label="Item Name"
+              <TextField name="itemName" fullWidth label="Item Name"
                 {...register('itemName', {
                   required: "**Please fill in this field**",
                 })}
@@ -121,9 +173,11 @@ export default function CreateBill() {
                 size="small"
                 id="fullWidth"
                 error={errors.itemName}
-                helperText={errors.itemName?.message} />
+                helperText={errors.itemName?.message}
+                value={billDetails.itemName}
+                onChange={handleInput} />
 
-              <TextField fullWidth label="Item description"
+              <TextField name="itemDescription" fullWidth label="Item description"
                 {...register('itemDescription', {
                   required: "**Please fill in this field**",
                 })}
@@ -131,12 +185,14 @@ export default function CreateBill() {
                 size="small"
                 id="fullWidth"
                 error={errors.itemDescription}
-                helperText={errors.itemDescription?.message} />
+                helperText={errors.itemDescription?.message}
+                value={billDetails.itemDescription}
+                onChange={handleInput} />
 
             </Grid>
             <Grid item xs={2} md={1}>
               <Typography mt={3} mb={2} variant="h6" component="h5">Qty</Typography>
-              <TextField fullWidth label="" type="number"
+              <TextField name="qty" fullWidth label="" type="number"
                 {...register('qty', {
                   required: "**Please select Qty**",
                 })}
@@ -145,12 +201,14 @@ export default function CreateBill() {
                 id="fullWidth"
                 error={errors.qty}
                 helperText={errors.qty?.message}
+                value={billDetails.qty}
+                onChange={handleInput}
               />
 
             </Grid>
             <Grid item xs={2} md={2}>
               <Typography mt={3} mb={2} variant="h6" component="h5">Rate</Typography>
-              < TextField fullWidth label=""
+              < TextField name="rate" fullWidth label=""
                 {...register('rate', {
                   required: "**Please Enter rate value**",
                 })}
@@ -160,13 +218,14 @@ export default function CreateBill() {
                 id="fullWidth"
                 error={errors.rate}
                 helperText={errors.rate?.message}
-                onChange={changeValue}
+                value={billDetails.rate}
+                onChange={handleInput}
               />
             </Grid>
 
             <Grid item xs={2} md={2}>
               <Typography mt={3} mb={2} variant="h6" component="h5">Price</Typography>
-              <Typography mt={3} mb={2} variant="h6" component="h5">{price}</Typography>
+              <Typography mt={3} mb={2} variant="h6" component="h5">0</Typography>
 
             </Grid>
 
@@ -210,7 +269,7 @@ export default function CreateBill() {
         <Grid container spacing={2} mb={2}>
           <Grid item xs={12} md={12}>
             <Typography mt={3} mb={1} variant="h5" component="h5">Notes:-</Typography>
-            < TextField fullWidth label="" {...register('notes', {
+            < TextField name="notes" fullWidth label="" {...register('notes', {
               required: "**Please write some notes**",
             })}
               margin="dense"

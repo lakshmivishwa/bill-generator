@@ -6,7 +6,8 @@ const dbConnect = async () => {
     let connection = await client.connect();
     let db = connection.db('billing')
     return db;
- console.log(db);   
+    console.log(db);
 }
+
 module.exports = dbConnect;
 
