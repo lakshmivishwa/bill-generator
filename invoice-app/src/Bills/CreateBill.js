@@ -26,8 +26,8 @@ export default function CreateBill() {
 
   const handleInput = (e, index) => {
     const list = [...addItem];
-    // console.log()
-    list[index][e.target.name] = [e.target.value]
+    console.log(list);
+    list[index][e.target.name] = e.target.value
     setAddItem(list);
   }
 
@@ -143,7 +143,7 @@ export default function CreateBill() {
                 })}
                 margin="dense"
                 size="small"
-                id="fullWidth"
+                id="itemName"
                 error={errors.itemName}
                 helperText={errors.itemName?.message}
                 value={singleItem.itemName}
@@ -155,7 +155,7 @@ export default function CreateBill() {
                 })}
                 margin="dense"
                 size="small"
-                id="fullWidth"
+                id="itemDescription"
                 error={errors.itemDescription}
                 helperText={errors.itemDescription?.message}
                 value={singleItem.itemDescription}
@@ -171,7 +171,7 @@ export default function CreateBill() {
                 })}
                 margin="dense"
                 size="small"
-                id="fullWidth"
+                id="qty"
                 error={errors.qty}
                 helperText={errors.qty?.message}
                 value={singleItem.qty}
@@ -185,10 +185,9 @@ export default function CreateBill() {
                 {...register('rate', {
                   required: "**Please Enter rate value**",
                 })}
-
                 margin="dense"
                 size="small"
-                id="fullWidth"
+                id="rate"
                 error={errors.rate}
                 helperText={errors.rate?.message}
                 value={singleItem.rate}
