@@ -3,76 +3,43 @@ import { Grid, Typography, Container, Button } from '@mui/material';
 import { MdDeleteForever } from "react-icons/md";
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form"
 
 export default function CreateBill() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [billDetails, setBillDetails] = useState({
-    name: "",
-    email: "",
-    billingAddress: "",
-    invoiceFrom: "",
-    companyEmail: "",
-    CompanyAddress: "",
-    itemName: "",
-    itemDescription: "",
-    qty: "",
-    rate: "",
-    notes: ""
-  });
 
   const [addItem, setAddItem] = useState([
-    { addItemList: "" },
+    {
+      itemName: "", itemDescription: "", qty: "",
+      rate: ""
+    }
   ]);
 
+
   const handleAddItem = () => {
-    setAddItem([...addItem, { addItemList: "" }])
+    setAddItem([...addItem, {
+      itemName: "", itemDescription: "", qty: "",
+      rate: ""
+    }])
   }
+
+  const handleInput = (e, index) => {
+    const list = [...addItem];
+    // console.log()
+    list[index][e.target.name] = [e.target.value]
+    setAddItem(list);
+  }
+
   const handleRemoveItem = (index) => {
     const list = [...addItem]
     list.splice(index, 1)
     setAddItem(list)
   }
 
-  // const navigate = useNavigate();
-  async function onSubmit() {
-
-    const { name, email, billingAddress, invoiceFrom, companyEmail, CompanyAddress, itemName, itemDescription, qty, rate, notes
-    } = billDetails;
-
-    const res = await fetch("/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name, email, billingAddress, invoiceFrom, companyEmail, CompanyAddress, itemName, itemDescription, qty, rate, notes
-      })
-    });
-console.log(res);
-    const data = await res.json();
-    
-    if (data.status === 422 || !data) {
-      window.alert("invalid");
-      console.log("invalid");
-    } else {
-      window.alert("successful");
-      console.log("successful");
-    }
-
-    // navigate('/bills/create/billReview');
-  };
-
-  let value;
-  let name;
-  const handleInput = (e) => {
-    name = e.target.name;
-    value = e.target.value;
-    console.log(billDetails);
-    setBillDetails({ ...billDetails, [name]: value })
-
+  function onSubmit(e) {
+    // e.preventDefault();
+    console.log(addItem);
   }
 
   return (
@@ -81,6 +48,7 @@ console.log(res);
         <Grid container spacing={2}>
           <Grid item xs={6} md={6}>
             <Typography mt={3} mb={2} variant="h6" component="h5">Bill To:-</Typography>
+
             <TextField fullWidth label="Who is this invoice to?"
               {...register('name', {
                 required: "**This Field is required**",
@@ -90,8 +58,8 @@ console.log(res);
               id="fullWidth"
               error={errors.name}
               helperText={errors.name?.message}
-              value={billDetails.name}
-              onChange={handleInput}
+            // value={billDetails.name}
+            // onChange={handleInput}
             />
 
             <TextField name="email" fullWidth label="Email Address"
@@ -103,8 +71,9 @@ console.log(res);
               id="fullWidth"
               error={errors.email}
               helperText={errors.email?.message}
-              value={billDetails.email}
-              onChange={handleInput} />
+            // value={billDetails.email}
+            // onChange={handleInput}
+            />
 
             <TextField name="billingAddress" fullWidth label="Billing Address"
               {...register('billingAddress', {
@@ -115,9 +84,9 @@ console.log(res);
               id="fullWidth"
               error={errors.billingAddress}
               helperText={errors.billingAddress?.message}
-              value={billDetails.billingAddress}
-              onChange={handleInput} />
-
+            // value={billDetails.billingAddress}
+            // onChange={handleInput}
+            />
           </Grid>
 
           <Grid item xs={6} md={6}>
@@ -132,8 +101,9 @@ console.log(res);
               id="fullWidth"
               error={errors.invoiceFrom}
               helperText={errors.invoiceFrom?.message}
-              value={billDetails.invoiceFrom}
-              onChange={handleInput} />
+            // value={billDetails.invoiceFrom}
+            // onChange={handleInput} 
+            />
 
             <TextField name="companyEmail" fullWidth label="Email Address"
               {...register('companyEmail', {
@@ -144,8 +114,9 @@ console.log(res);
               id="fullWidth"
               error={errors.companyEmail}
               helperText={errors.companyEmail?.message}
-              value={billDetails.companyEmail}
-              onChange={handleInput} />
+            // value={billDetails.companyEmail}
+            // onChange={handleInput}
+            />
 
             <TextField name="CompanyAddress" fullWidth label="Address"
               {...register('CompanyAddress', {
@@ -156,14 +127,15 @@ console.log(res);
               id="fullWidth"
               error={errors.CompanyAddress}
               helperText={errors.CompanyAddress?.message}
-              value={billDetails.CompanyAddress}
-              onChange={handleInput} />
+            // value={billDetails.CompanyAddress}
+            // onChange={handleInput} 
+            />
           </Grid>
         </Grid>
 
         {addItem.map((singleItem, index) => (
           <Grid container spacing={2} mt={3} mb={3}>
-            <Grid item xs={4} md={6} key={index}>
+            <Grid item xs={4} md={6}  >
               <Typography mt={3} mb={2} variant="h6" component="h5">Item</Typography>
               <TextField name="itemName" fullWidth label="Item Name"
                 {...register('itemName', {
@@ -174,9 +146,9 @@ console.log(res);
                 id="fullWidth"
                 error={errors.itemName}
                 helperText={errors.itemName?.message}
-                value={billDetails.itemName}
-                onChange={handleInput} />
-
+                value={singleItem.itemName}
+                onChange={(e) => handleInput(e, index)}
+              />
               <TextField name="itemDescription" fullWidth label="Item description"
                 {...register('itemDescription', {
                   required: "**Please fill in this field**",
@@ -186,8 +158,9 @@ console.log(res);
                 id="fullWidth"
                 error={errors.itemDescription}
                 helperText={errors.itemDescription?.message}
-                value={billDetails.itemDescription}
-                onChange={handleInput} />
+                value={singleItem.itemDescription}
+                onChange={(e) => handleInput(e, index)}
+              />
 
             </Grid>
             <Grid item xs={2} md={1}>
@@ -201,8 +174,8 @@ console.log(res);
                 id="fullWidth"
                 error={errors.qty}
                 helperText={errors.qty?.message}
-                value={billDetails.qty}
-                onChange={handleInput}
+                value={singleItem.qty}
+                onChange={(e) => handleInput(e, index)}
               />
 
             </Grid>
@@ -218,8 +191,8 @@ console.log(res);
                 id="fullWidth"
                 error={errors.rate}
                 helperText={errors.rate?.message}
-                value={billDetails.rate}
-                onChange={handleInput}
+                value={singleItem.rate}
+                onChange={(e) => handleInput(e, index)}
               />
             </Grid>
 
@@ -237,13 +210,16 @@ console.log(res);
                   < MdDeleteForever size={30} color="red" /></Button>
               )}
             </Grid>
-            <Grid item xs={12} md={12}>
-              {addItem.length - 1 === index && addItem.length < 4 && (
-                <Button variant="contained" onClick={handleAddItem}>Add Item</Button>
-              )}
-            </Grid>
+
           </Grid>
         ))}
+
+        <Grid item xs={12} md={12}>
+          {/* {addItem.length - 1 === index && addItem.length < 4 && ( */}
+          <Button variant="contained" onClick={handleAddItem}>Add Item</Button>
+          {/* )} */}
+
+        </Grid>
 
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
