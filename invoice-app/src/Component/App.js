@@ -5,7 +5,7 @@ import SignIn from './signInForm';
 import CreateBill from '../Bills/CreateBill';
 import ViewBill from '../Bills/ViewBill';
 import EditBill from '../Bills/EditBill';
-
+import List from '../Bills/ItemList/ItemList';
 import BillReview from '../Bills/BillReview/BillReview';
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
+      <Route path="/list" element={<List />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/bills/create" element={<CreateBill />} />
         <Route path="/bills/1" element={<ViewBill />} />
