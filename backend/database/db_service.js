@@ -5,9 +5,8 @@ const client = new MongoClient(url);
 const dbConnect = async () => {
     let connection = await client.connect();
     let db = connection.db('billing')
+    console.log("connection successful");
     return db;
-    console.log(db);
 }
 
 module.exports = dbConnect;
-

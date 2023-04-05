@@ -6,8 +6,10 @@ import TextField from '@mui/material/TextField';
 import { useForm } from "react-hook-form"
 
 export default function CreateBill() {
+  const date = new Date();
 
   const { register, handleSubmit, formState: { errors } } = useForm();
+  console.log(errors);
 
   const [inputFields, setInputFields] = useState([{
     itemName: "", itemDescription: "", qty: "", rate: ""
@@ -15,7 +17,6 @@ export default function CreateBill() {
 
   const addInputField = () => {
     setInputFields([...inputFields, {
-
     }])
   }
   const removeInputFields = (index) => {
@@ -24,17 +25,51 @@ export default function CreateBill() {
     setInputFields(rows);
   }
 
-  const handleChange = (index, evnt) => {
-    const { name, value } = evnt.target;
-    const list = [...inputFields];
-    list[index][name] = value;
-    setInputFields(list);
-    console.log(list)
-  }
-
-  function onSubmit(e) {
+  async function onSubmit(data) {
     console.log(inputFields);
-    console.log(e);
+    console.log(data);
+
+    const jsonData =
+    {
+      "id": 1,
+      "billTo": {
+        "name": data.name,
+        "billingAddress": data.billingAddress,
+      },
+      "billFrom": {
+        "email": data.email,
+        "invoiceFrom": data.invoiceFrom,
+        "gst": "1AE275245863",
+        "pan": "ATRPV1671J"
+      },
+      "notes": data.notes,
+      "items": { inputFields },
+      "dateOfInvoice": { date },
+      "invoiceNumber": "",
+      "accountDetails": {
+      }
+    }
+
+    const response = await fetch("/register", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(jsonData),
+    });
+
+    const getdata = await response.json()
+    console.log(getdata);
+    // return response;
+    // // return res();
+    if (getdata.status === 422 || !getdata) {
+      window.alert("invalid")
+      console.log("invalid")
+    } else {
+      console.log("success")
+    }
+
   }
 
   return (
@@ -53,8 +88,6 @@ export default function CreateBill() {
               id="fullWidth"
               error={errors.name}
               helperText={errors.name?.message}
-            // value={billDetails.name}
-            // onChange={handleInput}
             />
 
             <TextField name="email" fullWidth label="Email Address"
@@ -66,8 +99,6 @@ export default function CreateBill() {
               id="fullWidth"
               error={errors.email}
               helperText={errors.email?.message}
-            // value={billDetails.email}
-            // onChange={handleInput}
             />
 
             <TextField name="billingAddress" fullWidth label="Billing Address"
@@ -79,8 +110,7 @@ export default function CreateBill() {
               id="fullWidth"
               error={errors.billingAddress}
               helperText={errors.billingAddress?.message}
-            // value={billDetails.billingAddress}
-            // onChange={handleInput}
+
             />
           </Grid>
 
@@ -90,14 +120,11 @@ export default function CreateBill() {
               {...register('invoiceFrom', {
                 required: "**This Field is required**",
               })}
-
               margin="dense"
               size="small"
               id="fullWidth"
               error={errors.invoiceFrom}
               helperText={errors.invoiceFrom?.message}
-            // value={billDetails.invoiceFrom}
-            // onChange={handleInput} 
             />
 
             <TextField name="companyEmail" fullWidth label="Email Address"
@@ -109,8 +136,6 @@ export default function CreateBill() {
               id="fullWidth"
               error={errors.companyEmail}
               helperText={errors.companyEmail?.message}
-            // value={billDetails.companyEmail}
-            // onChange={handleInput}
             />
 
             <TextField name="CompanyAddress" fullWidth label="Address"
@@ -122,84 +147,67 @@ export default function CreateBill() {
               id="fullWidth"
               error={errors.CompanyAddress}
               helperText={errors.CompanyAddress?.message}
-            // value={billDetails.CompanyAddress}
-            // onChange={handleInput} 
             />
           </Grid>
         </Grid>
 
         {inputFields.map((data, index) => {
-          const { itemName, itemDescription, qty, rate } = data;
           return (
 
             <Grid container spacing={2} mt={3} mb={3}>
               <Grid item xs={4} md={6}  >
                 <Typography mt={3} mb={2} variant="h6" component="h5">Item</Typography>
-                <TextField name="itemName" fullWidth label="Item Name"
-                  // {...register('itemName', {
-                  //   required: "**Please fill in this field**",
-                  // })}
+                <TextField name={`itemName${index + 1}`} fullWidth label="Item Name"
+                  {...register(`itemName${index + 1}`, {
+                    required: "**Please fill in this field**",
+                  })}
                   margin="dense"
                   size="small"
-                  // id="itemName"
-                  // error={errors.itemName}
-                  // helperText={errors.itemName?.message}
-                  value={itemName}
-                  onChange={(evnt) => handleChange(index, evnt)}
+                  error={errors.itemName}
+                  helperText={errors.itemName?.message}
+
                 />
-                <TextField name="itemDescription" fullWidth label="Item description"
-                  // {...register('itemDescription', {
-                  //   required: "**Please fill in this field**",
-                  // })}
+                <TextField name={`itemDescription${index + 1}`} fullWidth label="Item description"
+                  {...register(`itemDescription${index + 1}`, {
+                    required: "**Please fill in this field**",
+                  })}
                   margin="dense"
                   size="small"
-                  // id="itemDescription"
-                  // error={errors.itemDescription}
-                  // helperText={errors.itemDescription?.message}
-                  value={itemDescription}
-                  onChange={(evnt) => handleChange(index, evnt)}
+                  error={errors.itemDescription}
+                  helperText={errors.itemDescription?.message}
                 />
 
               </Grid>
               <Grid item xs={2} md={1}>
                 <Typography mt={3} mb={2} variant="h6" component="h5">Qty</Typography>
-                <TextField name="qty" fullWidth label="" type="number"
-                  // {...register('qty', {
-                  //   required: "**Please select Qty**",
-                  // })}
+                <TextField name={`qty${index + 1}`} fullWidth label="" type="number"
+                  {...register(`qty${index + 1}`, {
+                    required: "**Please select Qty**",
+                  })}
                   margin="dense"
                   size="small"
-                  // id="qty"
-                  // error={errors.qty}
-                  // helperText={errors.qty?.message}
-                  value={qty}
-                  onChange={(evnt) => handleChange(index, evnt)}
+                  error={errors.qty}
+                  helperText={errors.qty?.message}
                 />
 
               </Grid>
               <Grid item xs={2} md={2}>
                 <Typography mt={3} mb={2} variant="h6" component="h5">Rate</Typography>
-                < TextField  fullWidth label=""
-                  {...register('rate', {
-                    required: "**Please Enter rate value**",
+                <TextField name={`rate${index + 1}`} fullWidth label=""
+                  {...register(`rate${index + 1}`, {
+                    required: "**Please fill in this field**",
                   })}
                   margin="dense"
                   size="small"
-                  // id="rate"
                   error={errors.rate}
                   helperText={errors.rate?.message}
-                  value={rate}
-                  onChange={(evnt) => handleChange(index, evnt)}
                 />
               </Grid>
 
               <Grid item xs={2} md={2}>
                 <Typography mt={3} mb={2} variant="h6" component="h5">Price</Typography>
                 <Typography mt={3} mb={2} variant="h6" component="h5">0</Typography>
-
               </Grid>
-
-
               <Grid item xs={2} md={1}>
                 <Typography mt={3} mb={2} variant="h6" component="h6">Action</Typography>
                 {inputFields.length > 1 && (
@@ -212,14 +220,10 @@ export default function CreateBill() {
                 {inputFields.length - 1 === index && inputFields.length < 4 && (
                   <Button variant="contained" onClick={addInputField}>Add Item</Button>
                 )}
-
               </Grid>
-
             </Grid>
           )
         })}
-
-
 
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>

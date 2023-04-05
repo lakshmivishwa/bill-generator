@@ -1,27 +1,11 @@
 const express = require('express');
-const { default: mongoose } = require('mongoose');
 const app = express();
 const port = 4000;
-app.use(express.json());
-require('dotenv').config();
-const mongoString = process.env.DATABASE_URL
-console.log(mongoString);
+const connection = require("./database/find")
 
-mongoose.connect(mongoString);
-const database = mongoose.connection
+app.use(express.json())
+app.listen(port, () => {
+    console.log(`listening to the port no ${port}`)
+})
 
-console.log(mongoose);
-
-// const dbConnect = require('./database/db_service')
-// console.log(dbConnect);
-// let database= dbConnect();
-// console.log(database);
-
-
-
-
-
-// console.log(mongoString);
 app.use(require('./Router/auth'));
-
-
