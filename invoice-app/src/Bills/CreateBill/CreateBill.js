@@ -1,29 +1,36 @@
 import * as React from 'react';
 import { Grid, Typography, Container, Button } from '@mui/material';
-import { MdDeleteForever } from "react-icons/md";
+
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { useForm } from "react-hook-form"
+// import EditBill from './EditBill';
+import FinalProductDetail from './ProductTable/FinalProductTable';
 
-export default function CreateBill() {
+export default function NewCreateBill() {
   const date = new Date();
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   console.log(errors);
 
   const [inputFields, setInputFields] = useState([{
-    itemName: "", itemDescription: "", qty: "", rate: ""
+    itemName: "", itemDescription: "", qty: "", rate: "", delete: ""
   }]);
 
+  const handleChange = (event) => {
+    setInputFields(event.target.value);
+  };
+
   const addInputField = () => {
-    setInputFields([...inputFields, {
-    }])
+    setInputFields(inputFields)
   }
   const removeInputFields = (index) => {
     const rows = [...inputFields];
     rows.splice(index, 1);
     setInputFields(rows);
   }
+
+
 
   async function onSubmit(data) {
     console.log(inputFields);
@@ -48,8 +55,9 @@ export default function CreateBill() {
       "invoiceNumber": "",
       "accountDetails": {
       }
-    }
 
+    }
+    console.log(jsonData);
     const response = await fetch("/register", {
       method: "POST",
       credentials: "same-origin",
@@ -150,80 +158,9 @@ export default function CreateBill() {
             />
           </Grid>
         </Grid>
-
-        {inputFields.map((data, index) => {
-          return (
-
-            <Grid container spacing={2} mt={3} mb={3}>
-              <Grid item xs={4} md={6}  >
-                <Typography mt={3} mb={2} variant="h6" component="h5">Item</Typography>
-                <TextField name={`itemName${index + 1}`} fullWidth label="Item Name"
-                  {...register(`itemName${index + 1}`, {
-                    required: "**Please fill in this field**",
-                  })}
-                  margin="dense"
-                  size="small"
-                  error={errors.itemName}
-                  helperText={errors.itemName?.message}
-
-                />
-                <TextField name={`itemDescription${index + 1}`} fullWidth label="Item description"
-                  {...register(`itemDescription${index + 1}`, {
-                    required: "**Please fill in this field**",
-                  })}
-                  margin="dense"
-                  size="small"
-                  error={errors.itemDescription}
-                  helperText={errors.itemDescription?.message}
-                />
-
-              </Grid>
-              <Grid item xs={2} md={1}>
-                <Typography mt={3} mb={2} variant="h6" component="h5">Qty</Typography>
-                <TextField name={`qty${index + 1}`} fullWidth label="" type="number"
-                  {...register(`qty${index + 1}`, {
-                    required: "**Please select Qty**",
-                  })}
-                  margin="dense"
-                  size="small"
-                  error={errors.qty}
-                  helperText={errors.qty?.message}
-                />
-
-              </Grid>
-              <Grid item xs={2} md={2}>
-                <Typography mt={3} mb={2} variant="h6" component="h5">Rate</Typography>
-                <TextField name={`rate${index + 1}`} fullWidth label=""
-                  {...register(`rate${index + 1}`, {
-                    required: "**Please fill in this field**",
-                  })}
-                  margin="dense"
-                  size="small"
-                  error={errors.rate}
-                  helperText={errors.rate?.message}
-                />
-              </Grid>
-
-              <Grid item xs={2} md={2}>
-                <Typography mt={3} mb={2} variant="h6" component="h5">Price</Typography>
-                <Typography mt={3} mb={2} variant="h6" component="h5">0</Typography>
-              </Grid>
-              <Grid item xs={2} md={1}>
-                <Typography mt={3} mb={2} variant="h6" component="h6">Action</Typography>
-                {inputFields.length > 1 && (
-                  <Button onClick={removeInputFields} >
-                    < MdDeleteForever size={30} color="red" /></Button>
-                )}
-              </Grid>
-
-              <Grid item xs={12} md={12}>
-                {inputFields.length - 1 === index && inputFields.length < 4 && (
-                  <Button variant="contained" onClick={addInputField}>Add Item</Button>
-                )}
-              </Grid>
-            </Grid>
-          )
-        })}
+        <Grid container spacing={2} mt={5}>
+          <FinalProductDetail />
+        </Grid>
 
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
@@ -264,6 +201,6 @@ export default function CreateBill() {
           </Grid>
         </Grid>
       </form>
-    </Container>
+    </Container >
   );
 }

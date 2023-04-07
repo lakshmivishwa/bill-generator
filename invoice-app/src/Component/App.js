@@ -2,20 +2,22 @@
 import Navbar from './Navbar';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignIn from './signInForm';
-import CreateBill from '../Bills/CreateBill';
+import CreateBill from '../Bills/CreateBill/CreateBill';
 import ViewBill from '../Bills/ViewBill';
 import EditBill from '../Bills/EditBill';
-import List from '../Bills/ItemList/ItemList';
+// import List from '../Bills/ItemList/ItemList';
 import BillReview from '../Bills/BillReview/BillReview';
+// import NewCreateBill from '../Bills/NewCreateBill';
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/list" element={<List />} />
+        {/* <Route path="/list" element={<List />} /> */}
         <Route path="/login" element={<SignIn />} />
         <Route path="/bills/create" element={<CreateBill />} />
+        {/* <Route path="/bills/newcreate" element={<NewCreateBill />} /> */}
         <Route path="/bills/1" element={<ViewBill />} />
         <Route path="/bills/1/edit" element={<EditBill />} />
         <Route path="/bills/create/billReview" element={<BillReview />} />
