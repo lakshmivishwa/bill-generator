@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Grid, Typography, Container, Button } from '@mui/material';
-
+import { Grid, Typography, Container, Button, Card, CardContent } from '@mui/material';
+import styles from "./style";
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { useForm } from "react-hook-form"
@@ -16,20 +16,6 @@ export default function NewCreateBill() {
   const [inputFields, setInputFields] = useState([{
     itemName: "", itemDescription: "", qty: "", rate: "", delete: ""
   }]);
-
-  const handleChange = (event) => {
-    setInputFields(event.target.value);
-  };
-
-  const addInputField = () => {
-    setInputFields(inputFields)
-  }
-  const removeInputFields = (index) => {
-    const rows = [...inputFields];
-    rows.splice(index, 1);
-    setInputFields(rows);
-  }
-
 
 
   async function onSubmit(data) {
@@ -81,126 +67,226 @@ export default function NewCreateBill() {
   }
 
   return (
-    <Container maxWidth="md">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2}>
-          <Grid item xs={6} md={6}>
-            <Typography mt={3} mb={2} variant="h6" component="h5">Bill To:-</Typography>
 
-            <TextField fullWidth label="Who is this invoice to?"
-              {...register('name', {
-                required: "**This Field is required**",
-              })}
-              margin="dense"
-              size="small"
-              id="fullWidth"
-              error={errors.name}
-              helperText={errors.name?.message}
-            />
-
-            <TextField name="email" fullWidth label="Email Address"
-              {...register('email', {
-                required: "**This Field is required**",
-              })}
-              margin="dense"
-              size="small"
-              id="fullWidth"
-              error={errors.email}
-              helperText={errors.email?.message}
-            />
-
-            <TextField name="billingAddress" fullWidth label="Billing Address"
-              {...register('billingAddress', {
-                required: "**This Field is required**",
-              })}
-              margin="dense"
-              size="small"
-              id="fullWidth"
-              error={errors.billingAddress}
-              helperText={errors.billingAddress?.message}
-
-            />
-          </Grid>
-
-          <Grid item xs={6} md={6}>
-            <Typography mt={3} mb={2} variant="h6" component="h5">Bill From:-</Typography>
-            <TextField name="invoiceFrom" fullWidth label="Who is this invoice from?"
-              {...register('invoiceFrom', {
-                required: "**This Field is required**",
-              })}
-              margin="dense"
-              size="small"
-              id="fullWidth"
-              error={errors.invoiceFrom}
-              helperText={errors.invoiceFrom?.message}
-            />
-
-            <TextField name="companyEmail" fullWidth label="Email Address"
-              {...register('companyEmail', {
-                required: "**This Field is required**",
-              })}
-              margin="dense"
-              size="small"
-              id="fullWidth"
-              error={errors.companyEmail}
-              helperText={errors.companyEmail?.message}
-            />
-
-            <TextField name="CompanyAddress" fullWidth label="Address"
-              {...register('CompanyAddress', {
-                required: "**This Field is required**",
-              })}
-              margin="dense"
-              size="small"
-              id="fullWidth"
-              error={errors.CompanyAddress}
-              helperText={errors.CompanyAddress?.message}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} mt={5}>
-          <FinalProductDetail />
-        </Grid>
-
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={2} >
+    <Container maxWidth="md" >
+      <Card sx={{ minWidth: 275 }} mt={3} mb={3}>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Grid container spacing={2}>
               <Grid item xs={6} md={6}>
-                <Typography mt={3} mb={2}>Sub-Total:-</Typography>
-                <Typography mt={3} mb={2}>Discountl:-</Typography>
-                <Typography mt={3} mb={2}>Tax:-</Typography>
-                <Typography mt={3} mb={2} variant="h5" component="h5">Total:-</Typography>
+                <Typography mt={3} mb={2} variant="h6" component="h5">Bill To:-</Typography>
+
+                <TextField fullWidth label="Who is this invoice to?"
+                  {...register('name', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.name}
+                  helperText={errors.name?.message}
+                />
+
+                <TextField name="email" fullWidth label="Email Address"
+                  {...register('email', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.email}
+                  helperText={errors.email?.message}
+                />
+
+                <TextField name="contact" fullWidth label="Contact no"
+                  {...register('contact', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.contact}
+                  helperText={errors.contact?.message}
+
+                />
               </Grid>
+
               <Grid item xs={6} md={6}>
-                <Typography mt={3} mb={2}></Typography>
-                <Typography mt={3} mb={2}></Typography>
-                <Typography mt={3} mb={2}></Typography>
-                <Typography mt={3} mb={2} variant="h5" component="h5"></Typography>
+                <Typography mt={3} mb={2} variant="h6" component="h5">Bill From:-</Typography>
+                <TextField name="invoiceFrom" fullWidth label="Who is this invoice from?"
+                  {...register('invoiceFrom', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.invoiceFrom}
+                  helperText={errors.invoiceFrom?.message}
+                />
+
+                <TextField name="companyEmail" fullWidth label="Email Address"
+                  {...register('companyEmail', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.companyEmail}
+                  helperText={errors.companyEmail?.message}
+                />
+
+                <TextField name="CompanyContact" fullWidth label="CompanyContact"
+                  {...register('CompanyContact', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.CompanyContact}
+                  helperText={errors.CompanyContact?.message}
+                />
               </Grid>
             </Grid>
-          </Grid>
-        </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={6} md={6}>
+                <Typography mt={3} mb={2} variant="h6" component="h5">Billing Address:-</Typography>
 
-        <Grid container spacing={2} mb={2}>
-          <Grid item xs={12} md={12}>
-            <Typography mt={3} mb={1} variant="h5" component="h5">Notes:-</Typography>
-            < TextField name="notes" fullWidth label=""
-              {...register('notes', {
-                required: "**Please write some notes**",
-              })}
-              margin="dense"
-              size="small"
-              id="fullWidth"
-              error={errors.notes}
-              helperText={errors.notes?.message} />
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <Button variant="contained" type="submit" >Preview</Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Container >
+                <TextField fullWidth label="Address"
+                  {...register('billingAddress', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.billingAddress}
+                  helperText={errors.billingAddress?.message}
+                />
+
+                <TextField name="cityPin" fullWidth label="City and Pin-code"
+                  {...register('cityPin', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.cityPin}
+                  helperText={errors.cityPin?.message}
+                />
+
+                <TextField name="state" fullWidth label="State"
+                  {...register('state', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.state}
+                  helperText={errors.state?.message}
+                />
+              </Grid>
+
+              <Grid item xs={6} md={6}>
+                <Typography mt={3} mb={2} variant="h6" component="h5">Company Address:-</Typography>
+                <TextField name="companyAddress" fullWidth label="Company Address"
+                  {...register('companyAddress', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.companyAddress}
+                  helperText={errors.companyAddress?.message}
+                />
+
+                <TextField name="companyCityPin" fullWidth label="City and Pin-code"
+                  {...register('companyCityPin', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.companyCityPin}
+                  helperText={errors.companyCityPin?.message}
+                />
+
+                <TextField name="companyState" fullWidth label="State"
+                  {...register('companyState', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.companyState}
+                  helperText={errors.companyState?.message}
+                />
+              </Grid>
+            </Grid>
+            <Grid container spacing={2} mt={5}>
+              <FinalProductDetail />
+            </Grid>
+
+            <Grid container spacing={2} mt={5}>
+
+              <Grid item xs={12} md={6}>
+                <Card style={styles.CardComponent} >
+                  <Typography mt={3} mb={1} variant="h5" component="h5" >Notes:-</Typography>
+                  < TextField name="notes" label=""
+                    {...register('notes', {
+                      required: "**Please write some notes**",
+                    })}
+                    multiline
+                    rows={4}
+                    margin="dense"
+                    size="small"
+                    error={errors.notes}
+                    helperText={errors.notes?.message} />
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={1}>
+
+              </Grid>
+              <Grid item xs={12} md={5}>
+
+                <Grid container spacing={2} mb={2}>
+                  <Grid item xs={6} md={7}>
+                    <Typography mt={3} variant="h5" component="h5">Sub-Total:- </Typography>
+                    <Typography variant="h5" component="h5">Discountl:-</Typography>
+                    <Typography variant="h5" component="h5">Tax:-</Typography>
+
+                  </Grid>
+                  <Grid item xs={6} md={5} style={styles.Total}>
+                    <Typography mt={3} variant="h5" component="h6">1</Typography>
+                    <Typography variant="h5" component="h5">1</Typography>
+                    <Typography variant="h5" component="h5">1</Typography>
+                  </Grid>
+                </Grid>
+                <hr />
+                <Grid container spacing={2} mb={2}>
+                  <Grid item xs={6} md={7}>
+                    <Typography variant="h5" component="h5">Total:-</Typography>
+                  </Grid>
+                  <Grid item xs={6} md={5} style={styles.Total}>
+                    <Typography variant="h5" component="h5">1</Typography>
+                  </Grid>
+                </Grid>
+
+              </Grid>
+
+            </Grid>
+
+            <Grid container spacing={2} mb={2}>
+              <Grid item xs={12} md={12}>
+
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <Button variant="contained" type="submit" >Preview</Button>
+              </Grid>
+            </Grid>
+          </form >
+        </CardContent>
+      </Card>
+    </Container>
+
+
   );
 }

@@ -10,11 +10,9 @@ import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function Navbar() {
 
   const navigate = useNavigate();
-
   const navigateToLogin = () => {
     //navigate to /login
     navigate('/login');
@@ -30,7 +28,7 @@ export default function Navbar() {
   };
   return (
 
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} mb={3}>
       <AppBar position="static">
         <Toolbar>
           <IconButton

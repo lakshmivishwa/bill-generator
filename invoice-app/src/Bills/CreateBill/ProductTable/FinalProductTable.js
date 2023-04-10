@@ -1,18 +1,20 @@
 import React, { useState, Fragment } from "react";
 import ItemForm from "./ItemForm";
-import Table from "./table";
+import Table from "./Table/table";
 
 
 function ProductDetail() {
 	const [tableData, setTableData] = useState([]);
 	const [formObject, setFormObject] = useState({
 		itemName: "",
-		ItemDescription: "",
+		itemDescription: "",
 		qty: "",
 		rate: "",
 		price: "",
-		action: ""
+		action: "",
 	});
+
+
 	const onValChange = (event) => {
 		console.log(event)
 		const value = (res) => ({
@@ -23,13 +25,15 @@ function ProductDetail() {
 	};
 
 	const onFormSubmit = (event) => {
-		console.log(event);
+
+		console.log(formObject);
 		event.preventDefault();
 		const checkVal = !Object.values(formObject).every((res) => res === "");
 		if (checkVal) {
-			const dataObj = (data) => [...data, formObject];
-			setTableData(dataObj);
-			console.log(dataObj);
+			// const dataObj = (data) => [...data, formObject];
+			const data = { ...formObject, id: tableData.length + 1 };
+
+			setTableData([...tableData, data]);
 			const isEmpty = {
 				itemName: "",
 				itemDescription: "",
@@ -41,9 +45,6 @@ function ProductDetail() {
 			setFormObject(isEmpty);
 		}
 	};
-	console.log(tableData);
-	console.log(formObject);
-
 
 	const removeTableData = (index) => {
 		console.log("deleted");
@@ -54,12 +55,12 @@ function ProductDetail() {
 
 	return (
 		<Fragment>
-			<Table tableData={tableData} deleteTableData={removeTableData} />
 			<ItemForm
 				onValChange={onValChange}
 				formObject={formObject}
 				onFormSubmit={onFormSubmit}
 			/>
+			<Table tableData={tableData} deleteTableData={removeTableData} />
 		</Fragment>
 	);
 }
