@@ -1,10 +1,10 @@
 import { MdDeleteForever } from "react-icons/md";
 import { Grid, Container } from '@mui/material';
 import styles from "./style";
-function Table({ tableData, deleteTableData }) {
 
-    // console.log(sum);
+function Table({ tableData, deleteTableData }) {
     console.log(tableData)
+
     return (
         <Container maxWidth="md">
             <Grid container spacing={2} mt={3}>

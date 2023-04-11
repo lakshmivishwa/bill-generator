@@ -4,6 +4,7 @@ import Table from "./Table/table";
 
 
 function ProductDetail() {
+
 	const [tableData, setTableData] = useState([]);
 	const [formObject, setFormObject] = useState({
 		itemName: "",
@@ -13,8 +14,6 @@ function ProductDetail() {
 		price: "",
 		action: "",
 	});
-
-
 	const onValChange = (event) => {
 		console.log(event)
 		const value = (res) => ({
@@ -24,16 +23,21 @@ function ProductDetail() {
 		setFormObject(value);
 	};
 
+	let priceSum = 0;
+	console.log(priceSum);
 	const onFormSubmit = (event) => {
-
-		console.log(formObject);
 		event.preventDefault();
+		console.log(formObject);
+
 		const checkVal = !Object.values(formObject).every((res) => res === "");
 		if (checkVal) {
+
 			// const dataObj = (data) => [...data, formObject];
 			const data = { ...formObject, id: tableData.length + 1 };
 
 			setTableData([...tableData, data]);
+			console.log(tableData);
+
 			const isEmpty = {
 				itemName: "",
 				itemDescription: "",
@@ -44,7 +48,9 @@ function ProductDetail() {
 			};
 			setFormObject(isEmpty);
 		}
+
 	};
+
 
 	const removeTableData = (index) => {
 		console.log("deleted");

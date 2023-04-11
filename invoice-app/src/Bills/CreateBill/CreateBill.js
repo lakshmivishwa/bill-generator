@@ -8,62 +8,55 @@ import { useForm } from "react-hook-form"
 import FinalProductDetail from './ProductTable/FinalProductTable';
 
 export default function NewCreateBill() {
-  const date = new Date();
+  // const date = new Date();
 
   const { register, handleSubmit, formState: { errors } } = useForm();
-  console.log(errors);
-
-  const [inputFields, setInputFields] = useState([{
-    itemName: "", itemDescription: "", qty: "", rate: "", delete: ""
-  }]);
-
 
   async function onSubmit(data) {
-    console.log(inputFields);
     console.log(data);
 
-    const jsonData =
-    {
-      "id": 1,
-      "billTo": {
-        "name": data.name,
-        "billingAddress": data.billingAddress,
-      },
-      "billFrom": {
-        "email": data.email,
-        "invoiceFrom": data.invoiceFrom,
-        "gst": "1AE275245863",
-        "pan": "ATRPV1671J"
-      },
-      "notes": data.notes,
-      "items": { inputFields },
-      "dateOfInvoice": { date },
-      "invoiceNumber": "",
-      "accountDetails": {
-      }
+    // const jsonData =
+    // {
+    //   "id": 1,
+    //   "billTo": {
+    //     "name": data.name,
+    //     "billingAddress": data.billingAddress,
+    //   },
+    //   "billFrom": {
+    //     "email": data.email,
+    //     "invoiceFrom": data.invoiceFrom,
+    //     "gst": "1AE275245863",
+    //     "pan": "ATRPV1671J"
+    //   },
+    //   "notes": data.notes,
+    //   "items": { inputFields },
+    //   "dateOfInvoice": { date },
+    //   "invoiceNumber": "",
+    //   "accountDetails": {
+    //   }
 
-    }
-    console.log(jsonData);
-    const response = await fetch("/register", {
-      method: "POST",
-      credentials: "same-origin",
-      headers: { "Content-Type": "application/json" },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-      body: JSON.stringify(jsonData),
-    });
+    // }
+    // console.log(jsonData);
 
-    const getdata = await response.json()
-    console.log(getdata);
+    // const response = await fetch("/register", {
+    //   method: "POST",
+    //   credentials: "same-origin",
+    //   headers: { "Content-Type": "application/json" },
+    //   redirect: "follow",
+    //   referrerPolicy: "no-referrer",
+    //   body: JSON.stringify(jsonData),
+    // });
+
+    // const getdata = await response.json()
+    // console.log(getdata);
     // return response;
     // // return res();
-    if (getdata.status === 422 || !getdata) {
-      window.alert("invalid")
-      console.log("invalid")
-    } else {
-      console.log("success")
-    }
-
+    // if (getdata.status === 422 || !getdata) {
+    //   window.alert("invalid")
+    //   console.log("invalid")
+    // } else {
+    //   console.log("success")
+    // }
   }
 
   return (
@@ -72,6 +65,7 @@ export default function NewCreateBill() {
       <Card sx={{ minWidth: 275 }} mt={3} mb={3}>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
+
             <Grid container spacing={2}>
               <Grid item xs={6} md={6}>
                 <Typography mt={3} mb={2} variant="h6" component="h5">Bill To:-</Typography>
@@ -107,7 +101,39 @@ export default function NewCreateBill() {
                   id="fullWidth"
                   error={errors.contact}
                   helperText={errors.contact?.message}
+                />
 
+                <TextField fullWidth label="Address"
+                  {...register('billingAddress', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.billingAddress}
+                  helperText={errors.billingAddress?.message}
+                />
+
+                <TextField name="cityPin" fullWidth label="City and Pin-code"
+                  {...register('cityPin', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.cityPin}
+                  helperText={errors.cityPin?.message}
+                />
+
+                <TextField name="state" fullWidth label="State"
+                  {...register('state', {
+                    required: "**This Field is required**",
+                  })}
+                  margin="dense"
+                  size="small"
+                  id="fullWidth"
+                  error={errors.state}
+                  helperText={errors.state?.message}
                 />
               </Grid>
 
@@ -145,48 +171,7 @@ export default function NewCreateBill() {
                   error={errors.CompanyContact}
                   helperText={errors.CompanyContact?.message}
                 />
-              </Grid>
-            </Grid>
-            <Grid container spacing={2}>
-              <Grid item xs={6} md={6}>
-                <Typography mt={3} mb={2} variant="h6" component="h5">Billing Address:-</Typography>
 
-                <TextField fullWidth label="Address"
-                  {...register('billingAddress', {
-                    required: "**This Field is required**",
-                  })}
-                  margin="dense"
-                  size="small"
-                  id="fullWidth"
-                  error={errors.billingAddress}
-                  helperText={errors.billingAddress?.message}
-                />
-
-                <TextField name="cityPin" fullWidth label="City and Pin-code"
-                  {...register('cityPin', {
-                    required: "**This Field is required**",
-                  })}
-                  margin="dense"
-                  size="small"
-                  id="fullWidth"
-                  error={errors.cityPin}
-                  helperText={errors.cityPin?.message}
-                />
-
-                <TextField name="state" fullWidth label="State"
-                  {...register('state', {
-                    required: "**This Field is required**",
-                  })}
-                  margin="dense"
-                  size="small"
-                  id="fullWidth"
-                  error={errors.state}
-                  helperText={errors.state?.message}
-                />
-              </Grid>
-
-              <Grid item xs={6} md={6}>
-                <Typography mt={3} mb={2} variant="h6" component="h5">Company Address:-</Typography>
                 <TextField name="companyAddress" fullWidth label="Company Address"
                   {...register('companyAddress', {
                     required: "**This Field is required**",
@@ -221,12 +206,12 @@ export default function NewCreateBill() {
                 />
               </Grid>
             </Grid>
+
             <Grid container spacing={2} mt={5}>
               <FinalProductDetail />
             </Grid>
 
             <Grid container spacing={2} mt={5}>
-
               <Grid item xs={12} md={6}>
                 <Card style={styles.CardComponent} >
                   <Typography mt={3} mb={1} variant="h5" component="h5" >Notes:-</Typography>
@@ -239,12 +224,15 @@ export default function NewCreateBill() {
                     margin="dense"
                     size="small"
                     error={errors.notes}
-                    helperText={errors.notes?.message} />
+                    helperText={errors.notes?.message}
+                  />
                 </Card>
-              </Grid>
-              <Grid item xs={12} md={1}>
 
               </Grid>
+
+              <Grid item xs={12} md={1}>
+              </Grid>
+
               <Grid item xs={12} md={5}>
 
                 <Grid container spacing={2} mb={2}>
@@ -252,7 +240,6 @@ export default function NewCreateBill() {
                     <Typography mt={3} variant="h5" component="h5">Sub-Total:- </Typography>
                     <Typography variant="h5" component="h5">Discountl:-</Typography>
                     <Typography variant="h5" component="h5">Tax:-</Typography>
-
                   </Grid>
                   <Grid item xs={6} md={5} style={styles.Total}>
                     <Typography mt={3} variant="h5" component="h6">1</Typography>
@@ -260,7 +247,9 @@ export default function NewCreateBill() {
                     <Typography variant="h5" component="h5">1</Typography>
                   </Grid>
                 </Grid>
+
                 <hr />
+
                 <Grid container spacing={2} mb={2}>
                   <Grid item xs={6} md={7}>
                     <Typography variant="h5" component="h5">Total:-</Typography>
@@ -274,19 +263,15 @@ export default function NewCreateBill() {
 
             </Grid>
 
-            <Grid container spacing={2} mb={2}>
-              <Grid item xs={12} md={12}>
-
-              </Grid>
+            <Grid container spacing={2} mb={2} mt={5}>
               <Grid item xs={12} md={12}>
                 <Button variant="contained" type="submit" >Preview</Button>
               </Grid>
             </Grid>
           </form >
+
         </CardContent>
       </Card>
     </Container>
-
-
   );
 }
