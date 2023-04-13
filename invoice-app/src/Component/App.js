@@ -37,7 +37,6 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-
           <Route path="/login" element={<SignIn />} />
           <Route path="/bills/create" element={<CreateBill />} />
           <Route path="/bills/1" element={<ViewBill />} />

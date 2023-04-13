@@ -3,6 +3,7 @@ const app = express();
 const port = 4000;
 const connection = require("./database/find")
 const cors = require('cors');
+
 app.use(cors({
     origin: '*'
 }));

@@ -9,26 +9,27 @@ import Container from '@mui/material/Container';
 import styles from './style';
 import { useForm } from "react-hook-form"
 import { useRef } from "react";
-// import { signIn } from "../../../Redux/Actions/action";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 function SignUp() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    console.log(errors);
     const navigate = useNavigate()
     const password = useRef({});
     password.current = watch("password", "");
 
     async function onSubmit(data) {
         console.log(data);
+        
         await axios.post(`http://localhost:4000/register`,
             data)
             .then((response) => {
-                
                 console.log(response.data);
+                // navigate("/login")
             })
-
     }
+
     return (
         <Container component="main" maxWidth="xs">
             <div style={styles.MainContainer}>
@@ -80,7 +81,7 @@ function SignUp() {
                                 </div>
                                 {/* radio button end */}
 
-                                <TextField
+                                <TextField name="contact"
                                     //contact detail validation
                                     {...register('contact', {
                                         required: "**Mobile number is required**",
