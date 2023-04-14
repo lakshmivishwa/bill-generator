@@ -9,8 +9,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
+import { userContext } from '../../context/userContext'
+import { useContext } from "react"
+
 
 export default function Navbar() {
+  const theme = useContext(userContext);
+  console.log(theme);
 
   const navigate = useNavigate();
   const navigateToLogin = () => {
@@ -31,14 +36,6 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }} >
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-          </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
@@ -53,7 +50,14 @@ export default function Navbar() {
           >
             Bills
           </Button>
+          <Button
+            color="inherit"
+            id="basic-button"
 
+
+          >
+            {/* {userName} */}
+          </Button>
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}
@@ -67,9 +71,10 @@ export default function Navbar() {
             <MenuItem onClick={handleClose}><Link href="/bills/1" underline="none"> View Bills</Link></MenuItem>
           </Menu>
 
-
         </Toolbar>
+
       </AppBar>
+
     </Box>
   );
 }

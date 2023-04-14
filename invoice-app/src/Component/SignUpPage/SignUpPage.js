@@ -21,7 +21,7 @@ function SignUp() {
 
     async function onSubmit(data) {
         console.log(data);
-        
+
         await axios.post(`http://localhost:4000/register`,
             data)
             .then((response) => {

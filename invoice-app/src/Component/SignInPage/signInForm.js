@@ -9,6 +9,9 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+
 
 
 function Copyright(props) {
@@ -24,17 +27,29 @@ function Copyright(props) {
     );
 }
 export default function SignIn() {
-    const handleSubmit = (event) => {
+    const [user, setUser] = React.useState('');
+    const navigate = useNavigate()
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
-    return (
+        const newData = new FormData(event.currentTarget);
+        const loginData = {
+            email: newData.get('email'),
+            password: newData.get('password'),
+        };
+        console.log(loginData);
+        await axios.post(`http://localhost:4000/login`,
+            loginData)
+            .then((response) => {
+                console.log(response.data);
+                setUser(response.data.userName);
+                navigate("/bills/create")
+            })
 
+    };
+
+    return (
         <Container component="main" maxWidth="xs">
+           
             <Box
                 sx={{
                     marginTop: 8,
