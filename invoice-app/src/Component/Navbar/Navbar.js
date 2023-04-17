@@ -9,17 +9,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
-import { userContext } from '../../context/userContext'
-import { useContext } from "react"
 
 
 export default function Navbar() {
-  const theme = useContext(userContext);
-  console.log(theme);
+
 
   const navigate = useNavigate();
   const navigateToLogin = () => {
-    //navigate to /login
     navigate('/login');
   };
 
@@ -78,3 +74,4 @@ export default function Navbar() {
     </Box>
   );
 }
+

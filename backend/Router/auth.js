@@ -26,7 +26,7 @@ router.post("/login", async (req, res) => {
             res.status(400).json({ error: "user error" })
         } else {
             // res.json({ message: "logged in successful" })
-            res.json({ userName: collection.name })
+            res.json({ collection })
         }
 
     } catch (err) {

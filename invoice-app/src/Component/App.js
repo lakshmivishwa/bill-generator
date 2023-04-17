@@ -36,17 +36,17 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <userContext.Provider value='test'>
-          <Navbar />
-          <Routes>
-            <Route path="/login" element={<SignIn />} />
-            <Route path="/bills/create" element={<CreateBill />} />
-            <Route path="/bills/1" element={<ViewBill />} />
-            <Route path="/bills/1/edit" element={<EditBill />} />
-            <Route path="/bills/create/billReview" element={<BillReview />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Routes>
-        </userContext.Provider>
+        {/* <userContext.Provider value='test'> */}
+        <Navbar />
+        <Routes>
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/bills/create" element={<CreateBill />} />
+          <Route path="/bills/1" element={<ViewBill />} />
+          <Route path="/bills/1/edit" element={<EditBill />} />
+          <Route path="/bills/create/billReview" element={<BillReview />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Routes>
+        {/* </userContext.Provider> */}
       </BrowserRouter>
     </ThemeProvider>
   );

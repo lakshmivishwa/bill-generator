@@ -12,8 +12,6 @@ import Container from '@mui/material/Container';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-
-
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -27,7 +25,7 @@ function Copyright(props) {
     );
 }
 export default function SignIn() {
-    const [user, setUser] = React.useState('');
+    // const [user, setUser] = React.useState('');
     const navigate = useNavigate()
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -41,7 +39,8 @@ export default function SignIn() {
             loginData)
             .then((response) => {
                 console.log(response.data);
-                setUser(response.data.userName);
+                // setUser(response.data)
+                // console.log(user);
                 navigate("/bills/create")
             })
 
@@ -49,7 +48,6 @@ export default function SignIn() {
 
     return (
         <Container component="main" maxWidth="xs">
-           
             <Box
                 sx={{
                     marginTop: 8,
