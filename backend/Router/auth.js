@@ -3,7 +3,6 @@ const express = require('express')
 const router = express.Router();
 const dbConnect = require('../database/db_service')
 
-const { MongoClient } = require('mongodb');
 router.get("/", (req, res) => {
     res.send("welcome to my router page");
 });
@@ -28,17 +27,12 @@ router.post("/login", async (req, res) => {
             // res.json({ message: "logged in successful" })
             res.json({ collection })
         }
-
     } catch (err) {
         console.log(err);
     }
 
 
 });
-
-
-
-
 
 router.post("/register", async (req, res) => {
     const signUpData = req.body;
@@ -47,7 +41,7 @@ router.post("/register", async (req, res) => {
     let db = await dbConnect();
     let collection = db.collection("signUpData").insertOne(req.body, (err, res) => {
         if (err) throw err;
-        console.log("1 document inserted");
+        res.json({ collection })
         db.close();
     })
 
