@@ -7,13 +7,16 @@ import App from './Component/App';
 // import SignIn from './Component/signInForm';
 import reportWebVitals from './reportWebVitals';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { Provider } from 'react-redux'
+import store from '../src/Redux/Store'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
 
-    <App />
-    {/* <SignIn/> */}
   </React.StrictMode>
 );
 
