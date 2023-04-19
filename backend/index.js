@@ -14,8 +14,8 @@ app.listen(port, () => {
 
 });
 
-dbConnect();
-// console.log(db);
+// dbConnect();
 
 
-app.use(require('./Router/auth'));
+app.use(require('./Router/auth.router'));
+ 
