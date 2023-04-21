@@ -11,7 +11,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { signIn } from '../../Redux/Actions/Action';
 
 function Copyright(props) {
     return (
@@ -26,6 +27,7 @@ function Copyright(props) {
     );
 }
 export default function SignIn() {
+
     const dispatch = useDispatch();
 
     const navigate = useNavigate()
@@ -41,7 +43,9 @@ export default function SignIn() {
             loginData)
             .then((response) => {
                 console.log(response.data);
-                dispatch(response.data)
+                let userData = response.data
+                console.log(userData);
+                dispatch(signIn(userData))
                 navigate("/bills/create")
             })
 

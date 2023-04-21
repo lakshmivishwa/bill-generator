@@ -9,10 +9,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector } from 'react-redux'
 
 export default function Navbar() {
 
+  const loggedInUser = useSelector((state) => state.loggedInReducer)
+  let userName = loggedInUser.signIn.response;
+  console.log(userName);
 
   const navigate = useNavigate();
   const navigateToLogin = () => {
@@ -52,7 +55,7 @@ export default function Navbar() {
 
 
           >
-            {/* {userName} */}
+            {userName.name}
           </Button>
           <Menu
             id="basic-menu"

@@ -1,9 +1,11 @@
-const express = require('express');
+// const express = require('express');
+import express from 'express';
 const app = express();
 const port = 4000;
-// const connection = require("./database/find")
-const cors = require('cors');
-const dbConnect = require('./database/db_service')
+import cors from "cors"
+import dbConnect from './database/db_service.js';
+import router from './Router/auth.router.js';
+// const dbConnect = require('./database/db_service')
 app.use(cors({
     origin: '*'
 }));
@@ -11,11 +13,9 @@ app.use(cors({
 app.use(express.json())
 app.listen(port, () => {
     console.log(`listening to the port no ${port}`)
-
 });
 
 // dbConnect();
 
 
-app.use(require('./Router/auth.router'));
- 
+app.use(router);

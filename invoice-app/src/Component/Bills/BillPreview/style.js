@@ -22,6 +22,9 @@ const styles = {
         marginTop: "5px",
         paddingTop: "5px",
     },
+    Button:{
+        marginLeft:"50px"
+    }
 
 }
 

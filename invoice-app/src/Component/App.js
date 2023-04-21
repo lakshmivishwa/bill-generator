@@ -2,11 +2,11 @@
 import Navbar from './Navbar/Navbar';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignIn from './SignInPage/signInForm';
-import CreateBill from './Bills/CreateBill/CreateBill';
+import CreateBill from './Bills/CreateBill/PersonalDetail/CreateBill';
 import ViewBill from './Bills/ViewBills/ViewBill';
 import EditBill from './Bills/EditBill/EditBill';
 // import List from '../Bills/ItemList/ItemList';
-import BillReview from './Bills/BillReview/BillReview';
+import BillPreview from './Bills/BillPreview/BillPreview';
 // import NewCreateBill from '../Bills/NewCreateBill';
 import { ThemeProvider } from '@mui/material/';
 import theme from "../Theme/Theme";
@@ -35,19 +35,20 @@ console.log(theme);
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        {/* <userContext.Provider value='test'> */}
-        <Navbar />
-        <Routes>
-          <Route path="/login" element={<SignIn />} />
-          <Route path="/bills/create" element={<CreateBill />} />
-          <Route path="/bills/1" element={<ViewBill />} />
-          <Route path="/bills/1/edit" element={<EditBill />} />
-          <Route path="/bills/create/billReview" element={<BillReview />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-        {/* </userContext.Provider> */}
-      </BrowserRouter>
+
+      <Navbar />
+      <Routes>
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/bills/create" element={<CreateBill />} />
+        <Route path="/bills/1" element={<ViewBill />} />
+        <Route path="/bills/1/edit" element={<EditBill />} />
+        <Route path="/bills/create/billPreview" element={<BillPreview />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+
+
+
+
     </ThemeProvider>
   );
 }

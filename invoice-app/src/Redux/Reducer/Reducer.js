@@ -1,14 +1,9 @@
 const initialStateForSignIn = {
     signIn: {
-        name: "",
-        contact: "",
-        email: "",
-        password: "",
-
     },
 }
 
-export const signInReducer = (state = initialStateForSignIn, action) => {
+export const loggedInReducer = (state = initialStateForSignIn, action) => {
     switch (action.type) {
         case "SIGN_IN":
             return {
@@ -18,3 +13,4 @@ export const signInReducer = (state = initialStateForSignIn, action) => {
         default: return state;
     }
 }
+

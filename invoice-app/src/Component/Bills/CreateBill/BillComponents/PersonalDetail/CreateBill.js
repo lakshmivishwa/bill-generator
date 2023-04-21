@@ -1,62 +1,34 @@
 import * as React from 'react';
-import { Grid, Typography, Container, Button, Card, CardContent } from '@mui/material';
+import { Grid, Typography, Container, Button, Card, CardContent, Link } from '@mui/material';
 import styles from "./style";
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { useForm } from "react-hook-form"
-// import EditBill from './EditBill';
-import FinalProductDetail from './FinalProductTable/FinalProductTable';
+import FinalProductDetail from '../FinalProductTable/FinalProductTable';
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 
 export default function NewCreateBill() {
-  // const date = new Date();
 
+  const loggedUserAddress = useSelector((state) => state.loggedInReducer)
+  let userAddressDetail = loggedUserAddress.signIn.response;
+  console.log(userAddressDetail);
+
+  const [address, setAddress] = useState({
+    userAddress: userAddressDetail.address,
+    cityPincode: userAddressDetail.cityPincode,
+    contact: userAddressDetail.contact,
+    state: userAddressDetail.state,
+    name: userAddressDetail.name,
+    email: userAddressDetail.email,
+  })
+  console.log(address);
+
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
-
   async function onSubmit(data) {
     console.log(data);
-
-    // const jsonData =
-    // {
-    //   "id": 1,
-    //   "billTo": {
-    //     "name": data.name,
-    //     "billingAddress": data.billingAddress,
-    //   },
-    //   "billFrom": {
-    //     "email": data.email,
-    //     "invoiceFrom": data.invoiceFrom,
-    //     "gst": "1AE275245863",
-    //     "pan": "ATRPV1671J"
-    //   },
-    //   "notes": data.notes,
-    //   "items": { inputFields },
-    //   "dateOfInvoice": { date },
-    //   "invoiceNumber": "",
-    //   "accountDetails": {
-    //   }
-
-    // }
-    // console.log(jsonData);
-
-    // const response = await fetch("/register", {
-    //   method: "POST",
-    //   credentials: "same-origin",
-    //   headers: { "Content-Type": "application/json" },
-    //   redirect: "follow",
-    //   referrerPolicy: "no-referrer",
-    //   body: JSON.stringify(jsonData),
-    // });
-
-    // const getdata = await response.json()
-    // console.log(getdata);
-    // return response;
-    // // return res();
-    // if (getdata.status === 422 || !getdata) {
-    //   window.alert("invalid")
-    //   console.log("invalid")
-    // } else {
-    //   console.log("success")
-    // }
+    navigate('billReview');
   }
 
   return (
@@ -139,6 +111,7 @@ export default function NewCreateBill() {
 
               <Grid item xs={6} md={6}>
                 <Typography mt={3} mb={2} variant="h6" component="h5">Bill From:-</Typography>
+
                 <TextField name="invoiceFrom" fullWidth label="Who is this invoice from?"
                   {...register('invoiceFrom', {
                     required: "**This Field is required**",
@@ -148,6 +121,10 @@ export default function NewCreateBill() {
                   id="fullWidth"
                   error={errors.invoiceFrom}
                   helperText={errors.invoiceFrom?.message}
+                  onChange={data => setAddress({
+                    userAddress: data.userAddress
+                  })}
+                  value={address.name}
                 />
 
                 <TextField name="companyEmail" fullWidth label="Email Address"
@@ -159,6 +136,10 @@ export default function NewCreateBill() {
                   id="fullWidth"
                   error={errors.companyEmail}
                   helperText={errors.companyEmail?.message}
+                  onChange={data => setAddress({
+                    email: data.email
+                  })}
+                  value={address.email}
                 />
 
                 <TextField name="CompanyContact" fullWidth label="CompanyContact"
@@ -170,6 +151,10 @@ export default function NewCreateBill() {
                   id="fullWidth"
                   error={errors.CompanyContact}
                   helperText={errors.CompanyContact?.message}
+                  onChange={data => setAddress({
+                    contact: data.contact
+                  })}
+                  value={address.contact}
                 />
 
                 <TextField name="companyAddress" fullWidth label="Company Address"
@@ -181,6 +166,10 @@ export default function NewCreateBill() {
                   id="fullWidth"
                   error={errors.companyAddress}
                   helperText={errors.companyAddress?.message}
+                  onChange={data => setAddress({
+                    userAddress: data.userAddress
+                  })}
+                  value={address.userAddress}
                 />
 
                 <TextField name="companyCityPin" fullWidth label="City and Pin-code"
@@ -192,6 +181,10 @@ export default function NewCreateBill() {
                   id="fullWidth"
                   error={errors.companyCityPin}
                   helperText={errors.companyCityPin?.message}
+                  onChange={data => setAddress({
+                    cityPincode: data.cityPincode
+                  })}
+                  value={address.cityPincode}
                 />
 
                 <TextField name="companyState" fullWidth label="State"
@@ -203,6 +196,10 @@ export default function NewCreateBill() {
                   id="fullWidth"
                   error={errors.companyState}
                   helperText={errors.companyState?.message}
+                  onChange={data => setAddress({
+                    state: data.state
+                  })}
+                  value={address.state}
                 />
               </Grid>
             </Grid>
@@ -265,7 +262,7 @@ export default function NewCreateBill() {
 
             <Grid container spacing={2} mb={2} mt={5}>
               <Grid item xs={12} md={12}>
-                <Button variant="contained" type="submit" >Preview</Button>
+                <Link to="/billReview"> <Button variant="contained" type="submit" >Preview</Button></Link>
               </Grid>
             </Grid>
           </form >

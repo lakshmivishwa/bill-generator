@@ -1,5 +1,5 @@
-
-export const signIn = async (req, res) => {
+import dbConnect from "../../database/db_service.js";
+const signIn = async (req, res) => {
 
     try {
         const { email, password } = req.body;
@@ -7,6 +7,7 @@ export const signIn = async (req, res) => {
             return res.status(400).json({ error: "please fill the data" })
         }
         let db = await dbConnect();
+
         let response = await db.collection("users").findOne({ email: email, password: password })
         console.log(response);
         if (!response) {
@@ -21,8 +22,7 @@ export const signIn = async (req, res) => {
 
 }
 
-
-export const register = async (req, res) => {
+const register = async (req, res) => {
     const data = req.body;
     let db = await dbConnect();
     let dbResponse = db.collection("users").insertOne(data, (err, dbRes) => {
@@ -32,3 +32,5 @@ export const register = async (req, res) => {
     })
 
 };
+
+export { register, signIn };

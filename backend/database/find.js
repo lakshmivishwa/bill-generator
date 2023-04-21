@@ -1,4 +1,5 @@
-const dbConnect = require('./db_service')
+import dbConnect from "./db_service";
+
 console.log(dbConnect);
 
 const find = async () => {

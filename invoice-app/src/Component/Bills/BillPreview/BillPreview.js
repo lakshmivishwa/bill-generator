@@ -7,9 +7,15 @@ import CardContent from '@mui/material/CardContent';
 import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell } from '@coreui/react'
 import { Container } from '@mui/material';
 import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-function BillReview() {
+function BillPreview() {
+    const navigate = useNavigate();
 
+    function onSubmit(data) {
+        console.log(data);
+        navigate('/bills/create');
+    }
     const ref = React.createRef();
     return (
 
@@ -54,6 +60,7 @@ function BillReview() {
                                     <CTableHeaderCell scope="col">#</CTableHeaderCell>
                                     <CTableHeaderCell scope="col">Product Name</CTableHeaderCell>
                                     <CTableHeaderCell scope="col">Qty</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">Rate</CTableHeaderCell>
                                     <CTableHeaderCell scope="col">Price</CTableHeaderCell>
                                 </CTableRow>
                             </CTableHead>
@@ -64,17 +71,20 @@ function BillReview() {
                                     <CTableDataCell>Mark</CTableDataCell>
                                     <CTableDataCell>1</CTableDataCell>
                                     <CTableDataCell>100</CTableDataCell>
-                                </CTableRow>
-                                <CTableRow active>
-                                    <CTableHeaderCell scope="row">2</CTableHeaderCell>
-                                    <CTableDataCell>Jacob</CTableDataCell>
-                                    <CTableDataCell>1</CTableDataCell>
                                     <CTableDataCell>100</CTableDataCell>
                                 </CTableRow>
                                 <CTableRow active>
                                     <CTableHeaderCell scope="row">2</CTableHeaderCell>
                                     <CTableDataCell>Jacob</CTableDataCell>
                                     <CTableDataCell>1</CTableDataCell>
+                                    <CTableDataCell>100</CTableDataCell>
+                                    <CTableDataCell>100</CTableDataCell>
+                                </CTableRow>
+                                <CTableRow active>
+                                    <CTableHeaderCell scope="row">2</CTableHeaderCell>
+                                    <CTableDataCell>Jacob</CTableDataCell>
+                                    <CTableDataCell>1</CTableDataCell>
+                                    <CTableDataCell>100</CTableDataCell>
                                     <CTableDataCell>100</CTableDataCell>
                                 </CTableRow>
                                 <CTableRow active style={styles.Total}>
@@ -82,6 +92,7 @@ function BillReview() {
                                     <CTableDataCell></CTableDataCell>
                                     <CTableDataCell>3</CTableDataCell>
                                     <CTableDataCell>300</CTableDataCell>
+                                    <CTableDataCell>100</CTableDataCell>
                                 </CTableRow>
                             </CTableBody>
                         </CTable>
@@ -94,11 +105,13 @@ function BillReview() {
                 <CardContent >
                     <Typography component="p" variant='p'>Notes :- Thank you for the business</Typography>
                 </CardContent>
+
             </Card>
             <Button variant="contained" >Download Bill</Button>
+            <Button variant="contained" style={styles.Button} onClick={onSubmit}>Cancel</Button>
         </Container>
 
     )
 }
 
-export default BillReview;
+export default BillPreview;
