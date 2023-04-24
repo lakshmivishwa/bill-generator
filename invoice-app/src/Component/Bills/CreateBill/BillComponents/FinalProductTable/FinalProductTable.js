@@ -32,7 +32,7 @@ function ProductDetail() {
 
 
 	const onFormSubmit = (event) => {
-		event.preventDefault();
+		// event.preventDefault();
 		console.log(formObject);
 
 		const checkVal = !Object.values(formObject).every((res) => res === "");
@@ -61,6 +61,7 @@ function ProductDetail() {
 	const removeTableData = (index) => {
 		console.log("deleted");
 		const rows = [...tableData];
+		console.log(tableData);
 		rows.splice(index, 1);
 		setTableData(rows);
 	}

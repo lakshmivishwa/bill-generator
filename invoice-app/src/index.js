@@ -8,7 +8,7 @@ import App from './Component/App';
 import reportWebVitals from './reportWebVitals';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from 'react-redux'
-import store , { persistor} from './Redux/Store';
+import store, { persistor } from './Redux/Store';
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter } from "react-router-dom";
 

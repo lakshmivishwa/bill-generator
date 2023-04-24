@@ -1,9 +1,24 @@
 import { MdDeleteForever } from "react-icons/md";
 import { Grid, Container } from '@mui/material';
 import styles from "./style";
+import { useDispatch } from 'react-redux'
+import { itemList } from "../../../../../Redux/Actions/Action";
+import { useState } from "react";
 
 function Table({ tableData, deleteTableData }) {
-    console.log(tableData)
+    const dispatch = useDispatch();
+    console.log(tableData);
+    dispatch(itemList(tableData))
+
+    let totalQty = 0;
+    let totalRate = 0;
+    let totalPrice = 0;
+
+    for (let i = 0; i < tableData.length; i++) {
+        totalQty += parseInt(tableData[i].qty);
+        totalRate += parseInt(tableData[i].rate);
+        totalPrice += tableData[i].price;
+    }
 
     return (
         <Container maxWidth="md">
@@ -25,9 +40,9 @@ function Table({ tableData, deleteTableData }) {
                         <tbody>
 
                             {tableData.map((data, index) => {
+
                                 return (
                                     <tr key={index}>
-
                                         <td>{index + 1}</td>
                                         <td>{data.itemName}</td>
                                         <td>{data.itemDescription}</td>
@@ -39,6 +54,23 @@ function Table({ tableData, deleteTableData }) {
                                 );
                             })}
                         </tbody>
+                        <tbody></tbody>
+                        {(tableData.length !== 0) ?
+                            <tbody>
+                                <tr>
+                                    <td>Total</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{totalQty}</td>
+                                    <td >{totalRate}</td>
+                                    <td>{totalPrice}</td>
+                                    <td></td>
+                                </tr>
+                            </tbody> : ""
+                        }
+
+
+
                     </table>
                 </Grid>
             </Grid>

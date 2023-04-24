@@ -14,3 +14,23 @@ export const loggedInReducer = (state = initialStateForSignIn, action) => {
     }
 }
 
+
+const initialItem = {
+    items: [],
+
+}
+
+export const itemListReducer = (state = initialItem, action) => {
+    switch (action.type) {
+        case "ITEM_LIST":
+
+            return {
+                ...state,
+
+                items: [...state.items, action.payload]
+
+            }
+        default: return state;
+    }
+}
+

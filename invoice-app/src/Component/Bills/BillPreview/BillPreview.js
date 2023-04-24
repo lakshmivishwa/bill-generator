@@ -7,25 +7,30 @@ import CardContent from '@mui/material/CardContent';
 import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell } from '@coreui/react'
 import { Container } from '@mui/material';
 import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux'
 
-function BillPreview() {
-    const navigate = useNavigate();
+function BillPreview(props) {
 
-    function onSubmit(data) {
-        console.log(data);
-        navigate('/bills/create');
-    }
+    const items = useSelector((state) => state.itemListReducer)
+
+    console.log(items);
+
+    console.log(props);
+
+    let value = props.value.data;
+    console.log(value);
+
     const ref = React.createRef();
+
     return (
 
         <Container maxWidth="md" ref={ref}>
             <Card variant="outlined" style={styles.container}>
                 <Grid container spacing={1} style={styles.Gridcontainer}>
                     <Grid item sm={7} xs={12}>
-                        <Typography component="h6" variant='h6'> ABC Furniture Co.</Typography>
-                        <Typography component="p" variant='p'> #101 tree street, Leaf vale , delhi 110001</Typography>
-                        <Typography component="p" variant='p'>Contact:-9896369856</Typography>
+                        <Typography component="h6" variant='h6'>{value.name}</Typography>
+                        <Typography component="p" variant='p'>{value.companyAddress}{value.companyCityPin}{value.companyState}</Typography>
+                        <Typography component="p" variant='p'>{value.CompanyContact}</Typography>
                     </Grid>
                     <Grid item sm={4} xs={12}>
                         <Typography component="h6" variant='h6'> Invoice</Typography>
@@ -53,7 +58,7 @@ function BillPreview() {
             </Card>
             <Card variant="outlined" style={styles.container}>
                 <CardContent >
-                    <Grid item sm={12} xs={12}>
+                    {/* <Grid item sm={12} xs={12}>
                         <CTable>
                             <CTableHead>
                                 <CTableRow active>
@@ -97,19 +102,57 @@ function BillPreview() {
                             </CTableBody>
                         </CTable>
 
+                    </Grid> */}
+
+                    <Grid container spacing={2} mt={3}>
+                        <Grid item xs={12} md={12}  >
+                            <table className="table">
+                                {/* {(tableData.length !== 0) ? */}
+                                <thead style={styles.TableHead}>
+                                    <tr >
+                                        <th>Sr No</th>
+                                        <th>Item Name</th>
+                                        <th>Qty</th>
+                                        <th>Rate</th>
+                                        <th>Price</th>
+
+                                    </tr>
+                                </thead>
+                                {/* : ''} */}
+                                <tbody>
+                                    {/* {tableData.map((data, index) => { */}
+
+                                    {/* return ( */}
+                                    <tr >
+
+                                        <td>1</td>
+                                        <td>hh</td>
+                                        <td>aaa</td>
+                                        <td >11</td>
+                                        <td>123</td>
+
+                                    </tr>
+                                    {/* ); */}
+                                    {/* })} */}
+                                </tbody>
+                            </table>
+                        </Grid>
                     </Grid>
+
+
                 </CardContent>
             </Card>
 
             <Card variant="outlined" style={styles.container}>
                 <CardContent >
-                    <Typography component="p" variant='p'>Notes :- Thank you for the business</Typography>
+                    <Typography component="p" variant='p'>{value.notes}</Typography>
                 </CardContent>
 
             </Card>
-            <Button variant="contained" >Download Bill</Button>
-            <Button variant="contained" style={styles.Button} onClick={onSubmit}>Cancel</Button>
+            <Button variant="contained" onClick={props.handlePrint}>Download Bill</Button>
+            <Button variant="contained" style={styles.Button} onClick={props.handleClick}>Cancel</Button>
         </Container>
+
 
     )
 }

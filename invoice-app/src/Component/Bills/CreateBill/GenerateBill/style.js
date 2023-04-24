@@ -5,7 +5,8 @@ const styles = {
     },
     Total: {
         textAlign: "right"
-    }
+    },
+   
 };
 
 export default styles;
