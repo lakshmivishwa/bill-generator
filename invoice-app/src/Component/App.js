@@ -11,6 +11,7 @@ import EditBill from './Bills/EditBill/EditBill';
 import { ThemeProvider } from '@mui/material/';
 import theme from "../Theme/Theme";
 import SignUp from './SignUpPage/SignUpPage';
+import TableForm from './Bills/CreateBill/BillComponents/ItemForm/ItemForm';
 
 console.log(theme);
 
@@ -19,6 +20,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Navbar />
       <Routes>
+        <Route path="/table" element={<TableForm />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/bills/create" element={<CreateBill />} />
         <Route path="/bills/1" element={<ViewBill />} />

@@ -18,8 +18,8 @@ export const logout = () => {
 export const itemList = (content) => {
     return {
         type: ITEM_LIST,
-        payload:content,
-        id: content.id,
-        content: content.element
+        payload: content,
+        // id: content.id,
+        // // content: content.element
     }
 }
