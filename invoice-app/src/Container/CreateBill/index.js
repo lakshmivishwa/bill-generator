@@ -7,8 +7,10 @@ import { useForm } from "react-hook-form"
 
 import { useSelector } from 'react-redux'
 // import { useNavigate } from 'react-router-dom';
-import BillPreview from '../../BillPreview/BillPreview';
-import TableForm from "../BillComponents/ItemForm/ItemForm"
+import BillPreview from '../BillPreview';
+import Table from '../../Component/BillComponents/LineItem';
+import CreateItem from '../../Component/BillComponents/CreateItem';
+
 
 export default function NewCreateBill() {
     const loggedUserAddress = useSelector((state) => state.loggedInReducer)
@@ -23,37 +25,45 @@ export default function NewCreateBill() {
         state: userAddressDetail.state,
         name: userAddressDetail.name,
         email: userAddressDetail.email,
-    })
+    });
 
-    const [description, setDescription] = useState("");
-    const [quantity, setQuantity] = useState("");
-    const [price, setPrice] = useState("");
-    const [amount, setAmount] = useState("");
-    const [list, setList] = useState([]);
-    const [total, setTotal] = useState(0);
+    const [tableData, setTableData] = useState([]);
 
     const [detail, setDetail] = useState({})
+    
     console.log(address);
 
     async function onSubmit(data) {
         console.log('preview data', data);
-        setBillPreview("false")
-        setDetail({ data });
+        // setBillPreview("false")
+        // setDetail({ data });
     }
 
-    const [billPreview, setBillPreview] = useState("true");
+    const [preview, setPreview] = useState(false);
 
     const showPreview = (data) => {
         console.log(data);
-        setBillPreview("false")
+        setPreview(true)
     }
 
     const cancelPreview = () => {
-        setBillPreview("true")
+        setPreview(false)
     }
 
     const printHandlier = () => {
         window.print();
+    }
+
+    const removeItem = (index) => {
+        console.log("deleted");
+        const rows = [...tableData];
+        console.log(tableData);
+        rows.splice(index, 1);
+        setTableData(rows);
+    }
+
+    const addItem = (item) => {
+        setTableData([ ...tableData, {id: tableData.length + 1 , ...item}]);
     }
 
     return (
@@ -61,8 +71,7 @@ export default function NewCreateBill() {
         <Container maxWidth="md" >
             <Card sx={{ minWidth: 275 }} mt={3} mb={3}>
                 <CardContent>
-                    {billPreview === "true" ?
-                        <div>
+                    {!preview ?
                             <form onSubmit={handleSubmit(onSubmit)}>
 
                                 <Grid container spacing={2}>
@@ -232,10 +241,17 @@ export default function NewCreateBill() {
                                 </Grid>
 
                                 <Grid container spacing={2} mt={5}>
-                                    <TableForm
-                                    
+                                    <CreateItem
+                                        addItem={addItem}
                                     />
                                 </Grid>
+
+                                <Table 
+                                tableData={tableData}
+                                deleteItem={removeItem}
+        
+                                />
+
 
                                 <Grid container spacing={2} mt={5}>
                                     <Grid item xs={12} md={6}>
@@ -295,10 +311,6 @@ export default function NewCreateBill() {
                                     </Grid>
                                 </Grid>
                             </form >
-                            {/* <Grid item xs={12} md={6}>
-                                <Button variant="contained" onClick={showPreview}>Preview</Button>
-                            </Grid> */}
-                        </div>
                         :
                         <BillPreview handleClick={cancelPreview} handlePrint={printHandlier} value={detail} />
                     }

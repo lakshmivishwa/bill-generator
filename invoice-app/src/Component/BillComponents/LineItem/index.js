@@ -55,6 +55,7 @@ function Table({ tableData, deleteTableData }) {
                             })}
                         </tbody>
                         <tbody></tbody>
+                        {(tableData.length !== 0) ?
                             <tbody>
                                 <tr>
                                     <td>Total</td>
@@ -66,6 +67,10 @@ function Table({ tableData, deleteTableData }) {
                                     <td></td>
                                 </tr>
                             </tbody> : ""
+                        }
+
+
+
                     </table>
                 </Grid>
             </Grid>

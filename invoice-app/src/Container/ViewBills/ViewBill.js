@@ -3,7 +3,7 @@ import { Container, Grid, Card, CardContent, Typography, CardActions, Button } f
 import styles from "./style";
 
 import { ThemeProvider } from '@mui/material';
-import theme from "../../../Theme/Theme"
+import Theme from '../../Theme/Theme';
 export default function ViewBill() {
   return (
     <div style={styles.MainContainer}>
@@ -13,7 +13,7 @@ export default function ViewBill() {
           <Grid container spacing={2}>
             <Grid item xs={6} md={8}>
               <CardContent>
-                <ThemeProvider theme={theme}>
+                <ThemeProvider theme={Theme}>
                   <Typography variant="h6" component="div" color="info.main">
                     Invoice No:1111
                   </Typography>
@@ -39,7 +39,7 @@ export default function ViewBill() {
           <Grid container spacing={2}>
             <Grid item xs={6} md={8}>
               <CardContent>
-                <ThemeProvider theme={theme}>
+                <ThemeProvider theme={Theme}>
                   <Typography variant="h6" component="div" color="info.main">
                     Invoice No:1111
                   </Typography>

@@ -1,17 +1,13 @@
 
 import Navbar from './Navbar/Navbar';
 import { Routes, Route } from "react-router-dom";
-import SignIn from './SignInPage/signInForm';
-import CreateBill from './Bills/CreateBill/GenerateBill/generateBill';
-import ViewBill from './Bills/ViewBills/ViewBill';
-import EditBill from './Bills/EditBill/EditBill';
-// import List from '../Bills/ItemList/ItemList';
-// import BillPreview from './Bills/BillPreview/BillPreview';
-// import NewCreateBill from '../Bills/NewCreateBill';
 import { ThemeProvider } from '@mui/material/';
 import theme from "../Theme/Theme";
 import SignUp from './SignUpPage/SignUpPage';
-import TableForm from './Bills/CreateBill/BillComponents/ItemForm/ItemForm';
+import SignIn from './SignInPage/signInForm';
+import NewCreateBill from '../Container/CreateBill';
+import ViewBill from '../Container/ViewBills/ViewBill';
+import EditBill from '../Container/EditBill/EditBill';
 
 console.log(theme);
 
@@ -20,9 +16,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <Navbar />
       <Routes>
-        <Route path="/table" element={<TableForm />} />
         <Route path="/login" element={<SignIn />} />
-        <Route path="/bills/create" element={<CreateBill />} />
+        <Route path="/bills/create" element={<NewCreateBill />} />
         <Route path="/bills/1" element={<ViewBill />} />
         <Route path="/bills/1/edit" element={<EditBill />} />
         <Route path="/signup" element={<SignUp />} />

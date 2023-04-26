@@ -2,12 +2,10 @@ import * as React from 'react';
 import { Grid, Typography, Button, Container } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useForm } from "react-hook-form";
-import Table from "../../BillComponents/Table/table"
 import { useState } from 'react';
-function ItemForm() {
+function CreateItem({addItem}) {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const [tableData, setTableData] = useState([]);
     const [formObject, setFormObject] = useState({
         itemName: "",
         itemDescription: "",
@@ -41,10 +39,7 @@ function ItemForm() {
         if (checkVal) {
 
             // const dataObj = (data) => [...data, formObject];
-            const data = { ...formObject, id: tableData.length + 1 };
-
-            setTableData([...tableData, data]);
-            console.log(tableData);
+            addItem(formObject);
 
             const isEmpty = {
                 itemName: "",
@@ -59,14 +54,7 @@ function ItemForm() {
 
     };
 
-    const removeTableData = (index) => {
-        console.log("deleted");
-        const rows = [...tableData];
-        console.log(tableData);
-        rows.splice(index, 1);
-        setTableData(rows);
-    }
-
+  
 
 
     return (
@@ -147,12 +135,10 @@ function ItemForm() {
 
             </Grid>
 
-            {/* </form> */}
-            <Table tableData={tableData} deleteTableData={removeTableData} />
         </Container >
 
 
 
     );
 }
-export default ItemForm;
+export default CreateItem;
