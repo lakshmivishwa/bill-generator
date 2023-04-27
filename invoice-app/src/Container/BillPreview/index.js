@@ -6,30 +6,24 @@ import { Card } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import { Container } from '@mui/material';
 import { Button } from '@mui/material';
-import { useSelector } from 'react-redux'
 
-function BillPreview(props) {
+function BillPreview({ handleClick, handlePrint, billFrom, billTo, notes, itemList }) {
+    console.log(itemList);
 
-    const items = useSelector((state) => state.itemListReducer)
 
-    console.log(items);
-
-    console.log(props);
-
-    let value = props.value.data;
-    console.log(value);
-
-    const ref = React.createRef();
-
+    let totalPrice = 0;
+    for (let i = 0; i < itemList.length; i++) {
+        totalPrice += itemList[i].price;
+    }
     return (
 
-        <Container maxWidth="md" ref={ref}>
+        <Container maxWidth="md" >
             <Card variant="outlined" style={styles.container}>
                 <Grid container spacing={1} style={styles.Gridcontainer}>
                     <Grid item sm={7} xs={12}>
-                        <Typography component="h6" variant='h6'>{value.name}</Typography>
-                        <Typography component="p" variant='p'>{value.billingAddress}</Typography>
-                        <Typography component="p" variant='p'>{value.contact}</Typography>
+                        <Typography component="h6" variant='h6'>{billTo.clientName}</Typography>
+                        <Typography component="p" variant='p'>{billTo.clientEmail}</Typography>
+                        <Typography component="p" variant='p'>{billTo.clientContact}</Typography>
                     </Grid>
                     <Grid item sm={4} xs={12}>
                         <Typography component="h6" variant='h6'> Invoice</Typography>
@@ -41,55 +35,68 @@ function BillPreview(props) {
                 <Grid container spacing={1} style={styles.container}>
                     <Grid item sm={6} xs={12}>
                         <Typography component="h6" variant='h6'>BILL TO:-</Typography>
-                        <Typography component="p" variant='p'>{value.invoiceFrom}</Typography>
-                        <Typography component="p" variant='p'>{value.CompanyContact}</Typography>
-                        <Typography component="p" variant='p'>{value.companyEmail}</Typography>
+                        <Typography component="p" variant='p'>{billFrom.vendorName}</Typography>
+                        <Typography component="p" variant='p'>{billFrom.vendorContact}</Typography>
+                        <Typography component="p" variant='p'>{billFrom.vendorEmail}</Typography>
                     </Grid>
                     <Grid item sm={6} xs={12}>
                         <Typography component="h6" variant='h6'>SHIP TO:-</Typography>
-                        <Typography component="p" variant='p'> {value.invoiceFrom}</Typography>
-                        <Typography component="p" variant='p'>{value.companyAddress}</Typography>
-                        <Typography component="p" variant='p'>{value.companyCityPin}</Typography>
-                        <Typography component="p" variant='p'>{value.state}</Typography>
+                        <Typography component="p" variant='p'> {billFrom.vendorName}</Typography>
+                        <Typography component="p" variant='p'>{billFrom.vendorAddress}</Typography>
+                        <Typography component="p" variant='p'>{billFrom.vendorCityPincode}</Typography>
+                        <Typography component="p" variant='p'>{billFrom.vendorState}</Typography>
                         <Typography component="p" variant='p'>Country :- India</Typography>
                     </Grid>
                 </Grid>
             </Card>
             <Card variant="outlined" style={styles.container}>
                 <CardContent >
-
-
                     <Grid container spacing={2} mt={3}>
                         <Grid item xs={12} md={12}  >
                             <table className="table">
-                                {/* {(tableData.length !== 0) ? */}
-                                <thead style={styles.TableHead}>
-                                    <tr >
-                                        <th>Sr No</th>
-                                        <th>Item Name</th>
-                                        <th>Qty</th>
-                                        <th>Rate</th>
-                                        <th>Price</th>
+                                {(itemList.length !== 0) ?
+                                    <thead style={styles.TableHead}>
+                                        <tr >
+                                            <th>Sr No</th>
+                                            <th>Item Name</th>
+                                            <th>Item Description</th>
+                                            <th>Qty</th>
+                                            <th>Rate</th>
+                                            <th>Price</th>
 
-                                    </tr>
-                                </thead>
-                                {/* : ''} */}
+                                        </tr>
+                                    </thead> : ''}
                                 <tbody>
-                                    {/* {tableData.map((data, index) => { */}
 
-                                    {/* return ( */}
-                                    <tr >
+                                    {itemList.map((data, index) => {
 
-                                        <td>1</td>
-                                        <td>hh</td>
-                                        <td>aaa</td>
-                                        <td >11</td>
-                                        <td>123</td>
+                                        return (
+                                            <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td>{data.itemName}</td>
+                                                <td>{data.itemDescription}</td>
+                                                <td>{data.qty}</td>
+                                                <td >{data.rate}</td>
+                                                <td>{data.price}</td>
 
-                                    </tr>
-                                    {/* ); */}
-                                    {/* })} */}
+                                            </tr>
+                                        );
+                                    })}
                                 </tbody>
+
+                                {(itemList.length !== 0) ?
+                                    <tbody>
+                                        <tr>
+                                            <td>Total</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td ></td>
+                                            <td>{totalPrice}</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody> : ""
+                                }
                             </table>
                         </Grid>
                     </Grid>
@@ -100,12 +107,12 @@ function BillPreview(props) {
 
             <Card variant="outlined" style={styles.container}>
                 <CardContent >
-                    <Typography component="p" variant='p'>{value.notes}</Typography>
+                    <Typography component="p" variant='p'>{notes}</Typography>
                 </CardContent>
 
             </Card>
-            <Button variant="contained" onClick={props.handlePrint}>Download Bill</Button>
-            <Button variant="contained" style={styles.Button} onClick={props.handleClick}>Cancel</Button>
+            <Button variant="contained" onClick={handlePrint}>Download Bill</Button>
+            <Button variant="contained" style={styles.Button} onClick={handleClick}>Cancel</Button>
         </Container>
 
 

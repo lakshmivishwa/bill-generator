@@ -1,21 +1,16 @@
 import { MdDeleteForever } from "react-icons/md";
 import { Grid, Container } from '@mui/material';
 import styles from "./style";
-// import { useDispatch } from 'react-redux'
-// import { itemList } from "../../../../../Redux/Actions/Action";
-// import { useState } from "react";
+
 
 function Table({ tableData, deleteTableData }) {
-    // const dispatch = useDispatch();
     console.log(tableData);
-    // dispatch(itemList(tableData))
-
-    // let totalQty = 0;
-    // let totalRate = 0;
+    let totalQty = 0;
+    let totalRate = 0;
     let totalPrice = 0;
     for (let i = 0; i < tableData.length; i++) {
-        // totalQty += parseInt(tableData[i].qty);
-        // totalRate += parseInt(tableData[i].rate);
+        totalQty += parseInt(tableData[i].qty);
+        totalRate += parseInt(tableData[i].rate);
         totalPrice += tableData[i].price;
     }
 
@@ -61,8 +56,8 @@ function Table({ tableData, deleteTableData }) {
                                     <td>Total</td>
                                     <td></td>
                                     <td></td>
-                                    <td>1</td>
-                                    <td >1</td>
+                                    <td>{totalQty}</td>
+                                    <td >{totalRate}</td>
                                     <td>{totalPrice}</td>
                                     <td></td>
                                 </tr>

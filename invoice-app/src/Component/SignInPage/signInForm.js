@@ -27,11 +27,10 @@ function Copyright(props) {
     );
 }
 export default function SignIn() {
-
     const dispatch = useDispatch();
-
     const navigate = useNavigate()
     const handleSubmit = async (event) => {
+
         event.preventDefault();
         const newData = new FormData(event.currentTarget);
         const loginData = {

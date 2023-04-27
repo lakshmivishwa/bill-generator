@@ -1,6 +1,6 @@
 const SIGN_IN = "SIGN_IN";
 const LOG_OUT = "LOG_OUT";
-const ITEM_LIST = "ITEM_LIST";
+const BILL_DETAILS = "BILL_DETAILS";
 
 export const signIn = (value) => {
     return {
@@ -15,11 +15,10 @@ export const logout = () => {
     }
 }
 
-export const itemList = (content) => {
+export const billDetails = (value) => {
     return {
-        type: ITEM_LIST,
-        payload: content,
-        // id: content.id,
-        // // content: content.element
+        type: BILL_DETAILS,
+        payload: value,
+
     }
 }

@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Grid, Typography, Button, Container } from '@mui/material';
+import { Grid, Typography, Button, Container, Link } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useForm } from "react-hook-form";
 import { useState } from 'react';
-function CreateItem({addItem}) {
+import { FcAddDatabase } from "react-icons/fc";
+function CreateItem({ addItem }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [formObject, setFormObject] = useState({
@@ -33,7 +34,7 @@ function CreateItem({addItem}) {
 
     const onFormSubmit = (event) => {
         event.preventDefault();
-        console.log("formObject",formObject);
+        console.log("formObject", formObject);
 
         const checkVal = !Object.values(formObject).every((res) => res === "");
         if (checkVal) {
@@ -54,7 +55,7 @@ function CreateItem({addItem}) {
 
     };
 
-  
+
 
 
     return (
@@ -130,7 +131,8 @@ function CreateItem({addItem}) {
                     />
                 </Grid>
                 <Grid item xs={12} md={12}>
-                    <Button variant="contained" type="button" onClick={onFormSubmit}>Add Item</Button>
+                    <Button variant="text"> <FcAddDatabase size={40} onClick={onFormSubmit} /></Button>
+                    {/* <Button variant="contained" type="button" onClick={onFormSubmit}>Add Item</Button> */}
                 </Grid>
 
             </Grid>

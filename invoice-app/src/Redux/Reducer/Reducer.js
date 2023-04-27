@@ -1,5 +1,6 @@
 const initialStateForSignIn = {
     signIn: {
+        name: ""
     },
 }
 
@@ -15,35 +16,21 @@ export const loggedInReducer = (state = initialStateForSignIn, action) => {
 }
 
 
-const initialItem = {
-    items: [],
-
+const initialBillDetails = {
+    billDetails: {},
 }
 
-// export const itemListReducer = (state = initialItem, action) => {
-//     switch (action.type) {
-//         case "ITEM_LIST":
-
-//             return {
-//                 ...state,
-
-//                 items: [...state.items, action.payload]
-
-//             }
-//         default: return state;
-//     }
-// }
-
-
-export function itemListReducer(state = initialItem, action) {
+export const billDetailReducer = (state = initialBillDetails, action) => {
     switch (action.type) {
-        case "ITEM_LIST":
+        case "BILL_DETAILS":
+
             return {
+                ...state,
 
-                items: [...state.items, action.payload]
+                billDetails: action.payload
             }
-
-        default:
-            return state;
+        default: return state;
     }
 }
+
+

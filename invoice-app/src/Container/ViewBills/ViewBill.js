@@ -8,7 +8,7 @@ export default function ViewBill() {
   return (
     <div style={styles.MainContainer}>
 
-      <Container maxWidth="md"style={styles.MainCardContainer} >
+      <Container maxWidth="md" style={styles.MainCardContainer} >
         <Card sx={{ minWidth: 275 }} variant="outlined" style={styles.CardContainer}>
           <Grid container spacing={2}>
             <Grid item xs={6} md={8}>

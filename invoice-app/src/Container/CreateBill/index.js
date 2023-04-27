@@ -5,68 +5,54 @@ import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { useForm } from "react-hook-form"
 import { useSelector } from 'react-redux'
-// import { useNavigate } from 'react-router-dom';
 import BillPreview from '../BillPreview';
 import Table from '../../Component/BillComponents/LineItem';
 import CreateItem from '../../Component/BillComponents/CreateItem';
-
+import * as myConstClass from '../../Error';
 
 export default function NewCreateBill() {
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const errorMsg = myConstClass.requiredField;
+
     const loggedUserAddress = useSelector((state) => state.loggedInReducer)
     let userAddressDetail = loggedUserAddress.signIn.response;
-    // console.log(userAddressDetail);
-    const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const [billFrom, setBillFrom] = useState({
-        userAddress: userAddressDetail.address,
-        cityPincode: userAddressDetail.cityPincode,
-        contact: userAddressDetail.contact,
-        state: userAddressDetail.state,
-        name: userAddressDetail.name,
-        email: userAddressDetail.email,
-    });
-    const [submitData, setSubmitData] = useState({
-
-    })
-    console.log("submitData", submitData);
-
-    const billTo = {
-        userAddress: submitData.data.clientAddress,
-        cityPincode: submitData.data.clientCityPin,
-        contact: submitData.data.clientContact,
-        state: submitData.data.clientState,
-        name: submitData.data.clientName,
-        email: submitData.data.email,
-    }
-    console.log(billTo);
-
-    const [tableData, setTableData] = useState([]);
-
-    const [detail, setDetail] = useState({})
     const [preview, setPreview] = useState(false);
-
-    function onSubmit(data) {
-        setSubmitData({ data });
-        console.log('preview data', data);
-        // setPreview("true")
-        // setDetail({ data });
-
-    }
+    const [billFrom, setBillFrom] = useState({
+        vendorAddress: userAddressDetail.address,
+        vendorCityPincode: userAddressDetail.cityPincode,
+        vendorContact: userAddressDetail.contact,
+        vendorState: userAddressDetail.state,
+        vendorName: userAddressDetail.name,
+        vendorEmail: userAddressDetail.email,
+    });
+    const [billTo, setBillTo] = useState({});
+    const [tableData, setTableData] = useState([]);
+    const [notes, setNotes] = useState("");
 
     const billData = {
         billTo: billTo,
         billFrom: billFrom,
         lineItems: tableData,
-        billDate: new Date()
-
+        billDate: new Date(),
+        notes: notes
     };
-
     console.log(billData);
 
-    // const showPreview = (data) => {
-    //     console.log(data);
-    //     setPreview(true)
-    // }
+    function onSubmit(data) {
+        let dataObject = {
+            clientAddress: data.clientAddress,
+            clientCityPin: data.clientCityPin,
+            clientContact: data.clientContact,
+            clientName: data.clientName,
+            clientState: data.clientState,
+        }
+        let notes = data.notes;
+        setNotes(notes)
+        setBillTo(dataObject)
+        setPreview("true")
+
+    }
 
     const cancelPreview = () => {
         setPreview(false)
@@ -102,7 +88,7 @@ export default function NewCreateBill() {
 
                                     <TextField fullWidth label="Who is this invoice to?"
                                         {...register('clientName', {
-                                            required: "**This Field is required**",
+                                            required: errorMsg,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -113,7 +99,7 @@ export default function NewCreateBill() {
 
                                     <TextField name="clientEmail" fullWidth label="Email Address"
                                         {...register('clientEmail', {
-                                            required: "**This Field is required**",
+                                            required: errorMsg,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -124,7 +110,7 @@ export default function NewCreateBill() {
 
                                     <TextField name="clientContact" fullWidth label="Contact no"
                                         {...register('clientContact', {
-                                            required: "**This Field is required**",
+                                            required: errorMsg,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -135,7 +121,7 @@ export default function NewCreateBill() {
 
                                     <TextField fullWidth label="Address"
                                         {...register('clientAddress', {
-                                            required: "**This Field is required**",
+                                            required: errorMsg,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -146,7 +132,7 @@ export default function NewCreateBill() {
 
                                     <TextField name="clientCityPin" fullWidth label="City and Pin-code"
                                         {...register('clientCityPin', {
-                                            required: "**This Field is required**",
+                                            required: errorMsg,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -157,7 +143,7 @@ export default function NewCreateBill() {
 
                                     <TextField name="clientState" fullWidth label="State"
                                         {...register('clientState', {
-                                            required: "**This Field is required**",
+                                            required: errorMsg,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -172,7 +158,7 @@ export default function NewCreateBill() {
 
                                     <TextField name="vendorName" fullWidth label="Who is this invoice from?"
                                         {...register('vendorName', {
-                                            required: "**This Field is required**",
+                                            required: errorMsg,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -180,14 +166,14 @@ export default function NewCreateBill() {
                                         error={errors.vendorName}
                                         helperText={errors.vendorName?.message}
                                         onChange={data => setBillFrom({
-                                            userAddress: data.userAddress
+                                            vendorName: data.vendorName
                                         })}
-                                        value={billFrom.name}
+                                        value={billFrom.vendorName}
                                     />
 
                                     <TextField name="vendorEmail" fullWidth label="Email Address"
-                                        {...register('companyEvendorEmailmail', {
-                                            required: "**This Field is required**",
+                                        {...register('vendorEmail', {
+                                            required: errorMsg,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -195,14 +181,14 @@ export default function NewCreateBill() {
                                         error={errors.vendorEmail}
                                         helperText={errors.vendorEmail?.message}
                                         onChange={data => setBillFrom({
-                                            email: data.email
+                                            vendorEmail: data.vendorEmail
                                         })}
-                                        value={billFrom.email}
+                                        value={billFrom.vendorEmail}
                                     />
 
                                     <TextField name="vendorContact" fullWidth label="Contact"
-                                        {...register('CompavendorContactnyContact', {
-                                            required: "**This Field is required**",
+                                        {...register('vendorContact', {
+                                            required: errorMsg,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -210,14 +196,14 @@ export default function NewCreateBill() {
                                         error={errors.vendorContact}
                                         helperText={errors.vendorContact?.message}
                                         onChange={data => setBillFrom({
-                                            contact: data.contact
+                                            vendorContact: data.vendorContact
                                         })}
-                                        value={billFrom.contact}
+                                        value={billFrom.vendorContact}
                                     />
 
                                     <TextField name="vendorAddress" fullWidth label="Address"
                                         {...register('vendorAddress', {
-                                            required: "**This Field is required**",
+                                            required: errorMsg,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -225,14 +211,14 @@ export default function NewCreateBill() {
                                         error={errors.vendorAddress}
                                         helperText={errors.vendorAddress?.message}
                                         onChange={data => setBillFrom({
-                                            userAddress: data.userAddress
+                                            vendorAddress: data.vendorAddress
                                         })}
-                                        value={billFrom.userAddress}
+                                        value={billFrom.vendorAddress}
                                     />
 
                                     <TextField name="vendorCityPin" fullWidth label="City and Pin-code"
                                         {...register('vendorCityPin', {
-                                            required: "**This Field is required**",
+                                            required: errorMsg,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -240,24 +226,24 @@ export default function NewCreateBill() {
                                         error={errors.vendorCityPin}
                                         helperText={errors.vendorCityPin?.message}
                                         onChange={data => setBillFrom({
-                                            cityPincode: data.cityPincode
+                                            vendorCityPincode: data.vendorCityPincode
                                         })}
-                                        value={billFrom.cityPincode}
+                                        value={billFrom.vendorCityPincode}
                                     />
 
-                                    <TextField name="companyState" fullWidth label="State"
-                                        {...register('companyState', {
-                                            required: "**This Field is required**",
+                                    <TextField name="vendorState" fullWidth label="State"
+                                        {...register('vendorState', {
+                                            required: errorMsg,
                                         })}
                                         margin="dense"
                                         size="small"
                                         id="fullWidth"
-                                        error={errors.companyState}
-                                        helperText={errors.companyState?.message}
+                                        error={errors.vendorState}
+                                        helperText={errors.vendorState?.message}
                                         onChange={data => setBillFrom({
-                                            state: data.state
+                                            vendorState: data.vendorState
                                         })}
-                                        value={billFrom.state}
+                                        value={billFrom.vendorState}
                                     />
                                 </Grid>
                             </Grid>
@@ -329,12 +315,21 @@ export default function NewCreateBill() {
 
                             <Grid container spacing={2} mb={2} mt={5}>
                                 <Grid item xs={12} md={6}>
-                                    <Button variant="contained" type="submit"  >Preview</Button>
+                                    <Button variant="contained" type="submit" >Download</Button>
                                 </Grid>
+
                             </Grid>
                         </form >
                         :
-                        <BillPreview handleClick={cancelPreview} handlePrint={printHandlier} value={detail} />
+                        <BillPreview
+                            handleClick={cancelPreview}
+                            handlePrint={printHandlier}
+                            billTo={billTo}
+                            billFrom={billFrom}
+                            itemList={tableData}
+                            notes={notes}
+
+                        />
                     }
 
                 </CardContent>
