@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { useState } from 'react';
 import { FcAddDatabase } from "react-icons/fc";
 function CreateItem({ addItem }) {
+    console.log(addItem);
+
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [formObject, setFormObject] = useState({
@@ -38,10 +40,7 @@ function CreateItem({ addItem }) {
 
         const checkVal = !Object.values(formObject).every((res) => res === "");
         if (checkVal) {
-
-            // const dataObj = (data) => [...data, formObject];
             addItem(formObject);
-
             const isEmpty = {
                 itemName: "",
                 itemDescription: "",

@@ -13,19 +13,8 @@ import * as myConstClass from '../../Error';
 export default function NewCreateBill() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const errorMsg = myConstClass.requiredField;
-
-    const loggedUserAddress = useSelector((state) => state.loggedInReducer)
-    let userAddressDetail = loggedUserAddress.signIn.response;
-
     const [preview, setPreview] = useState(false);
-    const [billFrom, setBillFrom] = useState({
-        vendorAddress: userAddressDetail.address,
-        vendorCityPincode: userAddressDetail.cityPincode,
-        vendorContact: userAddressDetail.contact,
-        vendorState: userAddressDetail.state,
-        vendorName: userAddressDetail.name,
-        vendorEmail: userAddressDetail.email,
-    });
+    const [billFrom, setBillFrom] = useState({});
     const [billTo, setBillTo] = useState({});
     const [tableData, setTableData] = useState([]);
     const [notes, setNotes] = useState("");
@@ -40,16 +29,26 @@ export default function NewCreateBill() {
     console.log(billData);
 
     function onSubmit(data) {
-        let dataObject = {
+        let billToData = {
             clientAddress: data.clientAddress,
             clientCityPin: data.clientCityPin,
             clientContact: data.clientContact,
             clientName: data.clientName,
             clientState: data.clientState,
         }
+
+        let billFromData = {
+            vendorAddress: data.vendorAddress,
+            vendorCityPin: data.vendorCityPin,
+            vendorContact: data.vendorContact,
+            vendorState: data.vendorState,
+            vendorName: data.vendorName,
+            vendorEmail: data.vendorEmail,
+        }
         let notes = data.notes;
         setNotes(notes)
-        setBillTo(dataObject)
+        setBillTo(billToData)
+        setBillFrom(billFromData)
         setPreview("true")
 
     }
@@ -76,8 +75,8 @@ export default function NewCreateBill() {
 
     return (
 
-        <Container maxWidth="md" >
-            <Card sx={{ minWidth: 275 }} mt={3} mb={3}>
+        <Container maxWidth="md" style={styles.MainContainer} >
+            <Card sx={{ minWidth: 275 }} mb={3} style={styles.CardComponent} >
                 <CardContent>
                     {!preview ?
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -165,10 +164,10 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorName}
                                         helperText={errors.vendorName?.message}
-                                        onChange={data => setBillFrom({
-                                            vendorName: data.vendorName
-                                        })}
-                                        value={billFrom.vendorName}
+                                        // onChange={data => setBillFrom({
+                                        //     vendorName: data.vendorName
+                                        // })}
+                                        value={billFrom?.vendorName}
                                     />
 
                                     <TextField name="vendorEmail" fullWidth label="Email Address"
@@ -180,10 +179,10 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorEmail}
                                         helperText={errors.vendorEmail?.message}
-                                        onChange={data => setBillFrom({
-                                            vendorEmail: data.vendorEmail
-                                        })}
-                                        value={billFrom.vendorEmail}
+                                    // onChange={data => setBillFrom({
+                                    //     vendorEmail: data.vendorEmail
+                                    // })}
+                                    // value={billFrom.vendorEmail}
                                     />
 
                                     <TextField name="vendorContact" fullWidth label="Contact"
@@ -195,10 +194,10 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorContact}
                                         helperText={errors.vendorContact?.message}
-                                        onChange={data => setBillFrom({
-                                            vendorContact: data.vendorContact
-                                        })}
-                                        value={billFrom.vendorContact}
+                                    // onChange={data => setBillFrom({
+                                    //     vendorContact: data.vendorContact
+                                    // })}
+                                    // value={billFrom.vendorContact}
                                     />
 
                                     <TextField name="vendorAddress" fullWidth label="Address"
@@ -210,10 +209,10 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorAddress}
                                         helperText={errors.vendorAddress?.message}
-                                        onChange={data => setBillFrom({
-                                            vendorAddress: data.vendorAddress
-                                        })}
-                                        value={billFrom.vendorAddress}
+                                    // onChange={data => setBillFrom({
+                                    //     vendorAddress: data.vendorAddress
+                                    // })}
+                                    // value={billFrom.vendorAddress}
                                     />
 
                                     <TextField name="vendorCityPin" fullWidth label="City and Pin-code"
@@ -225,10 +224,10 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorCityPin}
                                         helperText={errors.vendorCityPin?.message}
-                                        onChange={data => setBillFrom({
-                                            vendorCityPincode: data.vendorCityPincode
-                                        })}
-                                        value={billFrom.vendorCityPincode}
+                                    // onChange={data => setBillFrom({
+                                    //     vendorCityPincode: data.vendorCityPincode
+                                    // })}
+                                    // value={billFrom.vendorCityPincode}
                                     />
 
                                     <TextField name="vendorState" fullWidth label="State"
@@ -240,10 +239,10 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorState}
                                         helperText={errors.vendorState?.message}
-                                        onChange={data => setBillFrom({
-                                            vendorState: data.vendorState
-                                        })}
-                                        value={billFrom.vendorState}
+                                    // onChange={data => setBillFrom({
+                                    //     vendorState: data.vendorState
+                                    // })}
+                                    // value={billFrom.vendorState}
                                     />
                                 </Grid>
                             </Grid>
@@ -263,7 +262,7 @@ export default function NewCreateBill() {
 
                             <Grid container spacing={2} mt={5}>
                                 <Grid item xs={12} md={6}>
-                                    <Card style={styles.CardComponent} >
+                                    <Card style={styles.NoteCardComponent} >
                                         <Typography mt={3} mb={1} variant="h5" component="h5" >Notes:-</Typography>
                                         < TextField name="notes" label=""
                                             {...register('notes', {
@@ -287,14 +286,14 @@ export default function NewCreateBill() {
 
                                     <Grid container spacing={2} mb={2}>
                                         <Grid item xs={6} md={7}>
-                                            <Typography mt={3} variant="h5" component="h5">Sub-Total:- </Typography>
-                                            <Typography variant="h5" component="h5">Discountl:-</Typography>
-                                            <Typography variant="h5" component="h5">Tax:-</Typography>
+                                            <Typography variant="h6" component="h5">Sub-Total- </Typography>
+                                            <Typography variant="h6" component="h5">Discount -</Typography>
+                                            <Typography variant="h6" component="h6">Tax -</Typography>
                                         </Grid>
                                         <Grid item xs={6} md={5} style={styles.Total}>
-                                            <Typography mt={3} variant="h5" component="h6">1</Typography>
-                                            <Typography variant="h5" component="h5">-</Typography>
-                                            <Typography variant="h5" component="h5">-</Typography>
+                                            <Typography variant="h6" component="h5">1</Typography>
+                                            <Typography variant="h6" component="h5">-</Typography>
+                                            <Typography variant="h6" component="h5">-</Typography>
                                         </Grid>
                                     </Grid>
 
@@ -302,7 +301,7 @@ export default function NewCreateBill() {
 
                                     <Grid container spacing={2} mb={2}>
                                         <Grid item xs={6} md={7}>
-                                            <Typography variant="h5" component="h5">Total:-</Typography>
+                                            <Typography variant="h5" component="h5">Total -</Typography>
                                         </Grid>
                                         <Grid item xs={6} md={5} style={styles.Total}>
                                             <Typography variant="h5" component="h5">1</Typography>

@@ -1,19 +1,31 @@
-const initialStateForSignIn = {
+const initialSignIn= {
     signIn: {
-        name: ""
+        address: "",
+        cityPincode: "",
+        contact: "",
+        state: "",
+        name: "",
+        email: ""
     },
 }
-
-export const loggedInReducer = (state = initialStateForSignIn, action) => {
+export const loggedInReducer = (state = initialSignIn, action) => {
     switch (action.type) {
         case "SIGN_IN":
             return {
                 ...state,
                 signIn: action.payload
             }
-        default: return state;
+        case "LOG_OUT":
+            return {
+                ...state,
+                signIn: action.payload
+            }
+
+        default: return state
     }
 }
+
+
 
 
 const initialBillDetails = {

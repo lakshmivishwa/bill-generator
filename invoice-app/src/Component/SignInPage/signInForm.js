@@ -38,16 +38,17 @@ export default function SignIn() {
             password: newData.get('password'),
         };
         console.log(loginData);
+
         await axios.post(`http://localhost:4000/login`,
             loginData)
             .then((response) => {
                 console.log(response.data);
                 let userData = response.data
-                console.log(userData);
-                dispatch(signIn(userData))
+                let data = userData.response
+                console.log(userData.response);
+                dispatch(signIn(data))
                 navigate("/bills/create")
             })
-
     };
 
     return (
