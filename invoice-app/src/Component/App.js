@@ -8,6 +8,7 @@ import SignIn from './SignInPage/signInForm';
 import NewCreateBill from '../Container/CreateBill';
 import ViewBill from '../Container/ViewBills/ViewBill';
 import EditBill from '../Container/EditBill/EditBill';
+import Homepage from './HomePage/HomePage';
 
 console.log(theme);
 
@@ -16,7 +17,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <Navbar />
       <Routes>
-        <Route path="/login" element={<SignIn />} />
+        <Route path="/" element={<Homepage />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/bills/create" element={<NewCreateBill />} />
         <Route path="/bills/1" element={<ViewBill />} />
         <Route path="/bills/1/edit" element={<EditBill />} />

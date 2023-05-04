@@ -8,11 +8,13 @@ import { useSelector } from 'react-redux'
 import BillPreview from '../BillPreview';
 import Table from '../../Component/BillComponents/LineItem';
 import CreateItem from '../../Component/BillComponents/CreateItem';
-import * as myConstClass from '../../Error';
-
+import { requiredField } from '../../Error';
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 export default function NewCreateBill() {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const errorMsg = myConstClass.requiredField;
+    const navigate = useNavigate()
+
     const [preview, setPreview] = useState(false);
     const [billFrom, setBillFrom] = useState({});
     const [billTo, setBillTo] = useState({});
@@ -57,8 +59,15 @@ export default function NewCreateBill() {
         setPreview(false)
     }
 
-    const printHandlier = () => {
-        window.print();
+
+    async function downloadHandlier() {
+        await axios.post(`http://localhost:4000/billDetails`,
+            billData)
+            .then((response) => {
+                console.log("response", response);
+                navigate("/login")
+            })
+
     }
 
     const removeItem = (index) => {
@@ -87,7 +96,7 @@ export default function NewCreateBill() {
 
                                     <TextField fullWidth label="Who is this invoice to?"
                                         {...register('clientName', {
-                                            required: errorMsg,
+                                            required: requiredField,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -98,7 +107,7 @@ export default function NewCreateBill() {
 
                                     <TextField name="clientEmail" fullWidth label="Email Address"
                                         {...register('clientEmail', {
-                                            required: errorMsg,
+                                            required: requiredField,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -109,7 +118,7 @@ export default function NewCreateBill() {
 
                                     <TextField name="clientContact" fullWidth label="Contact no"
                                         {...register('clientContact', {
-                                            required: errorMsg,
+                                            required: requiredField,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -120,7 +129,7 @@ export default function NewCreateBill() {
 
                                     <TextField fullWidth label="Address"
                                         {...register('clientAddress', {
-                                            required: errorMsg,
+                                            required: requiredField,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -129,20 +138,32 @@ export default function NewCreateBill() {
                                         helperText={errors.clientAddress?.message}
                                     />
 
-                                    <TextField name="clientCityPin" fullWidth label="City and Pin-code"
-                                        {...register('clientCityPin', {
-                                            required: errorMsg,
+                                    <TextField name="clientCity" fullWidth label="City"
+                                        {...register('clientCity', {
+                                            required: requiredField,
                                         })}
                                         margin="dense"
                                         size="small"
                                         id="fullWidth"
-                                        error={errors.clientCityPin}
-                                        helperText={errors.clientCityPin?.message}
+                                        error={errors.clientCity}
+                                        helperText={errors.clientCity?.message}
                                     />
+
+                                    <TextField name="clientPin" fullWidth label=" Pin-code"
+                                        {...register('clientPin', {
+                                            required: requiredField,
+                                        })}
+                                        margin="dense"
+                                        size="small"
+                                        id="fullWidth"
+                                        error={errors.clientPin}
+                                        helperText={errors.clientPin?.message}
+                                    />
+
 
                                     <TextField name="clientState" fullWidth label="State"
                                         {...register('clientState', {
-                                            required: errorMsg,
+                                            required: requiredField,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -157,7 +178,7 @@ export default function NewCreateBill() {
 
                                     <TextField name="vendorName" fullWidth label="Who is this invoice from?"
                                         {...register('vendorName', {
-                                            required: errorMsg,
+                                            required: requiredField,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -172,7 +193,7 @@ export default function NewCreateBill() {
 
                                     <TextField name="vendorEmail" fullWidth label="Email Address"
                                         {...register('vendorEmail', {
-                                            required: errorMsg,
+                                            required: requiredField,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -187,7 +208,7 @@ export default function NewCreateBill() {
 
                                     <TextField name="vendorContact" fullWidth label="Contact"
                                         {...register('vendorContact', {
-                                            required: errorMsg,
+                                            required: requiredField,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -202,7 +223,7 @@ export default function NewCreateBill() {
 
                                     <TextField name="vendorAddress" fullWidth label="Address"
                                         {...register('vendorAddress', {
-                                            required: errorMsg,
+                                            required: requiredField,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -215,15 +236,30 @@ export default function NewCreateBill() {
                                     // value={billFrom.vendorAddress}
                                     />
 
-                                    <TextField name="vendorCityPin" fullWidth label="City and Pin-code"
-                                        {...register('vendorCityPin', {
-                                            required: errorMsg,
+                                    <TextField name="vendorCity" fullWidth label="City"
+                                        {...register('vendorCity', {
+                                            required: requiredField,
                                         })}
                                         margin="dense"
                                         size="small"
                                         id="fullWidth"
-                                        error={errors.vendorCityPin}
-                                        helperText={errors.vendorCityPin?.message}
+                                        error={errors.vendorCity}
+                                        helperText={errors.vendorCity?.message}
+                                    // onChange={data => setBillFrom({
+                                    //     vendorCityPincode: data.vendorCityPincode
+                                    // })}
+                                    // value={billFrom.vendorCityPincode}
+                                    />
+
+                                    <TextField name="vendorPincode" fullWidth label="Pin-code"
+                                        {...register('vendorPincode', {
+                                            required: requiredField,
+                                        })}
+                                        margin="dense"
+                                        size="small"
+                                        id="fullWidth"
+                                        error={errors.vendorPincode}
+                                        helperText={errors.vendorPincode?.message}
                                     // onChange={data => setBillFrom({
                                     //     vendorCityPincode: data.vendorCityPincode
                                     // })}
@@ -232,7 +268,7 @@ export default function NewCreateBill() {
 
                                     <TextField name="vendorState" fullWidth label="State"
                                         {...register('vendorState', {
-                                            required: errorMsg,
+                                            required: requiredField,
                                         })}
                                         margin="dense"
                                         size="small"
@@ -244,6 +280,7 @@ export default function NewCreateBill() {
                                     // })}
                                     // value={billFrom.vendorState}
                                     />
+
                                 </Grid>
                             </Grid>
 
@@ -266,7 +303,7 @@ export default function NewCreateBill() {
                                         <Typography mt={3} mb={1} variant="h5" component="h5" >Notes:-</Typography>
                                         < TextField name="notes" label=""
                                             {...register('notes', {
-                                                required: "**Please write some notes**",
+                                                required: requiredField,
                                             })}
                                             multiline
                                             rows={4}
@@ -314,7 +351,7 @@ export default function NewCreateBill() {
 
                             <Grid container spacing={2} mb={2} mt={5}>
                                 <Grid item xs={12} md={6}>
-                                    <Button variant="contained" type="submit" >Download</Button>
+                                    <Button variant="contained" type="submit" >Preview</Button>
                                 </Grid>
 
                             </Grid>
@@ -322,7 +359,7 @@ export default function NewCreateBill() {
                         :
                         <BillPreview
                             handleClick={cancelPreview}
-                            handlePrint={printHandlier}
+                            handlePrint={downloadHandlier}
                             billTo={billTo}
                             billFrom={billFrom}
                             itemList={tableData}

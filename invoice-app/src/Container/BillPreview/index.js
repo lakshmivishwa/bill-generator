@@ -7,14 +7,15 @@ import CardContent from '@mui/material/CardContent';
 import { Container } from '@mui/material';
 import { Button } from '@mui/material';
 
-function BillPreview({ handleClick, handlePrint, billFrom, billTo, notes, itemList }) {
+function BillPreview({ handleClick, downloadHandlier, billFrom, billTo, notes, itemList }) {
+    
     console.log(itemList);
-
-
     let totalPrice = 0;
     for (let i = 0; i < itemList.length; i++) {
         totalPrice += itemList[i].price;
     }
+    let currentDate = new Date().toJSON().slice(0, 10);
+
     return (
 
         <Container maxWidth="md" >
@@ -26,8 +27,8 @@ function BillPreview({ handleClick, handlePrint, billFrom, billTo, notes, itemLi
                         <Typography component="p" variant='p'>{billTo.clientContact}</Typography>
                     </Grid>
                     <Grid item sm={4} xs={12}>
-                        <Typography component="h6" variant='h6'> Invoice</Typography>
-                        <Typography component="p" variant='p'> Date:-</Typography>
+                        <Typography component="h6" variant='h6'> Invoice- xxxxx</Typography>
+                        <Typography component="p" variant='p'> Date:- {currentDate}</Typography>
                         <Typography component="p" variant='p'></Typography>
                     </Grid>
                 </Grid>
@@ -111,7 +112,7 @@ function BillPreview({ handleClick, handlePrint, billFrom, billTo, notes, itemLi
                 </CardContent>
 
             </Card>
-            <Button variant="contained" onClick={handlePrint}>Download Bill</Button>
+            <Button variant="contained" onClick={downloadHandlier}>Download Bill</Button>
             <Button variant="contained" style={styles.Button} onClick={handleClick}>Cancel</Button>
         </Container>
 

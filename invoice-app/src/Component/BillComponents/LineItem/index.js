@@ -3,16 +3,16 @@ import { Grid, Container } from '@mui/material';
 import styles from "./style";
 
 
-function Table({ tableData, deleteTableData }) {
-    console.log(tableData);
-    let totalQty = 0;
-    let totalRate = 0;
-    let totalPrice = 0;
-    for (let i = 0; i < tableData.length; i++) {
-        totalQty += parseInt(tableData[i].qty);
-        totalRate += parseInt(tableData[i].rate);
-        totalPrice += tableData[i].price;
+function Table({ tableData, deleteItem }) {
+    //function for getting sum of rate, price, qty
+    function getTotal(tableData, sumFor) {
+        let total = 0;
+        for (let i = 0; i < tableData.length; i++) {
+            total += parseInt(tableData[i][sumFor]);
+        }
+        return total;
     }
+
 
     return (
         <Container maxWidth="md">
@@ -44,7 +44,7 @@ function Table({ tableData, deleteTableData }) {
                                         <td>{data.qty}</td>
                                         <td >{data.rate}</td>
                                         <td>{data.price}</td>
-                                        <td>< MdDeleteForever size={30} color="red" onClick={deleteTableData} /></td>
+                                        <td>< MdDeleteForever size={30} color="#65A765" onClick={deleteItem} /></td>
                                     </tr>
                                 );
                             })}
@@ -56,9 +56,9 @@ function Table({ tableData, deleteTableData }) {
                                     <td>Total</td>
                                     <td></td>
                                     <td></td>
-                                    <td>{totalQty}</td>
-                                    <td >{totalRate}</td>
-                                    <td>{totalPrice}</td>
+                                    <td>{getTotal(tableData, 'qty')}</td>
+                                    <td >{getTotal(tableData, 'rate')}</td>
+                                    <td>{getTotal(tableData, 'price')}</td>
                                     <td></td>
                                 </tr>
                             </tbody> : ""

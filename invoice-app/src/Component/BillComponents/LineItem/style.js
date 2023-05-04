@@ -1,6 +1,6 @@
 const styles = {
     TableHead: {
-        backgroundColor: "#f96b24"
+        backgroundColor: "#CBC3E3"
     },
 
 };

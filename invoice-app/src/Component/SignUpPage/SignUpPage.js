@@ -1,16 +1,15 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { RadioGroup, FormLabel, FormControlLabel, Radio, FormControl } from '@mui/material';
-import Link from '@mui/material/Link';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import { RadioGroup, FormLabel, FormControlLabel, Radio, FormControl, Link, Box, Typography, Container, MenuItem, InputLabel } from '@mui/material';
 import styles from './style';
 import { useForm } from "react-hook-form"
-import { useRef } from "react";
 import { useNavigate } from 'react-router-dom';
+import { requiredField, namePattern, emailPattern } from '../../Error';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from "axios";
+import { useState, useRef } from 'react';
+// import Dropdown from '../../Container/State/State';
 
 function SignUp() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -19,16 +18,52 @@ function SignUp() {
     const password = useRef({});
     password.current = watch("password", "");
 
+
     async function onSubmit(data) {
         console.log(data);
-
         await axios.post(`http://localhost:4000/register`,
             data)
             .then((response) => {
                 console.log(response.data);
-                // navigate("/login")
+                navigate("/login")
             })
     }
+
+    const stateNames = [
+        'Andhra Pradesh',
+        'Arunachal Pradesh',
+        'Assam',
+        'Bihar',
+        'Chhattisgarh',
+        'Goa',
+        'Gujarat',
+        'Haryana',
+        'Himachal Pradesh',
+        'Jharkhand',
+        'Karnataka',
+        'Kerala',
+        'Madhya Pradesh',
+        'Maharashtra',
+        'Manipur',
+        'Meghalaya',
+        'Mizoram',
+        'Nagaland',
+        'Odisha',
+        'Punjab',
+        'Rajasthan',
+        'Sikkim',
+        'Tamil Nadu',
+        'Telangana',
+        'Tripura',
+        'Uttar Pradesh',
+        'Uttarakhand',
+        'West Bengal'
+    ];
+
+    const [state, setState] = useState("");
+    const handleChange = (event) => {
+        setState(event.target.value);
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -46,13 +81,14 @@ function SignUp() {
                             </Typography>
 
                             <Box component="form" noValidate sx={{ mt: 1 }}>
+
                                 <TextField
                                     // name validation
                                     {...register('name', {
-                                        required: "**Name is required**",
+                                        required: requiredField,
                                         pattern: {
                                             //used reg exp. for email pattern
-                                            value: /([A-Za-z]){4,}([\s]){1}([A-Za-z]){4,}/, message: "**Please enter full name **"
+                                            value: namePattern, message: "**Please enter full name **"
                                         }
                                     })}
                                     error={errors.name}
@@ -84,7 +120,7 @@ function SignUp() {
                                 <TextField name="contact"
                                     //contact detail validation
                                     {...register('contact', {
-                                        required: "**Mobile number is required**",
+                                        required: requiredField,
                                         minLength:
                                             { value: 10, message: "**Contact number should be 10 digit**" },
                                         maxLength: {
@@ -105,12 +141,12 @@ function SignUp() {
                                 />
 
                                 <TextField
-                                    //Email validation
+
                                     {...register('email', {
-                                        required: "**Email is required**",
+                                        required: requiredField,
                                         pattern: {
                                             //used reg exp. for email pattern
-                                            value: /^(?!.*?\.\.)[a-z]+[a-z0-9._]+[@]{1}[a-z]+[\d]*[a-z.]+$/g, message: "**This is not a valid email**"
+                                            value: emailPattern, message: "**This is not a valid email**"
                                         }
                                     })}
 
@@ -126,9 +162,9 @@ function SignUp() {
                                 />
 
                                 <TextField
-                                    //Email validation
+
                                     {...register('address', {
-                                        required: "**Address is required**",
+                                        required: requiredField,
 
                                     })}
 
@@ -144,44 +180,80 @@ function SignUp() {
                                 />
 
                                 <TextField
-                                    //Email validation
-                                    {...register('cityPincode', {
-                                        required: "**City and Pincode is required**",
+
+                                    {...register('city', {
+                                        required: requiredField,
 
                                     })}
-
-                                    error={errors.cityPincode}
-                                    helperText={errors.cityPincode?.message}
+                                    error={errors.city}
+                                    helperText={errors.city?.message}
                                     margin="normal"
                                     required
                                     fullWidth
-                                    id="cityPincode"
-                                    label="City and Pincode"
-                                    autoComplete="cityPincode"
+                                    id="city"
+                                    label="City"
+                                    autoComplete="City"
                                     autoFocus
                                 />
 
                                 <TextField
-                                    //Email validation
-                                    {...register('state', {
-                                        required: "**State is required**",
+
+                                    {...register('pincode', {
+                                        required: requiredField,
+                                        minLength:
+                                            { value: 5, message: "**minimum value should be 5 digit**" },
+                                        maxLength: {
+                                            value: 7,
+                                            message: "**Maximum value should be 7 digit**"
+                                        }
 
                                     })}
 
-                                    error={errors.state}
-                                    helperText={errors.state?.message}
+                                    error={errors.pincode}
+                                    helperText={errors.pincode?.message}
                                     margin="normal"
                                     required
                                     fullWidth
-                                    id="state"
-                                    label="State"
-                                    autoComplete="state"
+                                    id="pincode"
+                                    label="Pincode"
+                                    autoComplete="pincode"
                                     autoFocus
                                 />
+
+                                <FormControl fullWidth >
+                                    <InputLabel id="demo-simple-select-label">State*</InputLabel>
+                                    <Select name="state"
+                                        {...register('state', {
+                                            required: "**Please Select State**",
+
+                                        })}
+
+                                        required
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select-label"
+                                        value={state}
+                                        label="State"
+                                        autoComplete="State"
+                                        onChange={handleChange}
+
+
+                                    >
+                                        {stateNames.map((stateName) => (
+                                            <MenuItem
+                                                key={stateName}
+                                                value={stateName}
+                                            // style={getStyles(states, personName, theme)}
+                                            >
+                                                {stateName}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                {errors.state && <span style={styles.stateError}> {errors.state?.message}</span>}
 
                                 <TextField
                                     {...register('password', {
-                                        required: "**Password is required**",
+                                        required: requiredField,
                                         minLength:
                                             { value: 4, message: "**Password must be more then 4 characters**" },
                                         maxLength: {
@@ -202,7 +274,7 @@ function SignUp() {
 
                                 <TextField
                                     {...register('confirmPassword', {
-                                        required: "**confirm Password is required**",
+                                        required: requiredField,
                                         validate: value =>
                                             value === password.current || "Please enter same as password"
                                     }

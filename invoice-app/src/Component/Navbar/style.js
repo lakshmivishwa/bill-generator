@@ -1,19 +1,10 @@
 
 const styles = {
 
-    UserFont: {
-        paddingTop: "20px",
-        color: "black",
-        textDecoration: "none",
-        fontWeight: "bold",
-        content: "none",
-        border: "0"
+    MainContainer: {
+        marginBottom: "100px"
     },
-    DropdownMenu: {
-        height: "100px",
-        width: "100px",
-        textAlign: "center",
-    },
+
 
 }
 
