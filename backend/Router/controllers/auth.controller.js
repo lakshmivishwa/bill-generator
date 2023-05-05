@@ -4,6 +4,7 @@ const signIn = async (req, res) => {
 
     try {
         const { email, password } = req.body;
+        console.log(req.body)
         if (!email || !password) {
             return res.status(400).json({ error: "Username/ Password is required" })
         }
@@ -14,37 +15,41 @@ const signIn = async (req, res) => {
             res.status(400).json({ error: "Something went wrong, Please try again" })
         } else {
             res.json({ response })
-            res.end('Hello, World!');
         }
     } catch (err) {
         console.log(err);
     }
 
 }
-
 const register = async (req, res) => {
     const data = req.body;
+    console.log(data);
     let db = await dbConnect();
-    let dbResponse = db.collection("users").insertOne(data, (err) => {
-        if (err) throw err;
+
+    try {
+        let dbResponse = db.collection("users").insertOne(data);
+        res.json({ message: 'User Sign up succesfull' });
+    } catch (err) {
         db.close();
-        res.json({ dbResponse })
-    })
+        throw err;
+    }
 
 };
 
-const billDetails = async (req, res) => {
-    res.end('Hello, World!');
+const billdetails = async (req, res) => {
     const data = req.body;
     let db = await dbConnect();
     console.log(data);
-    let dbResponse = db.collection("bill_details").insertOne(data, (err) => {
-        if (err) throw err;
-        db.close();
-        res.json({ dbResponse })
 
-    })
+
+    try {
+        let dbResponse = db.collection("bill_details").insertOne(data);
+        res.json({ message: 'bill data stored' });
+    } catch (err) {
+        db.close();
+        throw err;
+    }
 
 };
 
-export { register, signIn, billDetails };
+export { register, signIn, billdetails };

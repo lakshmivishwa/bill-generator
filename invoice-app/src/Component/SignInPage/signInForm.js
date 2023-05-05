@@ -11,9 +11,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
 import { signIn } from '../../Redux/Actions/Action';
-
+import { useDispatch } from 'react-redux';
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -28,9 +27,10 @@ function Copyright(props) {
 }
 export default function SignIn() {
     const dispatch = useDispatch();
-    const navigate = useNavigate()
-    const handleSubmit = async (event) => {
 
+    const navigate = useNavigate()
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const newData = new FormData(event.currentTarget);
         const loginData = {
@@ -39,16 +39,16 @@ export default function SignIn() {
         };
         console.log(loginData);
 
-        await axios.post(`http://localhost:4000/login`,
+        await axios.post(`http://localhost:4000/signin`,
             loginData)
             .then((response) => {
-                console.log(response.data);
-                let userData = response.data
-                let data = userData.response
-                console.log(userData.response);
-                dispatch(signIn(data))
+                let user = response.data.response
+                console.log(user);
+                dispatch(signIn(user))
                 navigate("/bills/create")
             })
+
+
     };
 
     return (
@@ -61,7 +61,7 @@ export default function SignIn() {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'primary' }}>
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     {/* <LockOutlinedIcon /> */}
                 </Avatar>
                 <Typography component="h1" variant="h5">

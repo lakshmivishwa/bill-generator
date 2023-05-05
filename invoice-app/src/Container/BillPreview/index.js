@@ -7,8 +7,8 @@ import CardContent from '@mui/material/CardContent';
 import { Container } from '@mui/material';
 import { Button } from '@mui/material';
 
-function BillPreview({ handleClick, downloadHandlier, billFrom, billTo, notes, itemList }) {
-    
+function BillPreview({ handleClick, handlePrint, billFrom, billTo, notes, itemList }) {
+
     console.log(itemList);
     let totalPrice = 0;
     for (let i = 0; i < itemList.length; i++) {
@@ -112,7 +112,7 @@ function BillPreview({ handleClick, downloadHandlier, billFrom, billTo, notes, i
                 </CardContent>
 
             </Card>
-            <Button variant="contained" onClick={downloadHandlier}>Download Bill</Button>
+            <Button variant="contained" onClick={handlePrint}>Download Bill</Button>
             <Button variant="contained" style={styles.Button} onClick={handleClick}>Cancel</Button>
         </Container>
 

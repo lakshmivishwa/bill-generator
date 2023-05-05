@@ -24,8 +24,8 @@ function SignUp() {
         await axios.post(`http://localhost:4000/register`,
             data)
             .then((response) => {
-                console.log(response.data);
-                navigate("/login")
+                console.log(response.message);
+                navigate("/signin")
             })
     }
 

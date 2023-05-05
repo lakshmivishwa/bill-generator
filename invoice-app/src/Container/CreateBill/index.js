@@ -58,16 +58,14 @@ export default function NewCreateBill() {
     const cancelPreview = () => {
         setPreview(false)
     }
-
-
     async function downloadHandlier() {
-        await axios.post(`http://localhost:4000/billDetails`,
+        console.log(billData);
+        await axios.post(`http://localhost:4000/billdetails`,
             billData)
             .then((response) => {
-                console.log("response", response);
-                navigate("/login")
+                console.log(response.message);
+                navigate("/signin")
             })
-
     }
 
     const removeItem = (index) => {
