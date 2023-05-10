@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { signIn } from '../../Redux/Actions/Action';
 import { AiOutlineHome } from "react-icons/ai";
-import styles from './style';
+
 export default function Navbar() {
   const dispatch = useDispatch();
 
@@ -13,6 +13,16 @@ export default function Navbar() {
   console.log(loggedInUser);
   let userName = loggedInUser.signIn.name;
   console.log(userName);
+
+  //function for getting first letter of user name
+  function getFirstLetters(str) {
+    const firstLetters = str
+      .split(' ')
+      .map(word => word.charAt(0))
+      .join('');
+    return firstLetters;
+  }
+
 
   const navigate = useNavigate();
   const navigateToLogin = () => {
@@ -44,7 +54,7 @@ export default function Navbar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <AiOutlineHome size={30} />
           </Typography>
-          <Button color="inherit" onClick={navigateToLogin}> Login</Button>
+
           <Button
             color="inherit"
             id="basic-button"
@@ -68,14 +78,17 @@ export default function Navbar() {
             <MenuItem onClick={handleClose}><Link href="/bills/create" underline="none">Create Bill</Link></MenuItem>
             <MenuItem onClick={handleClose}><Link href="/bills/1" underline="none"> View Bills</Link></MenuItem>
           </Menu>
-
-          <Button
+          {userName ? <Button color="inherit" onClick={logout}> Logout</Button> :
+            <Button color="inherit" onClick={navigateToLogin}> Login</Button>}
+          {userName ? <Button
             color="inherit"
             id="basic-button"
-            onClick={logout}
+          // onClick={logout}
           >
-            {userName}
-          </Button>
+            {getFirstLetters(userName)}
+          </Button> : ""}
+
+
         </Toolbar>
       </AppBar>
     </Box>

@@ -219,7 +219,6 @@ function SignUp() {
                                     autoComplete="pincode"
                                     autoFocus
                                 />
-
                                 <FormControl fullWidth >
                                     <InputLabel id="demo-simple-select-label">State*</InputLabel>
                                     <Select name="state"

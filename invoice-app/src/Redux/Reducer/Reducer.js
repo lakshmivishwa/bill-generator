@@ -1,7 +1,8 @@
-const initialSignIn= {
+const initialSignIn = {
     signIn: {
         address: "",
-        cityPincode: "",
+        city: "",
+        pincode: "",
         contact: "",
         state: "",
         name: "",

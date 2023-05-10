@@ -7,7 +7,8 @@ export const signIn = (value) => {
         type: SIGN_IN,
         payload: {
             address: value.address,
-            cityPincode: value.cityPincode,
+            city: value.city,
+            pincode: value.pincode,
             contact: value.contact,
             state: value.state,
             name: value.name,
@@ -22,7 +23,8 @@ export const logout = () => {
         type: LOG_OUT,
         payload: {
             address: "",
-            cityPincode: "",
+            pincode: "",
+            city: "",
             contact: "",
             state: "",
             name: "",

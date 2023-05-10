@@ -5,6 +5,8 @@ const port = 4000;
 import cors from "cors"
 import dbConnect from './database/db_service.js';
 import router from './Router/auth.router.js';
+import createInvoice from "./createInvoice.js"
+
 // const dbConnect = require('./database/db_service')
 
 app.use(cors({
@@ -23,6 +25,6 @@ app.listen(port, () => {
 });
 
 // dbConnect();
-
-
 app.use(router);
+
+createInvoice();

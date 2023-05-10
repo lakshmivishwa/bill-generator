@@ -11,15 +11,65 @@ import CreateItem from '../../Component/BillComponents/CreateItem';
 import { requiredField } from '../../Error';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+
 export default function NewCreateBill() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate()
 
+    const loggedInUser = useSelector((state) => state.loggedInReducer);
+    console.log(loggedInUser);
+    let userDetail = loggedInUser.signIn;
+    console.log(userDetail);
+
     const [preview, setPreview] = useState(false);
-    const [billFrom, setBillFrom] = useState({});
+    const [billFrom, setBillFrom] = useState({
+        vendorAddress: userDetail.address,
+        vendorCity: userDetail.city,
+        vendorPin: userDetail.pincode,
+        vendorContact: userDetail.contact,
+        vendorState: userDetail.state,
+        vendorName: userDetail.name,
+        vendorEmail: userDetail.email,
+
+    });
     const [billTo, setBillTo] = useState({});
     const [tableData, setTableData] = useState([]);
     const [notes, setNotes] = useState("");
+
+    console.log(billFrom);
+
+    function onSubmit(data) {
+        console.log(data);
+        let billToData = {
+            clientAddress: data.clientAddress,
+            clientCity: data.clientCity,
+            clientPin: data.clientPin,
+            clientContact: data.clientContact,
+            clientName: data.clientName,
+            clientState: data.clientState,
+        }
+
+        // let billFromData = {
+        //     vendorAddress: data.vendorAddress,
+        //     vendorCity: data.vendorCity,
+        //     vendorPin: data.vendorPin,
+        //     vendorContact: data.vendorContact,
+        //     vendorState: data.vendorState,
+        //     vendorName: data.vendorName,
+        //     vendorEmail: data.vendorEmail,
+        // }
+        let notes = data.notes;
+        setNotes(notes)
+        setBillTo(billToData)
+        setBillFrom(billFrom)
+        setPreview("true")
+
+    }
+
+    const cancelPreview = () => {
+        setPreview(false)
+    }
+
 
     const billData = {
         billTo: billTo,
@@ -29,35 +79,6 @@ export default function NewCreateBill() {
         notes: notes
     };
     console.log(billData);
-
-    function onSubmit(data) {
-        let billToData = {
-            clientAddress: data.clientAddress,
-            clientCityPin: data.clientCityPin,
-            clientContact: data.clientContact,
-            clientName: data.clientName,
-            clientState: data.clientState,
-        }
-
-        let billFromData = {
-            vendorAddress: data.vendorAddress,
-            vendorCityPin: data.vendorCityPin,
-            vendorContact: data.vendorContact,
-            vendorState: data.vendorState,
-            vendorName: data.vendorName,
-            vendorEmail: data.vendorEmail,
-        }
-        let notes = data.notes;
-        setNotes(notes)
-        setBillTo(billToData)
-        setBillFrom(billFromData)
-        setPreview("true")
-
-    }
-
-    const cancelPreview = () => {
-        setPreview(false)
-    }
     async function downloadHandlier() {
         console.log(billData);
         await axios.post(`http://localhost:4000/billdetails`,
@@ -183,10 +204,12 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorName}
                                         helperText={errors.vendorName?.message}
-                                        // onChange={data => setBillFrom({
-                                        //     vendorName: data.vendorName
-                                        // })}
-                                        value={billFrom?.vendorName}
+
+                                        onChange={data => setBillFrom({
+                                            vendorName: data.vendorName
+                                        })}
+                                        value={billFrom.vendorName}
+
                                     />
 
                                     <TextField name="vendorEmail" fullWidth label="Email Address"
@@ -198,10 +221,11 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorEmail}
                                         helperText={errors.vendorEmail?.message}
-                                    // onChange={data => setBillFrom({
-                                    //     vendorEmail: data.vendorEmail
-                                    // })}
-                                    // value={billFrom.vendorEmail}
+                                        value={billFrom?.vendorEmail}
+                                        onChange={data => setBillFrom({
+                                            vendorEmail: data.vendorEmail
+                                        })}
+
                                     />
 
                                     <TextField name="vendorContact" fullWidth label="Contact"
@@ -213,10 +237,11 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorContact}
                                         helperText={errors.vendorContact?.message}
-                                    // onChange={data => setBillFrom({
-                                    //     vendorContact: data.vendorContact
-                                    // })}
-                                    // value={billFrom.vendorContact}
+                                        value={billFrom?.vendorContact}
+                                        onChange={data => setBillFrom({
+                                            vendorContact: data.vendorContact
+                                        })}
+
                                     />
 
                                     <TextField name="vendorAddress" fullWidth label="Address"
@@ -228,10 +253,11 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorAddress}
                                         helperText={errors.vendorAddress?.message}
-                                    // onChange={data => setBillFrom({
-                                    //     vendorAddress: data.vendorAddress
-                                    // })}
-                                    // value={billFrom.vendorAddress}
+                                        value={billFrom?.vendorAddress}
+                                        onChange={data => setBillFrom({
+                                            vendorAddress: data.vendorAddress
+                                        })}
+
                                     />
 
                                     <TextField name="vendorCity" fullWidth label="City"
@@ -243,10 +269,11 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorCity}
                                         helperText={errors.vendorCity?.message}
-                                    // onChange={data => setBillFrom({
-                                    //     vendorCityPincode: data.vendorCityPincode
-                                    // })}
-                                    // value={billFrom.vendorCityPincode}
+                                        value={billFrom?.vendorCity}
+                                        onChange={data => setBillFrom({
+                                            vendorCity: data.vendorCity
+                                        })}
+
                                     />
 
                                     <TextField name="vendorPincode" fullWidth label="Pin-code"
@@ -258,10 +285,11 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorPincode}
                                         helperText={errors.vendorPincode?.message}
-                                    // onChange={data => setBillFrom({
-                                    //     vendorCityPincode: data.vendorCityPincode
-                                    // })}
-                                    // value={billFrom.vendorCityPincode}
+                                        value={billFrom?.vendorPin}
+                                        onChange={data => setBillFrom({
+                                            vendorPin: data.vendorPin
+                                        })}
+
                                     />
 
                                     <TextField name="vendorState" fullWidth label="State"
@@ -273,10 +301,11 @@ export default function NewCreateBill() {
                                         id="fullWidth"
                                         error={errors.vendorState}
                                         helperText={errors.vendorState?.message}
-                                    // onChange={data => setBillFrom({
-                                    //     vendorState: data.vendorState
-                                    // })}
-                                    // value={billFrom.vendorState}
+                                        value={billFrom?.vendorState}
+                                        onChange={data => setBillFrom({
+                                            vendorState: data.vendorState
+                                        })}
+
                                     />
 
                                 </Grid>
