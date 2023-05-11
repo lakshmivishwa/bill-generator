@@ -23,6 +23,7 @@ function App() {
         <Route path="/bills/1" element={<ViewBill />} />
         <Route path="/bills/1/edit" element={<EditBill />} />
         <Route path="/signup" element={<SignUp />} />
+      
       </Routes>
     </ThemeProvider>
   );

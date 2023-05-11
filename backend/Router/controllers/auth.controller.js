@@ -33,23 +33,24 @@ const register = async (req, res) => {
         db.close();
         throw err;
     }
-
 };
 
 const billdetails = async (req, res) => {
     const data = req.body;
-    let db = await dbConnect();
-    console.log(data);
 
+    //Store the data in MongoDB
+    let db = await dbConnect();
 
     try {
-        let dbResponse = db.collection("bill_details").insertOne(data);
+        let dbResponse = await db.collection("bill_details").insertOne(data);
         res.json({ message: 'bill data stored' });
     } catch (err) {
         db.close();
         throw err;
     }
+    console.log(data);
 
-};
+}
+
 
 export { register, signIn, billdetails };

@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 const url = 'mongodb://127.0.0.1:27017';
 const client = new MongoClient(url);
 
@@ -8,6 +8,8 @@ const dbConnect = async () => {
     console.log("connection successful");
     return db;
 }
+
+const getObjectId = (id) => ObjectId(id)
 
 export default dbConnect;
 

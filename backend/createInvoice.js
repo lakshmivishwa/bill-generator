@@ -4,7 +4,6 @@ import fs from 'fs';
 
 function createInvoice() {
 
-
     // Create a document
     const doc = new PDFDocument();
 
@@ -14,16 +13,16 @@ function createInvoice() {
 
     // Embed a font, set the font size, and render some text
     doc
-        .font('fonts/PalatinoBold.ttf')
+        // .font('fonts/PalatinoBold.ttf')
         .fontSize(25)
         .text('Some text with an embedded font!', 100, 100);
 
     // Add an image, constrain it to a given size, and center it vertically and horizontally
-    doc.image('path/to/image.png', {
-        fit: [250, 300],
-        align: 'center',
-        valign: 'center'
-    });
+    // doc.image('path/to/image.png', {
+    //     fit: [250, 300],
+    //     align: 'center',
+    //     valign: 'center'
+    // });
 
     // Add another page
     doc
@@ -60,4 +59,4 @@ function createInvoice() {
 
 }
 
-module.exports = createInvoice;
+export default createInvoice;
