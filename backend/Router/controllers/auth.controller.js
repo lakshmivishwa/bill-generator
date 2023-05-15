@@ -44,7 +44,7 @@ const billdetails = async (req, res) => {
     try {
         let dbResponse = await db.collection("bill_details").insertOne(data);
         console.log(dbResponse);
-        res.json({ message: 'bill data stored' });
+        res.json({ dbResponse });
     } catch (err) {
         db.close();
         throw err;

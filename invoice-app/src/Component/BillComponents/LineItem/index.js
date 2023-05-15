@@ -4,6 +4,7 @@ import styles from "./style";
 
 
 function Table({ tableData, deleteItem }) {
+    console.log(tableData);
     //function for getting sum of rate, price, qty
     function getTotal(tableData, sumFor) {
         let total = 0;

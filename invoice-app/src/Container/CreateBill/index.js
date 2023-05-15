@@ -13,6 +13,9 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 export default function NewCreateBill() {
+    const today = new Date();
+    const formattedDate = today.toDateString();
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate()
 
@@ -31,7 +34,7 @@ export default function NewCreateBill() {
         vendorName: userDetail.name,
         vendorEmail: userDetail.email,
     });
-    
+
     const [billTo, setBillTo] = useState({});
     const [tableData, setTableData] = useState([]);
     const [notes, setNotes] = useState("");
@@ -40,6 +43,8 @@ export default function NewCreateBill() {
 
     function onSubmit(data) {
         console.log(data);
+
+
         let billToData = {
             clientAddress: data.clientAddress,
             clientCity: data.clientCity,
@@ -47,6 +52,7 @@ export default function NewCreateBill() {
             clientContact: data.clientContact,
             clientName: data.clientName,
             clientState: data.clientState,
+            clientEmail: data.clientEmail,
         }
 
         // let billFromData = {
@@ -75,7 +81,7 @@ export default function NewCreateBill() {
         billTo: billTo,
         billFrom: billFrom,
         lineItems: tableData,
-        billDate: new Date(),
+        billDate: formattedDate,
         notes: notes,
 
     };
@@ -92,10 +98,7 @@ export default function NewCreateBill() {
             })
     }
     async function printPdf() {
-
         await axios.get('http://localhost:4000/billdetails')
-
-
     }
 
     const removeItem = (index) => {
