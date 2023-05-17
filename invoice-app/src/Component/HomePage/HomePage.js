@@ -3,7 +3,7 @@ import { Grid, Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const Homepage = () => {
-    
+
     const navigate = useNavigate()
     const clickHandler = () => {
         navigate("/signup")

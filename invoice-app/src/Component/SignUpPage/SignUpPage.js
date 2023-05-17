@@ -9,9 +9,11 @@ import { requiredField, namePattern, emailPattern } from '../../Error';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from "axios";
 import { useState, useRef } from 'react';
+import State from '../../Container/State/State';
 // import Dropdown from '../../Container/State/State';
 
 function SignUp() {
+    const [stateValues, setStateValues] = useState({}); // State object to store the selected state values
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     console.log(errors);
     const navigate = useNavigate()
@@ -21,49 +23,28 @@ function SignUp() {
 
     async function onSubmit(data) {
         console.log(data);
+        const formData = {
+            ...data,
+            state: stateValues.state1
+        };
+        console.log(formData);
         await axios.post(`http://localhost:4000/register`,
-            data)
+            formData)
             .then((response) => {
                 console.log(response.message);
                 navigate("/signin")
             })
     }
 
-    const stateNames = [
-        'Andhra Pradesh',
-        'Arunachal Pradesh',
-        'Assam',
-        'Bihar',
-        'Chhattisgarh',
-        'Goa',
-        'Gujarat',
-        'Haryana',
-        'Himachal Pradesh',
-        'Jharkhand',
-        'Karnataka',
-        'Kerala',
-        'Madhya Pradesh',
-        'Maharashtra',
-        'Manipur',
-        'Meghalaya',
-        'Mizoram',
-        'Nagaland',
-        'Odisha',
-        'Punjab',
-        'Rajasthan',
-        'Sikkim',
-        'Tamil Nadu',
-        'Telangana',
-        'Tripura',
-        'Uttar Pradesh',
-        'Uttarakhand',
-        'West Bengal'
-    ];
-
-    const [state, setState] = useState("");
-    const handleChange = (event) => {
-        setState(event.target.value);
+    // getting state value
+    const handleStateChange = (value, name) => {
+        // Update the state value for the corresponding instance
+        setStateValues((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
     };
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -141,7 +122,6 @@ function SignUp() {
                                 />
 
                                 <TextField
-
                                     {...register('email', {
                                         required: requiredField,
                                         pattern: {
@@ -195,9 +175,7 @@ function SignUp() {
                                     autoComplete="City"
                                     autoFocus
                                 />
-
                                 <TextField
-
                                     {...register('pincode', {
                                         required: requiredField,
                                         minLength:
@@ -208,7 +186,6 @@ function SignUp() {
                                         }
 
                                     })}
-
                                     error={errors.pincode}
                                     helperText={errors.pincode?.message}
                                     margin="normal"
@@ -221,32 +198,8 @@ function SignUp() {
                                 />
                                 <FormControl fullWidth >
                                     <InputLabel id="demo-simple-select-label">State*</InputLabel>
-                                    <Select name="state"
-                                        {...register('state', {
-                                            required: "**Please Select State**",
-
-                                        })}
-
-                                        required
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select-label"
-                                        value={state}
-                                        label="State"
-                                        autoComplete="State"
-                                        onChange={handleChange}
-
-
-                                    >
-                                        {stateNames.map((stateName) => (
-                                            <MenuItem
-                                                key={stateName}
-                                                value={stateName}
-                                            // style={getStyles(states, personName, theme)}
-                                            >
-                                                {stateName}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
+                                    <State name="state1" handleChange={handleStateChange} />
+                                    {/* <State state={selectedState} handleChange={handleStateChange} /> */}
                                 </FormControl>
                                 {errors.state && <span style={styles.stateError}> {errors.state?.message}</span>}
 

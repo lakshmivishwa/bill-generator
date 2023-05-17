@@ -11,6 +11,8 @@ import CreateItem from '../../Component/BillComponents/CreateItem';
 import { requiredField } from '../../Error';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { saveAs } from 'file-saver';
+
 
 export default function NewCreateBill() {
     const today = new Date();
@@ -35,6 +37,7 @@ export default function NewCreateBill() {
         vendorEmail: userDetail.email,
     });
 
+    const [accountDetail, setAccountDetail] = useState({});
     const [billTo, setBillTo] = useState({});
     const [tableData, setTableData] = useState([]);
     const [notes, setNotes] = useState("");
@@ -44,7 +47,6 @@ export default function NewCreateBill() {
     function onSubmit(data) {
         console.log(data);
 
-
         let billToData = {
             clientAddress: data.clientAddress,
             clientCity: data.clientCity,
@@ -53,6 +55,12 @@ export default function NewCreateBill() {
             clientName: data.clientName,
             clientState: data.clientState,
             clientEmail: data.clientEmail,
+        }
+        let accountDetail = {
+            accountHolder: data.accounHolder,
+            accountNumber: data.accountNumber,
+            ifscCode: data.ifscCode,
+            bankName: data.bankName
         }
 
         // let billFromData = {
@@ -69,23 +77,24 @@ export default function NewCreateBill() {
         setBillTo(billToData)
         setBillFrom(billFrom)
         setPreview("true")
+        setAccountDetail(accountDetail)
 
     }
 
     const cancelPreview = () => {
         setPreview(false)
     }
-
-
     const billData = {
         billTo: billTo,
         billFrom: billFrom,
         lineItems: tableData,
         billDate: formattedDate,
+        accountDetail: accountDetail,
         notes: notes,
 
     };
     console.log(billData);
+    const [id, setId] = useState("")
 
     async function downloadHandlier() {
         console.log(billData);
@@ -93,12 +102,24 @@ export default function NewCreateBill() {
             billData)
             .then((response) => {
                 console.log(response);
-                // console.log(response.message);
-                // navigate("/signin")
+                console.log(response.data.dbResponse.insertedId)
+                setId(response.data.dbResponse.insertedId);
             })
     }
+
     async function printPdf() {
-        await axios.get('http://localhost:4000/billdetails')
+        await axios
+            .get(`http://localhost:4000/generatePdf/${id}`, { responseType: 'blob' })
+            .then(response => {
+                // Save the PDF file using FileSaver.js
+                saveAs(response.data, 'generated_pdf.pdf');
+            })
+            .catch(error => {
+                // Handle any errors
+                console.error(error);
+            });
+
+
     }
 
     const removeItem = (index) => {
@@ -323,7 +344,7 @@ export default function NewCreateBill() {
                                 </Grid>
                             </Grid>
 
-                            <Grid container spacing={2} mt={5}>
+                            <Grid container spacing={2} mt={3}>
                                 <CreateItem
                                     addItem={addItem}
                                 />
@@ -334,29 +355,56 @@ export default function NewCreateBill() {
                                 deleteItem={removeItem}
 
                             />
-                            <Grid container spacing={2} mt={5}>
-                                <Grid item xs={12} md={6}>
-                                    <Card style={styles.NoteCardComponent} >
-                                        <Typography mt={3} mb={1} variant="h5" component="h5" >Notes:-</Typography>
-                                        < TextField name="notes" label=""
-                                            {...register('notes', {
-                                                required: requiredField,
-                                            })}
-                                            multiline
-                                            rows={4}
-                                            margin="dense"
-                                            size="small"
-                                            error={errors.notes}
-                                            helperText={errors.notes?.message}
-                                        />
-                                    </Card>
+                            <Grid container spacing={2} mt={3}>
+                                <Grid item xs={12} md={5}>
+                                    <Typography mt={4} mb={2} variant="h6" component="h5">Account Details:-</Typography>
 
+                                    <TextField name="accounHolder" fullWidth label="Account Holder"
+                                        {...register('accounHolder', {
+                                            required: requiredField,
+                                        })}
+                                        margin="dense"
+                                        size="small"
+                                        id="fullWidth"
+                                        error={errors.accounHolder}
+                                        helperText={errors.accounHolder?.message}
+                                    />
+                                    <TextField name="accountNumber" fullWidth label="Account Number"
+                                        {...register('accountNumber', {
+                                            required: requiredField,
+                                        })}
+                                        margin="dense"
+                                        size="small"
+                                        id="fullWidth"
+                                        error={errors.accountNumber}
+                                        helperText={errors.accountNumber?.message}
+                                    />
+                                    <TextField name="bankName" fullWidth label="Bank Name"
+                                        {...register('bankName', {
+                                            required: requiredField,
+                                        })}
+                                        margin="dense"
+                                        size="small"
+                                        id="fullWidth"
+                                        error={errors.bankName}
+                                        helperText={errors.bankName?.message}
+                                    />
+                                    <TextField name="ifscCode" fullWidth label="IFSC Code"
+                                        {...register('ifscCode', {
+                                            required: requiredField,
+                                        })}
+                                        margin="dense"
+                                        size="small"
+                                        id="fullWidth"
+                                        error={errors.ifscCode}
+                                        helperText={errors.ifscCode?.message}
+                                    />
                                 </Grid>
 
                                 <Grid item xs={12} md={1}>
                                 </Grid>
 
-                                <Grid item xs={12} md={5}>
+                                <Grid item xs={12} md={5} mt={10} mb={2}>
 
                                     <Grid container spacing={2} mb={2}>
                                         <Grid item xs={6} md={7}>
@@ -385,6 +433,27 @@ export default function NewCreateBill() {
                                 </Grid>
 
                             </Grid>
+                            <Grid item xs={12} md={6} style={styles.NoteCardComponent}>
+                                {/* <Card style={styles.NoteCardComponent} > */}
+                                <Typography mt={3} mb={1} variant="h5" component="h5" >Notes:-</Typography>
+                                < TextField name="notes" label=""
+                                    {...register('notes', {
+                                        required: requiredField,
+                                    })}
+
+                                    rows={4}
+                                    margin="dense"
+                                    size="small"
+                                    error={errors.notes}
+                                    helperText={errors.notes?.message}
+                                />
+                                {/* </Card> */}
+
+                            </Grid>
+
+
+
+
 
                             <Grid container spacing={2} mb={2} mt={5}>
                                 <Grid item xs={12} md={6}>

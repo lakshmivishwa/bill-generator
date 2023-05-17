@@ -13,6 +13,6 @@ router.post("/register", register)
 
 router.post("/billdetails", billdetails);
 
-router.get("/generatePdf/1", generatePdf)
+router.get("/generatePdf/:id", generatePdf)
 
 export default router;

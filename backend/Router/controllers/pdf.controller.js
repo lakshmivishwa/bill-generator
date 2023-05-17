@@ -6,9 +6,11 @@ const { fontSize } = pkg;
 import fs from 'fs';
 
 const generatePdf = async (req, res) => {
+    const id = req.params.id;
     console.log('request received');
     let db = await dbConnect();
-    var o_id = new ObjectId("64623a1a60b7dcdfea690e8c");
+    var o_id = new ObjectId(id);
+    console.log(o_id);
     try {
         const collection = db.collection("bill_details");
         const data = await collection.findOne({ _id: o_id });
@@ -23,8 +25,6 @@ const generatePdf = async (req, res) => {
 
         // Pipe the PDF document to the response stream
         doc.pipe(res);
-
-
 
         // Write content to the PDF
         // Set up grid dimensions
@@ -98,7 +98,6 @@ const generatePdf = async (req, res) => {
 
         // Notes
         positionText(data.notes, startX + cellWidth + 150, startY + cellHeight * 33, 14, "#4B0082");
-
         doc.end();
 
     } catch (error) {

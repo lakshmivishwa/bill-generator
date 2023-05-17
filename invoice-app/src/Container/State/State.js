@@ -5,9 +5,9 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import { FormControl } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import styles from "./style";
 
-
-const Dropdown = () => {
+const State = ({ name, handleChange }) => {
 
     const stateNames = [
         'Andhra Pradesh',
@@ -40,28 +40,30 @@ const Dropdown = () => {
         'West Bengal'
     ];
 
-    const [state, setState] = useState("");
-    const handleChange = (event) => {
-        setState(event.target.value);
+    const [selectedState, setSelectedState] = useState("");
+
+    const handleStateChange = (event) => {
+        setSelectedState(event.target.value);
+        handleChange(event.target.value, name); // Pass the selected value and name to the handleChange function
     };
 
 
-    return (
-        <FormControl fullWidth mt={3}>
-            <InputLabel id="demo-simple-select-required-label">State</InputLabel>
-            <Select
 
+    return (
+        <FormControl fullWidth mt={5} style={styles.MainContainer}>
+            <InputLabel id="demo-simple-select-required-label" >State</InputLabel>
+            <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={state}
-                label="Age"
-                onChange={handleChange}
+                value={selectedState}
+                label="State"
+                onChange={handleStateChange}
             >
                 {stateNames.map((stateName) => (
                     <MenuItem
                         key={stateName}
                         value={stateName}
-                  
+
                     >
                         {stateName}
                     </MenuItem>
@@ -72,4 +74,4 @@ const Dropdown = () => {
     );
 };
 
-export default Dropdown;
+export default State;
