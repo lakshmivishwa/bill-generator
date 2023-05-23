@@ -20,9 +20,10 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/bills/create" element={<NewCreateBill />} />
-        <Route path="/bills/1" element={<ViewBill />} />
+        {/* <Route path="/bills/1" element={<ViewBill />} /> */}
         <Route path="/bills/1/edit" element={<EditBill />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/viewBills" element={<ViewBill />} />
       </Routes>
     </ThemeProvider>
   );

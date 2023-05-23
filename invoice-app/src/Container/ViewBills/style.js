@@ -4,6 +4,9 @@ const styles = {
         marginTop: "100px",
      
     },
+    CardContainer:{
+        marginBottom:"20px"
+    }
     
 }
 

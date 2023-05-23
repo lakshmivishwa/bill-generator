@@ -36,10 +36,8 @@ const initialBillDetails = {
 export const billDetailReducer = (state = initialBillDetails, action) => {
     switch (action.type) {
         case "BILL_DETAILS":
-
             return {
                 ...state,
-
                 billDetails: action.payload
             }
         default: return state;

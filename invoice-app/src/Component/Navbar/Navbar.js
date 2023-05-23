@@ -76,7 +76,7 @@ export default function Navbar() {
             }}
           >
             <MenuItem onClick={handleClose}><Link href="/bills/create" underline="none">Create Bill</Link></MenuItem>
-            <MenuItem onClick={handleClose}><Link href="/bills/1" underline="none"> View Bills</Link></MenuItem>
+            <MenuItem onClick={handleClose}><Link href="/viewBills" underline="none"> View Bills</Link></MenuItem>
           </Menu>
           {userName ? <Button color="inherit" onClick={logout}> Logout</Button> :
             <Button color="inherit" onClick={navigateToLogin}> Login</Button>}
