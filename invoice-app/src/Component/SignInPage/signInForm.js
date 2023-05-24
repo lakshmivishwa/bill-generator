@@ -11,8 +11,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
-
+import { signIn } from '../../Redux/Actions/Action';
+import { useDispatch } from 'react-redux';
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -26,9 +26,11 @@ function Copyright(props) {
     );
 }
 export default function SignIn() {
+    
     const dispatch = useDispatch();
 
     const navigate = useNavigate()
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const newData = new FormData(event.currentTarget);
@@ -37,13 +39,16 @@ export default function SignIn() {
             password: newData.get('password'),
         };
         console.log(loginData);
-        await axios.post(`http://localhost:4000/login`,
+
+        await axios.post(`http://localhost:4000/signin`,
             loginData)
             .then((response) => {
-                console.log(response.data);
-                dispatch(response.data)
+                let user = response.data.response
+                console.log(user);
+                dispatch(signIn(user))
                 navigate("/bills/create")
             })
+
 
     };
 

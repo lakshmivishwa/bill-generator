@@ -1,21 +1,30 @@
-const express = require('express');
+// const express = require('express');
+import express from 'express';
 const app = express();
 const port = 4000;
-// const connection = require("./database/find")
-const cors = require('cors');
-const dbConnect = require('./database/db_service')
+import cors from "cors"
+import dbConnect from './database/db_service.js';
+import router from './Router/auth.router.js';
+// import createInvoice from "./createInvoice.js"
+
+// const dbConnect = require('./database/db_service')
+
 app.use(cors({
     origin: '*'
 }));
 
 app.use(express.json())
+
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
+
 app.listen(port, () => {
     console.log(`listening to the port no ${port}`)
 
 });
 
-dbConnect();
-// console.log(db);
+// dbConnect();
+app.use(router);
 
-
-app.use(require('./Router/auth'));
+// createInvoice();
