@@ -22,22 +22,9 @@ const signIn = async (req, res) => {
 
 }
 
-// Generate a unique invoice number
-function generateInvoiceNumber() {
-    const timestamp = Date.now();
-    const randomNumber = Math.floor(Math.random() * 1000);
-    return `INV-${timestamp}-${randomNumber}`;
-}
-
 const register = async (req, res) => {
     const data = req.body;
-    console.log(data);
-    // Generate a unique invoice number
-    const invoiceNumber = generateInvoiceNumber();
-
-    // Add the invoice number to the data object
-    data.invoiceNumber = invoiceNumber;
-
+   
     console.log(data)
     let db = await dbConnect();
 

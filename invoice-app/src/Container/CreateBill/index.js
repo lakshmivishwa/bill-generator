@@ -45,6 +45,15 @@ export default function NewCreateBill() {
 
     console.log(billFrom);
 
+
+    // Generate a unique invoice number
+    function generateInvoiceNumber() {
+        const timestamp = Date.now();
+        const randomNumber = Math.floor(Math.random() * 1000);
+        return `INV-${timestamp}-${randomNumber}`;
+    }
+
+
     async function onSubmit(data) {
         console.log(data);
 
@@ -63,22 +72,8 @@ export default function NewCreateBill() {
             ifscCode: data.ifscCode,
             bankName: data.bankName
         }
-
-        // let billFromData = {
-        //     vendorAddress: data.vendorAddress,
-        //     vendorCity: data.vendorCity,
-        //     vendorPin: data.vendorPin,
-        //     vendorContact: data.vendorContact,
-        //     vendorState: data.vendorState,
-        //     vendorName: data.vendorName,
-        //     vendorEmail: data.vendorEmail,
-        // }
         let notes = data.notes;
-        // setNotes(notes)
-
         setBillFrom(billFrom)
-        // setPreview("true")
-        // setAccountDetail(accountDetail)
         console.log(billToData);
 
         const billData = {
@@ -88,7 +83,7 @@ export default function NewCreateBill() {
             billDate: formattedDate,
             accountDetail: accountDetail,
             notes: notes,
-            invoiceNumber: ""
+            invoiceNumber: generateInvoiceNumber()
         };
         console.log(billData);
 
@@ -102,7 +97,7 @@ export default function NewCreateBill() {
 
         navigate("/viewBills")
     }
-
+    console.log(billFrom);
 
     const removeItem = (index) => {
         console.log("deleted");
@@ -219,11 +214,11 @@ export default function NewCreateBill() {
                                     id="fullWidth"
                                     error={errors.vendorName}
                                     helperText={errors.vendorName?.message}
-
-                                    onChange={data => setBillFrom({
-                                        vendorName: data.vendorName
+                                    onChange={(e) => setBillFrom({
+                                        ...billFrom,
+                                        vendorName: e.target.value
                                     })}
-                                    value={billFrom.vendorName}
+                                    value={billFrom?.vendorName}
 
                                 />
 
@@ -237,8 +232,9 @@ export default function NewCreateBill() {
                                     error={errors.vendorEmail}
                                     helperText={errors.vendorEmail?.message}
                                     value={billFrom?.vendorEmail}
-                                    onChange={data => setBillFrom({
-                                        vendorEmail: data.vendorEmail
+                                    onChange={(e) => setBillFrom({
+                                        ...billFrom,
+                                        vendorEmail: e.target.value
                                     })}
 
                                 />
@@ -253,8 +249,9 @@ export default function NewCreateBill() {
                                     error={errors.vendorContact}
                                     helperText={errors.vendorContact?.message}
                                     value={billFrom?.vendorContact}
-                                    onChange={data => setBillFrom({
-                                        vendorContact: data.vendorContact
+                                    onChange={(e) => setBillFrom({
+                                        ...billFrom,
+                                        vendorContact: e.target.value
                                     })}
 
                                 />
@@ -269,8 +266,9 @@ export default function NewCreateBill() {
                                     error={errors.vendorAddress}
                                     helperText={errors.vendorAddress?.message}
                                     value={billFrom?.vendorAddress}
-                                    onChange={data => setBillFrom({
-                                        vendorAddress: data.vendorAddress
+                                    onChange={(e) => setBillFrom({
+                                        ...billFrom,
+                                        vendorAddress: e.target.value
                                     })}
 
                                 />
@@ -285,8 +283,9 @@ export default function NewCreateBill() {
                                     error={errors.vendorCity}
                                     helperText={errors.vendorCity?.message}
                                     value={billFrom?.vendorCity}
-                                    onChange={data => setBillFrom({
-                                        vendorCity: data.vendorCity
+                                    onChange={(e) => setBillFrom({
+                                        ...billFrom,
+                                        vendorCity: e.target.value
                                     })}
 
                                 />
@@ -301,8 +300,9 @@ export default function NewCreateBill() {
                                     error={errors.vendorPincode}
                                     helperText={errors.vendorPincode?.message}
                                     value={billFrom?.vendorPin}
-                                    onChange={data => setBillFrom({
-                                        vendorPin: data.vendorPin
+                                    onChange={(e) => setBillFrom({
+                                        ...billFrom,
+                                        vendorPin: e.target.value
                                     })}
 
                                 />
@@ -317,8 +317,9 @@ export default function NewCreateBill() {
                                     error={errors.vendorState}
                                     helperText={errors.vendorState?.message}
                                     value={billFrom?.vendorState}
-                                    onChange={data => setBillFrom({
-                                        vendorState: data.vendorState
+                                    onChange={(e) => setBillFrom({
+                                        ...billFrom,
+                                        vendorState: e.target.value
                                     })}
 
                                 />

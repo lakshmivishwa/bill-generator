@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { signIn } from '../../Redux/Actions/Action';
 import { AiOutlineHome } from "react-icons/ai";
-
+import Avatar from '@mui/material/Avatar';
 export default function Navbar() {
   const dispatch = useDispatch();
 
@@ -29,20 +29,31 @@ export default function Navbar() {
     navigate('/signin');
   };
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const [userMenuOpen, setUserMenuOpen] = React.useState(false);
+  const [billsMenuOpen, setBillsMenuOpen] = React.useState(false);
+
+  const handleUserMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
+    setUserMenuOpen(true);
+    setBillsMenuOpen(false);
   };
 
+  const handleBillsMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setBillsMenuOpen(true);
+    setUserMenuOpen(false);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setUserMenuOpen(false);
+    setBillsMenuOpen(false);
+  };
   const logout = () => {
     alert("logout")
     if (userName) {
       dispatch(signIn(""));
       navigate("/signin")
-
     }
   }
 
@@ -58,10 +69,10 @@ export default function Navbar() {
           <Button
             color="inherit"
             id="basic-button"
-            aria-controls={open ? 'basic-menu' : undefined}
+            aria-controls={billsMenuOpen ? 'basic-menu' : undefined}
             aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
+            aria-expanded={billsMenuOpen ? 'true' : undefined}
+            onClick={handleBillsMenuClick}
           >
             Bills
           </Button>
@@ -69,7 +80,7 @@ export default function Navbar() {
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}
-            open={open}
+            open={billsMenuOpen}
             onClose={handleClose}
             MenuListProps={{
               'aria-labelledby': 'basic-button',
@@ -78,15 +89,29 @@ export default function Navbar() {
             <MenuItem onClick={handleClose}><Link href="/bills/create" underline="none">Create Bill</Link></MenuItem>
             <MenuItem onClick={handleClose}><Link href="/viewBills" underline="none"> View Bills</Link></MenuItem>
           </Menu>
-          {userName ? <Button color="inherit" onClick={logout}> Logout</Button> :
-            <Button color="inherit" onClick={navigateToLogin}> Login</Button>}
-          {userName ? <Button
-            color="inherit"
-            id="basic-button"
-          // onClick={logout}
-          >
-            {getFirstLetters(userName)}
-          </Button> : ""}
+
+          {userName ?
+            (
+              <><Button
+                color="inherit"
+                id="basic-button"
+                aria-controls={userMenuOpen ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={userMenuOpen ? 'true' : undefined}
+                onClick={handleUserMenuClick}
+              >
+                <Avatar sx={{ color: 'black' }}>{getFirstLetters(userName)}</Avatar>
+              </Button><Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={userMenuOpen}
+                onClose={handleClose}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+              >
+                  <MenuItem onClick={() => { logout(); handleClose(); }}><Link underline="none"> Logout</Link></MenuItem>
+                </Menu></>) : (<Button color="inherit" onClick={navigateToLogin}> Login</Button>)}
 
 
         </Toolbar>
