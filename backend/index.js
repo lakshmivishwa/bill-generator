@@ -7,24 +7,25 @@ import dbConnect from './database/db_service.js';
 import router from './Router/auth.router.js';
 // import createInvoice from "./createInvoice.js"
 
-// const dbConnect = require('./database/db_service')
-
 app.use(cors({
     origin: '*'
 }));
 
 app.use(express.json())
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+// Connect to the database
+const db = await dbConnect();
+
+// Pass the database connection to your routes 
+app.use((req, res, next) => {
+    req.db = db;
+    next();
+});
 
 app.listen(port, () => {
     console.log(`listening to the port no ${port}`)
 
 });
 
-// dbConnect();
 app.use(router);
 
-// createInvoice();

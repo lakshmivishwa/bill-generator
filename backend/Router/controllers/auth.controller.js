@@ -1,5 +1,3 @@
-import dbConnect from "../../database/db_service.js";
-
 const signIn = async (req, res) => {
 
     try {
@@ -8,8 +6,8 @@ const signIn = async (req, res) => {
         if (!email || !password) {
             return res.status(400).json({ error: "Username/ Password is required" })
         }
-        let db = await dbConnect();
-        let response = await db.collection("users").findOne({ email: email, password: password })
+
+        let response = await req.db.collection("users").findOne({ email: email, password: password })
         console.log(response);
         if (!response) {
             res.status(400).json({ error: "Something went wrong, Please try again" })
@@ -24,12 +22,12 @@ const signIn = async (req, res) => {
 
 const register = async (req, res) => {
     const data = req.body;
-   
+
     console.log(data)
     let db = await dbConnect();
 
     try {
-        let dbResponse = db.collection("users").insertOne(data);
+        let dbResponse = req.db.collection("users").insertOne(data);
         res.json({ message: 'User Sign up succesfull' });
     } catch (err) {
         db.close();
@@ -37,14 +35,20 @@ const register = async (req, res) => {
     }
 };
 
+// Generate a unique invoice number
+function generateInvoiceNumber() {
+    const timestamp = Date.now();
+    const randomNumber = Math.floor(Math.random() * 1000);
+    return `INV-${timestamp}-${randomNumber}`;
+}
+
 const billdetails = async (req, res) => {
     const data = req.body;
-
-    //Store the data in MongoDB
-    let db = await dbConnect();
+    let invoiceNumber = generateInvoiceNumber();
+    data.invoiceNumber = invoiceNumber;
 
     try {
-        let dbResponse = await db.collection("bill_details").insertOne(data);
+        let dbResponse = await req.db.collection("bill_details").insertOne(data);
         console.log(dbResponse);
         res.json({ dbResponse });
     } catch (err) {

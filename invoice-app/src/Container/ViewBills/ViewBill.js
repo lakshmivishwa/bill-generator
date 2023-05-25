@@ -63,13 +63,15 @@ export default function ViewBill() {
                     <Grid item xs={6} md={8}>
                       <CardContent>
                         <ThemeProvider theme={Theme}>
-                          <Typography variant="h6" component="div" color="info.main">
-                            Invoice No:{item.invoiceNumber}
+                          <Typography variant="h5" component="span">  Invoice No :
+                            <Typography variant="h6" component="span" color="secondary.main">
+                              {item.invoiceNumber}
+                            </Typography>
                           </Typography>
-                          <Typography variant="h6" component="div" color="info.main">
+                          <Typography variant="h6" component="div">
                             Date:{item.billDate}
                           </Typography>
-                          <Typography variant="h6" component="div" color="info.main" >
+                          <Typography variant="h6" component="div"  >
                             Name: {item.billTo.clientName}
                           </Typography>
                         </ThemeProvider>
@@ -77,7 +79,7 @@ export default function ViewBill() {
                     </Grid >
                     <Grid item xs={5} md={4} mt={2}>
                       <CardActions>
-                        <Button variant="outlined" size="small" color="success" onClick={() => printPdf(item._id)} >Download</Button>
+                        <Button variant="contained" size="small" color="success" onClick={() => printPdf(item._id)} >Download</Button>
                         {/* <Button variant="outlined" size="small" color="success" >Edit</Button> */}
                       </CardActions>
                     </Grid>

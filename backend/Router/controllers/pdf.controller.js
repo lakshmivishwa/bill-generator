@@ -1,4 +1,3 @@
-import dbConnect from "../../database/db_service.js";
 import { ObjectId } from "mongodb";
 import PDFDocument from 'pdfkit';
 import pkg from 'pdfkit';
@@ -8,11 +7,10 @@ import fs from 'fs';
 const generatePdf = async (req, res) => {
     const id = req.params.id;
     console.log('request received');
-    let db = await dbConnect();
     var o_id = new ObjectId(id);
     console.log(o_id);
     try {
-        const collection = db.collection("bill_details");
+        const collection = req.db.collection("bill_details");
         const data = await collection.findOne({ _id: o_id });
 
         console.log(data);
@@ -26,7 +24,6 @@ const generatePdf = async (req, res) => {
         // Pipe the PDF document to the response stream
         doc.pipe(res);
 
-        // Write content to the PDF
         // Set up grid dimensions
         const cellWidth = 30;
         const cellHeight = 20;

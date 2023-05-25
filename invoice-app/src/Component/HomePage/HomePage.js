@@ -6,7 +6,7 @@ const Homepage = () => {
 
     const navigate = useNavigate()
     const clickHandler = () => {
-        navigate("/signup")
+        navigate("/bills/create")
     }
 
     return (
@@ -22,7 +22,7 @@ const Homepage = () => {
                         sx={{ mt: 3, mb: 2 }}
                         onClick={clickHandler}
                     >
-                        Sign In
+                        Create a new Bill here ........
                     </Button>
                 </div>
             </Grid>

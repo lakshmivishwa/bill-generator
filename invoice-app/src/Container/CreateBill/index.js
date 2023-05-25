@@ -8,13 +8,12 @@ import { useSelector } from 'react-redux'
 // import BillPreview from '../BillPreview';
 import Table from '../../Component/BillComponents/LineItem';
 import CreateItem from '../../Component/BillComponents/CreateItem';
-import { requiredField } from '../../Error';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 // import { saveAs } from 'file-saver';
 import { useDispatch } from 'react-redux';
 import { billDetails } from '../../Redux/Actions/Action';
-
+import { requiredField, namePattern, emailPattern } from '../../Error';
 export default function NewCreateBill() {
     const today = new Date();
     const formattedDate = today.toDateString();
@@ -39,20 +38,9 @@ export default function NewCreateBill() {
         vendorName: userDetail.name,
         vendorEmail: userDetail.email,
     });
-
-
     const [tableData, setTableData] = useState([]);
 
     console.log(billFrom);
-
-
-    // Generate a unique invoice number
-    function generateInvoiceNumber() {
-        const timestamp = Date.now();
-        const randomNumber = Math.floor(Math.random() * 1000);
-        return `INV-${timestamp}-${randomNumber}`;
-    }
-
 
     async function onSubmit(data) {
         console.log(data);
@@ -83,7 +71,6 @@ export default function NewCreateBill() {
             billDate: formattedDate,
             accountDetail: accountDetail,
             notes: notes,
-            invoiceNumber: generateInvoiceNumber()
         };
         console.log(billData);
 
@@ -116,7 +103,6 @@ export default function NewCreateBill() {
         <Container maxWidth="md" style={styles.MainContainer} >
             <Card sx={{ minWidth: 275 }} mb={3} style={styles.CardComponent} >
                 <CardContent>
-                    {/* {!preview ? */}
                     <form onSubmit={handleSubmit(onSubmit)}>
 
                         <Grid container spacing={2}>
@@ -126,7 +112,12 @@ export default function NewCreateBill() {
                                 <TextField fullWidth label="Who is this invoice to?"
                                     {...register('clientName', {
                                         required: requiredField,
+                                        pattern: {
+                                            //used reg exp. for email pattern
+                                            value: namePattern, message: "**Please enter full name **"
+                                        }
                                     })}
+                                    autoComplete="off"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -137,7 +128,12 @@ export default function NewCreateBill() {
                                 <TextField name="clientEmail" fullWidth label="Email Address"
                                     {...register('clientEmail', {
                                         required: requiredField,
+                                        pattern: {
+                                            //used reg exp. for email pattern
+                                            value: emailPattern, message: "**This is not a valid email**"
+                                        }
                                     })}
+                                    autoComplete="off"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -148,6 +144,12 @@ export default function NewCreateBill() {
                                 <TextField name="clientContact" fullWidth label="Contact no"
                                     {...register('clientContact', {
                                         required: requiredField,
+                                        minLength:
+                                            { value: 10, message: "**Contact number should be 10 digit**" },
+                                        maxLength: {
+                                            value: 10,
+                                            message: "**Contact number should be 10 digit**"
+                                        }
                                     })}
                                     margin="dense"
                                     size="small"
@@ -181,6 +183,13 @@ export default function NewCreateBill() {
                                 <TextField name="clientPin" fullWidth label=" Pin-code"
                                     {...register('clientPin', {
                                         required: requiredField,
+                                        minLength:
+                                            { value: 5, message: "**minimum value should be 5 digit**" },
+                                        maxLength: {
+                                            value: 7,
+                                            message: "**Maximum value should be 7 digit**"
+                                        }
+
                                     })}
                                     margin="dense"
                                     size="small"
@@ -208,6 +217,10 @@ export default function NewCreateBill() {
                                 <TextField name="vendorName" fullWidth label="Who is this invoice from?"
                                     {...register('vendorName', {
                                         required: requiredField,
+                                        pattern: {
+                                            //used reg exp. for email pattern
+                                            value: namePattern, message: "**Please enter full name **"
+                                        }
                                     })}
                                     margin="dense"
                                     size="small"
@@ -225,6 +238,10 @@ export default function NewCreateBill() {
                                 <TextField name="vendorEmail" fullWidth label="Email Address"
                                     {...register('vendorEmail', {
                                         required: requiredField,
+                                        pattern: {
+                                            //used reg exp. for email pattern
+                                            value: emailPattern, message: "**This is not a valid email**"
+                                        }
                                     })}
                                     margin="dense"
                                     size="small"
@@ -242,6 +259,12 @@ export default function NewCreateBill() {
                                 <TextField name="vendorContact" fullWidth label="Contact"
                                     {...register('vendorContact', {
                                         required: requiredField,
+                                        minLength:
+                                            { value: 10, message: "**Contact number should be 10 digit**" },
+                                        maxLength: {
+                                            value: 10,
+                                            message: "**Contact number should be 10 digit**"
+                                        }
                                     })}
                                     margin="dense"
                                     size="small"
@@ -293,6 +316,13 @@ export default function NewCreateBill() {
                                 <TextField name="vendorPincode" fullWidth label="Pin-code"
                                     {...register('vendorPincode', {
                                         required: requiredField,
+                                        minLength:
+                                            { value: 5, message: "**minimum value should be 5 digit**" },
+                                        maxLength: {
+                                            value: 7,
+                                            message: "**Maximum value should be 7 digit**"
+                                        }
+
                                     })}
                                     margin="dense"
                                     size="small"
@@ -304,7 +334,6 @@ export default function NewCreateBill() {
                                         ...billFrom,
                                         vendorPin: e.target.value
                                     })}
-
                                 />
 
                                 <TextField name="vendorState" fullWidth label="State"
@@ -321,7 +350,6 @@ export default function NewCreateBill() {
                                         ...billFrom,
                                         vendorState: e.target.value
                                     })}
-
                                 />
 
                             </Grid>
@@ -338,7 +366,7 @@ export default function NewCreateBill() {
                             deleteItem={removeItem}
 
                         />
-                        <Grid container spacing={2} mt={3}>
+                        <Grid container spacing={2} >
                             <Grid item xs={12} md={5}>
                                 <Typography mt={4} mb={2} variant="h6" component="h5">Account Details:-</Typography>
 
@@ -387,56 +415,26 @@ export default function NewCreateBill() {
                             <Grid item xs={12} md={1}>
                             </Grid>
 
-                            <Grid item xs={12} md={5} mt={10} mb={2}>
+                            <Grid item xs={12} md={5} mt={15} mb={2}>
+                                {/* <Card style={styles.NoteCardComponent} > */}
 
-                                <Grid container spacing={2} mb={2}>
-                                    <Grid item xs={6} md={7}>
-                                        <Typography variant="h6" component="h5">Sub-Total- </Typography>
-                                        <Typography variant="h6" component="h5">Discount -</Typography>
-                                        <Typography variant="h6" component="h6">Tax -</Typography>
-                                    </Grid>
-                                    <Grid item xs={6} md={5} style={styles.Total}>
-                                        <Typography variant="h6" component="h5">1</Typography>
-                                        <Typography variant="h6" component="h5">-</Typography>
-                                        <Typography variant="h6" component="h5">-</Typography>
-                                    </Grid>
-                                </Grid>
-
-                                <hr />
-
-                                <Grid container spacing={2} mb={2}>
-                                    <Grid item xs={6} md={7}>
-                                        <Typography variant="h5" component="h5">Total -</Typography>
-                                    </Grid>
-                                    <Grid item xs={6} md={5} style={styles.Total}>
-                                        <Typography variant="h5" component="h5">1</Typography>
-                                    </Grid>
-                                </Grid>
-
+                                < TextField name="notes" label="Notes"
+                                    {...register('notes', {
+                                        required: requiredField,
+                                    })}
+                                    multiline
+                                    fullWidth
+                                    id="fullWidth"
+                                    rows={4}
+                                    margin="dense"
+                                    size="small"
+                                    error={errors.notes}
+                                    helperText={errors.notes?.message}
+                                />
+                                {/* </Card> */}
                             </Grid>
 
                         </Grid>
-                        <Grid item xs={12} md={6} style={styles.NoteCardComponent}>
-                            {/* <Card style={styles.NoteCardComponent} > */}
-                            <Typography mt={3} mb={1} variant="h5" component="h5" >Notes:-</Typography>
-                            < TextField name="notes" label=""
-                                {...register('notes', {
-                                    required: requiredField,
-                                })}
-
-                                rows={4}
-                                margin="dense"
-                                size="small"
-                                error={errors.notes}
-                                helperText={errors.notes?.message}
-                            />
-                            {/* </Card> */}
-
-                        </Grid>
-
-
-
-
 
                         <Grid container spacing={2} mb={2} mt={5}>
                             <Grid item xs={12} md={6}>
@@ -445,18 +443,6 @@ export default function NewCreateBill() {
 
                         </Grid>
                     </form >
-                    {/* :
-                    <BillPreview
-                        handleClick={cancelPreview}
-                        handlePrint={downloadHandlier}
-                        billTo={billTo}
-                        billFrom={billFrom}
-                        itemList={tableData}
-                        notes={notes}
-                        printPdf={printPdf}
-                    />
-                   } */}
-
                 </CardContent>
             </Card>
         </Container>

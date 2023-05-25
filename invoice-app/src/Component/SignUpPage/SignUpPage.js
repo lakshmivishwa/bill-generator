@@ -6,7 +6,6 @@ import styles from './style';
 import { useForm } from "react-hook-form"
 import { useNavigate } from 'react-router-dom';
 import { requiredField, namePattern, emailPattern } from '../../Error';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from "axios";
 import { useState, useRef } from 'react';
 import State from '../../Container/State/State';

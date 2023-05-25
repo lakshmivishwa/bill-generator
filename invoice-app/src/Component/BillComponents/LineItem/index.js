@@ -17,7 +17,7 @@ function Table({ tableData, deleteItem }) {
 
     return (
         <Container maxWidth="md">
-            <Grid container spacing={2} mt={3}>
+            <Grid container spacing={2} >
                 {/* <h1>hi</h1> */}
                 <Grid item xs={12} md={12}  >
                     <table className="table">
