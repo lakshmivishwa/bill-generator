@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    table {
+      width: 100%;
+    }
+
+    td {
+      text-align: left;
+    }
+
+    th {
+      text-align: left;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+      /* border-style: dashed; */
+    }
+    .wide-column {
+      width: 60%;
+     
+    }
+  </style>
+</head>
+
+<body>
+
+  <div style="text-align:center; margin-left: 80px; margin-right: 80px;">
+    <h2>DUPLICATE COPY TAX INVOICE</h2>
+    <h4> Invoice created in Template</h4>
+    <h4>MOMO</h4>
+  </div>
+
+  <div style="text-align:center; margin-left: 50px; margin-right: 50px;">
+    <p>
+      <%= data.billFrom.vendorAddress %>, <%= data.billFrom.vendorCity %>, <%= data.billFrom.vendorPin %>, <%=
+              data.billFrom.vendorState %>
+    </p>
+    <p>Mob-<%= data.billFrom.vendorContact %>
+    </p>
+    <p>GSTIN-27AADFW06023126</p>
+  </div>
+
+
+  <div style="text-align: center;">
+    <p>VATIN-27681708811V</p>
+  </div>
+  <p>BillNo : F6882 Date : 29-05-2023 10:39 PM</p>
+
+
+
+  <div>
+    <p>Table : 12 Covers: 3 Waiter: CHANDAN</p>
+
+  </div>
+  </div>
+  <p>*Food*</p>
+
+  <table>
+    <tr >
+      <!-- <th>S.No.</th> -->
+      <th class="wide-column">Item</th>
+
+      <th>Qty</th>
+      <th>Rate</th>
+      <th>Amount</th>
+    </tr>
+    <% data.lineItems.forEach(function(item) { %>
+      <tr>
+        <!-- <td><%= item.id %></td> -->
+        <td class="wide-column">
+          <%= item.itemName %>
+        </td>
+
+        <td>
+          <%= item.qty %>
+        </td>
+        <td>
+          <%= item.rate %>
+        </td>
+        <td>
+          <%= item.price %>
+        </td>
+      </tr>
+      <% }); %>
+  </table>
+
+  <!-- Total Price -->
+  <div style="text-align:right; border-top: 1px solid black; ">
+    <p>SubTotal :<%= data.totalPrice %>
+    </p>
+    <p>SGST 2.50%: <%= data.totalPrice %>
+    </p>
+    <p>CGST 2.50% :<%= data.totalPrice %>
+    </p>
+    <p>Total: <%= data.totalPrice %>
+    </p>
+  </div>
+
+  <!-- Grand Total -->
+  <h3>Total <%= data.totalPrice %>
+  </h3>
+
+  <p>FSSAI- 11519034000118</p>
+  <p>GPAY- 11519034000118</p>
+  <!-- Account Details -->
+
+  <p>UPI - 7887573089@okaxis</p>
+  <p>Account Name: <%= data.accountDetail.accountHolder %>
+  </p>
+  <p>Bank Account : <%= data.accountDetail.accountNumber %>
+  </p>
+  <p>Bank Name: <%= data.accountDetail.bankName %>
+  </p>
+  <p>IFSC : <%= data.accountDetail.ifscCode %>
+  </p>
+
+  <!-- Notes -->
+
+  <p>
+    FOR HOMEDELIVERY & TAKEAWAY CALL- 8967563521
+  </p>
+
+
+</body>
+
+</html>

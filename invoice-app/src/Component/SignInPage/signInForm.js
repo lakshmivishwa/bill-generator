@@ -27,7 +27,7 @@ function Copyright(props) {
     );
 }
 export default function SignIn() {
-    
+
     const dispatch = useDispatch();
 
     const navigate = useNavigate()
@@ -40,7 +40,6 @@ export default function SignIn() {
             password: newData.get('password'),
         };
         console.log(loginData);
-
         await axios.post(`http://localhost:4000/signin`,
             loginData)
             .then((response) => {
@@ -49,8 +48,6 @@ export default function SignIn() {
                 dispatch(signIn(user))
                 navigate("/bills/create")
             })
-
-
     };
 
     return (

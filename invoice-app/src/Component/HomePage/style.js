@@ -2,13 +2,13 @@
 const styles = {
 
     Image: {
-        margin: "50px",
-        paddingTop: "20px",
+        margin: "30px",
+       
     },
 
     TitleContainer: {
         textAlign: "center",
-        marginTop: "150px",
+        marginTop: "100px",
         padding: "10px"
     },
     GridTitle: {

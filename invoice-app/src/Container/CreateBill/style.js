@@ -13,7 +13,7 @@ const styles = {
         textAlign: "right"
     },
     MainContainer: {
-        marginTop: "30px",
+        // marginTop: "10px",
         // border: "2px solid grey"
     }
 

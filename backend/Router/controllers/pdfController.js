@@ -40,7 +40,6 @@ const generatePdf = async (req, res) => {
         positionText(data.invoiceNumber, startX + cellWidth + 250, startY, cellHeight);
         positionText('Bill Date' + ':- ' + data.billDate, startX + cellWidth + 290, startY + cellHeight);
 
-
         // Bill To
         positionText('BILL TO:', startX, startY + cellHeight * 4, 16, "#097969");
         positionText(data.billTo.clientName, startX, startY + cellHeight * 5);

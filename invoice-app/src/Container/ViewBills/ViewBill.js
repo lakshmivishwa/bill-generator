@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux';
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import SignIn from '../../Component/SignInPage/signInForm';
+import { IoMdEye } from "react-icons/io";
+import { FcDownload } from "react-icons/fc";
+
 export default function ViewBill() {
 
   const loggedInUser = useSelector((state) => state.loggedInReducer);
@@ -23,7 +26,7 @@ export default function ViewBill() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/viewBills');
+        const response = await axios.get('http://localhost:4000/viewBillList');
         setData(response.data);
 
       } catch (error) {
@@ -35,8 +38,8 @@ export default function ViewBill() {
     getData();
   }, []);
   console.log(data);
-  async function printPdf(id) {
 
+  async function printPdf(id) {
     await axios
       .get(`http://localhost:4000/generatePdf/${id}`, { responseType: 'blob' })
       .then(response => {
@@ -48,6 +51,20 @@ export default function ViewBill() {
 
       });
   }
+
+  async function handleViewBill(id) {
+    await axios
+      .get(`http://localhost:4000/generatePdf/${id}`)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        // Handle any errors
+        console.error(error);
+
+      });
+  }
+
   console.log(data);
 
   return (
@@ -56,31 +73,42 @@ export default function ViewBill() {
         (<Container style={styles.Container}>
           <div>
             <ul>
-              {data.map(item => (
 
-                <Card sx={{ minWidth: 275 }} variant="outlined" style={styles.CardContainer}>
+              {data.map(item => (
+                <Card sx={{ minWidth: 375 }} variant="outlined" style={styles.CardContainer}>
                   <Grid container spacing={2}>
-                    <Grid item xs={6} md={8}>
+                    <Grid item xs={7} md={9}>
                       <CardContent>
-                        <ThemeProvider theme={Theme}>
-                          <Typography variant="h5" component="span">  Invoice No :
-                            <Typography variant="h6" component="span" color="secondary.main">
-                              {item.invoiceNumber}
-                            </Typography>
+                        <Typography variant="h6" component="div" color="primary.light" sx={{ fontFamily: 'Roboto', fontSize: '18px', fontWeight: 'bold' }} >
+                          {item.invoiceNumber}
+                        </Typography>
+                        <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '22px' }}>
+                          Date :-
+                        </Typography>
+                        <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '20px', fontWeight: 'bold' }}>
+                          {item.billDate}
+                        </Typography>
+                        <Typography>
+                          <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '22px' }} >
+                            Name :-
                           </Typography>
-                          <Typography variant="h6" component="div">
-                            Date:{item.billDate}
+                          <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '20px', fontWeight: 'bold' }} >
+                            {item.billTo.clientName}
                           </Typography>
-                          <Typography variant="h6" component="div"  >
-                            Name: {item.billTo.clientName}
-                          </Typography>
-                        </ThemeProvider>
+                        </Typography>
+                        <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '22px' }} >
+                          Bill Amount :-
+                        </Typography>
+                        <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '20px', fontWeight: 'bold' }} >
+                          {item.totalPrice}
+                        </Typography>
+
                       </CardContent>
                     </Grid >
-                    <Grid item xs={5} md={4} mt={2}>
+                    <Grid item xs={5} md={3} mt={3}>
                       <CardActions>
-                        <Button variant="contained" size="small" color="success" onClick={() => printPdf(item._id)} >Download</Button>
-                        {/* <Button variant="outlined" size="small" color="success" >Edit</Button> */}
+                        <Button size="small" color="success" onClick={() => printPdf(item._id)} ><FcDownload size={23} /></Button>
+                        <Button size="small" color="success" onClick={() => handleViewBill(item._id)}><IoMdEye size={25} /></Button>
                       </CardActions>
                     </Grid>
                   </Grid >

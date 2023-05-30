@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { AppBar, Box, Toolbar, Typography, Button, MenuItem, Menu, Link } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, Button, MenuItem, Menu, Link, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { signIn } from '../../Redux/Actions/Action';
-import { AiOutlineHome } from "react-icons/ai";
+import { TfiWrite } from "react-icons/tfi";
 import Avatar from '@mui/material/Avatar';
+import styles from "./style";
 export default function Navbar() {
   const dispatch = useDispatch();
 
@@ -22,8 +23,6 @@ export default function Navbar() {
       .join('');
     return firstLetters;
   }
-
-
   const navigate = useNavigate();
   const navigateToLogin = () => {
     navigate('/signin');
@@ -49,6 +48,10 @@ export default function Navbar() {
     setUserMenuOpen(false);
     setBillsMenuOpen(false);
   };
+
+  const handleClick = () => {
+    navigate("/")
+  };
   const logout = () => {
     alert("logout")
     if (userName) {
@@ -59,64 +62,74 @@ export default function Navbar() {
 
   return (
 
-    <Box sx={{ flexGrow: 1 }} >
-      <AppBar >
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <AiOutlineHome size={30} />
-          </Typography>
-
-          <Button
-            color="inherit"
-            id="basic-button"
-            aria-controls={billsMenuOpen ? 'basic-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={billsMenuOpen ? 'true' : undefined}
-            onClick={handleBillsMenuClick}
-          >
-            Bills
-          </Button>
-
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={billsMenuOpen}
-            onClose={handleClose}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
-          >
-            <MenuItem onClick={handleClose}><Link href="/bills/create" underline="none">Create Bill</Link></MenuItem>
-            <MenuItem onClick={handleClose}><Link href="/viewBills" underline="none"> View Bills</Link></MenuItem>
-          </Menu>
-
-          {userName ?
-            (
-              <><Button
-                color="inherit"
+    <Box sx={{ flexGrow: 1 }} style={styles.BoxContainer} >
+      <AppBar  >
+        <Container maxWidth="lg">
+          <Toolbar>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Button color="inherit"
                 id="basic-button"
-                aria-controls={userMenuOpen ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={userMenuOpen ? 'true' : undefined}
-                onClick={handleUserMenuClick}
-              >
-                <Avatar sx={{ color: 'black' }}>{getFirstLetters(userName)}</Avatar>
-              </Button><Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={userMenuOpen}
-                onClose={handleClose}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
-              >
-                  <MenuItem onClick={() => { logout(); handleClose(); }}><Link underline="none"> Logout</Link></MenuItem>
-                </Menu></>) : (<Button color="inherit" onClick={navigateToLogin}> Login</Button>)}
+                onClick={handleClick}>
+                <TfiWrite size={30} />
+              </Button>
+            </Typography>
 
 
-        </Toolbar>
+            
+            <Button
+              color="inherit"
+              id="basic-button"
+              aria-controls={billsMenuOpen ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={billsMenuOpen ? 'true' : undefined}
+              onClick={handleBillsMenuClick}
+            >
+              Bills
+            </Button>
+
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={billsMenuOpen}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <MenuItem onClick={handleClose}><Link href="/bills/create" underline="none">Create Bill</Link></MenuItem>
+              <MenuItem onClick={handleClose}><Link href="/viewBills" underline="none"> View Bills</Link></MenuItem>
+            </Menu>
+
+            {userName ?
+              (
+                <><Button
+                  color="inherit"
+                  id="basic-button"
+                  aria-controls={userMenuOpen ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={userMenuOpen ? 'true' : undefined}
+                  onClick={handleUserMenuClick}
+                >
+                  <Avatar sx={{ color: 'black' }}>{getFirstLetters(userName)}</Avatar>
+                </Button>
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={userMenuOpen}
+                    onClose={handleClose}
+                    MenuListProps={{
+                      'aria-labelledby': 'basic-button',
+                    }}
+                  >
+                    <MenuItem onClick={() => { logout(); handleClose(); }}><Link underline="none"> Logout</Link></MenuItem>
+                  </Menu></>) : (<Button color="inherit" onClick={navigateToLogin}> Login</Button>)}
+
+
+          </Toolbar>
+        </Container>
       </AppBar>
     </Box>
+
   );
 }
 

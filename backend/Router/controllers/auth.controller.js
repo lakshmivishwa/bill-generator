@@ -44,8 +44,11 @@ function generateInvoiceNumber() {
 
 const billdetails = async (req, res) => {
     const data = req.body;
+    let lineItems = data.lineItems;
+    const totalPrice = lineItems.reduce((acc, item) => acc + item.price, 0);
     let invoiceNumber = generateInvoiceNumber();
     data.invoiceNumber = invoiceNumber;
+    data.totalPrice = totalPrice;
 
     try {
         let dbResponse = await req.db.collection("bill_details").insertOne(data);
@@ -58,6 +61,5 @@ const billdetails = async (req, res) => {
     console.log(data);
 
 }
-
 
 export { register, signIn, billdetails };

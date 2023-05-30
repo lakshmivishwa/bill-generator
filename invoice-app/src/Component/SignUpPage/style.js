@@ -6,10 +6,10 @@ const styles = {
     Container: {
         color: "black ",
         backgroundColor: "white",
-        marginTop: "10px",
+        // marginTop: "10px",
         borderRadius: "10px",
         textAlign: "left",
-        paddingTop: "20px"
+        // paddingTop: "20px"
     },
     MainContainer: {
         backgroundImage: "url(http://localhost:3000/assets/images/apple2.jpg)",

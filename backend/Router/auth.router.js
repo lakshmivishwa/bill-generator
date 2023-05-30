@@ -2,9 +2,10 @@ import { Router } from "express"
 import express from 'express';
 
 const router = express.Router();
-import generatePdf from './controllers/pdf.controller.js';
+import generatePdf from './controllers/pdfControllerEjs.js';
+// import generatePdf from './controllers/pdfController.js';
 import { signIn, register, billdetails } from './controllers/auth.controller.js';
-import { viewBills } from "./controllers/viewBillsController.js";
+import { viewBillList } from "./controllers/viewBillsController.js";
 // router.post("/", signIn);
 
 router.post("/signin", signIn);
@@ -15,6 +16,6 @@ router.post("/billdetails", billdetails);
 
 router.get("/generatePdf/:id", generatePdf)
 
-router.get("/viewBills", viewBills)
+router.get("/viewBillList", viewBillList)
 
 export default router;

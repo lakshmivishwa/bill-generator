@@ -100,7 +100,7 @@ export default function NewCreateBill() {
 
     return (
 
-        <Container maxWidth="md" style={styles.MainContainer} >
+        <Container maxWidth="lg"  >
             <Card sx={{ minWidth: 275 }} mb={3} style={styles.CardComponent} >
                 <CardContent>
                     <form onSubmit={handleSubmit(onSubmit)}>
