@@ -51,7 +51,7 @@ const State = ({ name, handleChange }) => {
 
     return (
         <FormControl fullWidth mt={5} style={styles.MainContainer}>
-            <InputLabel id="demo-simple-select-required-label" >State</InputLabel>
+            <InputLabel id="demo-simple-select-required-label" >State*</InputLabel>
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"

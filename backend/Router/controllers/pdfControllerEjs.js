@@ -11,11 +11,10 @@ const generatePdf = async (req, res) => {
     try {
         const collection = req.db.collection("bill_details");
         const data = await collection.findOne({ _id: o_id });
-
         console.log(data);
 
         // Render the EJS template
-        const ejsTemplate = fs.readFileSync('views/template.ejs', 'utf-8');
+        const ejsTemplate = fs.readFileSync('views/bill.ejs', 'utf-8');
         const html = ejs.render(ejsTemplate, { data });
 
         // Configure the PDF options

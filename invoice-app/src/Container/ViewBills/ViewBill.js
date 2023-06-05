@@ -10,9 +10,11 @@ import { useEffect, useState } from 'react';
 import SignIn from '../../Component/SignInPage/signInForm';
 import { IoMdEye } from "react-icons/io";
 import { FcDownload } from "react-icons/fc";
+import { MdAddCircleOutline } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 export default function ViewBill() {
-
+  const navigate = useNavigate()
   const loggedInUser = useSelector((state) => state.loggedInReducer);
   console.log(loggedInUser);
   let userName = loggedInUser.signIn.name;
@@ -64,6 +66,10 @@ export default function ViewBill() {
 
       });
   }
+  function createBillHandler() {
+    navigate("/bills/create")
+
+  }
 
   console.log(data);
 
@@ -71,51 +77,53 @@ export default function ViewBill() {
     <div>
       {userName ?
         (<Container style={styles.Container}>
-          <div>
-            <ul>
-
-              {data.map(item => (
-                <Card sx={{ minWidth: 375 }} variant="outlined" style={styles.CardContainer}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={7} md={9}>
-                      <CardContent>
-                        <Typography variant="h6" component="div" color="primary.light" sx={{ fontFamily: 'Roboto', fontSize: '18px', fontWeight: 'bold' }} >
-                          {item.invoiceNumber}
-                        </Typography>
-                        <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '22px' }}>
-                          Date :-
-                        </Typography>
-                        <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '20px', fontWeight: 'bold' }}>
-                          {item.billDate}
-                        </Typography>
-                        <Typography>
-                          <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '22px' }} >
-                            Name :-
-                          </Typography>
-                          <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '20px', fontWeight: 'bold' }} >
-                            {item.billTo.clientName}
-                          </Typography>
-                        </Typography>
+          {/* <div> */}
+          <ul>
+            <div style={styles.Button} >
+              <Button variant="outlined" color="success" onClick={createBillHandler} > Create New bill <MdAddCircleOutline size={20} color="success" /></Button>
+            </div>
+            {data.map(item => (
+              <Card sx={{ minWidth: 375 }} variant="outlined" style={styles.CardContainer}>
+                <Grid container spacing={2}>
+                  <Grid item xs={7} md={9}>
+                    <CardContent>
+                      <Typography variant="h6" component="div" color="primary.light" sx={{ fontFamily: 'Roboto', fontSize: '18px', fontWeight: 'bold' }} >
+                        {item.invoiceNumber}
+                      </Typography>
+                      <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '22px' }}>
+                        Date :-
+                      </Typography>
+                      <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '20px', fontWeight: 'bold' }}>
+                        {item.billDate}
+                      </Typography>
+                      <Typography>
                         <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '22px' }} >
-                          Bill Amount :-
+                          Name :-
                         </Typography>
                         <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '20px', fontWeight: 'bold' }} >
-                          {item.totalPrice}
+                          {item.billTo.clientName}
                         </Typography>
+                      </Typography>
+                      <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '22px' }} >
+                        Bill Amount :-
+                      </Typography>
+                      <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '20px', fontWeight: 'bold' }} >
+                        {item.totalPrice}
+                      </Typography>
 
-                      </CardContent>
-                    </Grid >
-                    <Grid item xs={5} md={3} mt={3}>
-                      <CardActions>
-                        <Button size="small" color="success" onClick={() => printPdf(item._id)} ><FcDownload size={23} /></Button>
-                        <Button size="small" color="success" onClick={() => handleViewBill(item._id)}><IoMdEye size={25} /></Button>
-                      </CardActions>
-                    </Grid>
+                    </CardContent>
                   </Grid >
-                </Card>
-              ))}
-            </ul>
-          </div>
+                  <Grid item xs={5} md={3} mt={3}>
+                    <CardActions>
+                      <Button size="small" color="success" onClick={() => printPdf(item._id)} ><FcDownload size={23} title="download" /></Button>
+                      <Button size="small" color="success" onClick={() => handleViewBill(item._id)}><IoMdEye size={25} title="view" /></Button>
+                    </CardActions>
+                  </Grid>
+                </Grid >
+              </Card>
+            ))}
+          </ul>
+          {/* </div> */}
         </Container>)
         : (<SignIn />)}
 

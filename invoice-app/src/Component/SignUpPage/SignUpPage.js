@@ -202,9 +202,9 @@ function SignUp() {
                             autoFocus
                         />
                         <FormControl fullWidth >
-                            <InputLabel id="demo-simple-select-label">State*</InputLabel>
+
                             <State name="state1" handleChange={handleStateChange} />
-                            {/* <State state={selectedState} handleChange={handleStateChange} /> */}
+
                         </FormControl>
                         {errors.state && <span style={styles.stateError}> {errors.state?.message}</span>}
 

@@ -35,31 +35,5 @@ const register = async (req, res) => {
     }
 };
 
-// Generate a unique invoice number
-function generateInvoiceNumber() {
-    const timestamp = Date.now();
-    const randomNumber = Math.floor(Math.random() * 1000);
-    return `INV-${timestamp}-${randomNumber}`;
-}
 
-const billdetails = async (req, res) => {
-    const data = req.body;
-    let lineItems = data.lineItems;
-    const totalPrice = lineItems.reduce((acc, item) => acc + item.price, 0);
-    let invoiceNumber = generateInvoiceNumber();
-    data.invoiceNumber = invoiceNumber;
-    data.totalPrice = totalPrice;
-
-    try {
-        let dbResponse = await req.db.collection("bill_details").insertOne(data);
-        console.log(dbResponse);
-        res.json({ dbResponse });
-    } catch (err) {
-        db.close();
-        throw err;
-    }
-    console.log(data);
-
-}
-
-export { register, signIn, billdetails };
+export { register, signIn };

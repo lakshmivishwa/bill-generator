@@ -7,8 +7,10 @@ const styles = {
         // marginBottom: "30px",
     },
     CardComponent: {
-        padding: "30px"
+        border: "2px solid  #D3D3D3",
+        padding: "0px 20px 30px 20px"
     },
+   
     Total: {
         textAlign: "right"
     },

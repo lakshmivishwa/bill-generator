@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Grid, Typography, Container, Button, Card, CardContent, Link } from '@mui/material';
+import { Grid, Typography, Container, Button, Card, CardContent } from '@mui/material';
 import styles from "./style";
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
@@ -10,14 +10,19 @@ import Table from '../../Component/BillComponents/LineItem';
 import CreateItem from '../../Component/BillComponents/CreateItem';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-// import { saveAs } from 'file-saver';
+import { saveAs } from 'file-saver';
 import { useDispatch } from 'react-redux';
 import { billDetails } from '../../Redux/Actions/Action';
 import { requiredField, namePattern, emailPattern } from '../../Error';
 export default function NewCreateBill() {
-    const today = new Date();
-    const formattedDate = today.toDateString();
 
+    const currentDate = new Date();
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const year = currentDate.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+
+    console.log(formattedDate);
     const dispatch = useDispatch();
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -77,12 +82,18 @@ export default function NewCreateBill() {
         dispatch(billDetails(billData))
 
         await axios.post(`http://localhost:4000/billdetails`,
-            billData)
+            billData, { responseType: 'blob' })
             .then((response) => {
-                console.log(response);
+                saveAs(response.data, 'generated_pdf.pdf');
+                navigate("/viewBills")
             })
+            .catch(error => {
+                // Handle any errors
+                console.error(error);
 
-        navigate("/viewBills")
+            });
+
+
     }
     console.log(billFrom);
 
@@ -102,6 +113,7 @@ export default function NewCreateBill() {
 
         <Container maxWidth="lg"  >
             <Card sx={{ minWidth: 275 }} mb={3} style={styles.CardComponent} >
+                {/* <CardActionArea style={styles.CardActions}> */}
                 <CardContent>
                     <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -444,6 +456,7 @@ export default function NewCreateBill() {
                         </Grid>
                     </form >
                 </CardContent>
+                {/* </CardActionArea> */}
             </Card>
         </Container>
     );

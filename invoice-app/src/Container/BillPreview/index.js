@@ -7,17 +7,17 @@ import CardContent from '@mui/material/CardContent';
 import { Container } from '@mui/material';
 import { Button } from '@mui/material';
 
-function BillPreview({ handleClick, handlePrint, billFrom, billTo, notes, itemList , printPdf}) {
+function BillPreview({ handleClick, handlePrint, billFrom, billTo, notes, itemList, printPdf }) {
 
     console.log(itemList);
     let totalPrice = 0;
+
     for (let i = 0; i < itemList.length; i++) {
         totalPrice += itemList[i].price;
     }
     let currentDate = new Date().toJSON().slice(0, 10);
 
     return (
-
         <Container maxWidth="md" >
             <Card variant="outlined" style={styles.container}>
                 <Grid container spacing={1} style={styles.Gridcontainer}>

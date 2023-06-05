@@ -37,12 +37,13 @@ export default function Navbar() {
     setBillsMenuOpen(false);
   };
 
-  const handleBillsMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-    setBillsMenuOpen(true);
-    setUserMenuOpen(false);
+  const handleCreateBillsClick = (event) => {
+    navigate("/bills/create")
   };
 
+  const handleViewBillsClick = (event) => {
+    navigate("/viewBills")
+  };
   const handleClose = () => {
     setAnchorEl(null);
     setUserMenuOpen(false);
@@ -73,32 +74,23 @@ export default function Navbar() {
                 <TfiWrite size={30} />
               </Button>
             </Typography>
-
-
-            
             <Button
               color="inherit"
               id="basic-button"
-              aria-controls={billsMenuOpen ? 'basic-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={billsMenuOpen ? 'true' : undefined}
-              onClick={handleBillsMenuClick}
+              onClick={handleCreateBillsClick}
             >
-              Bills
+              Create Bills
+            </Button>
+            <Button
+              color="inherit"
+              id="basic-button"
+              onClick={handleViewBillsClick}
+
+            >
+              View Bills
             </Button>
 
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={billsMenuOpen}
-              onClose={handleClose}
-              MenuListProps={{
-                'aria-labelledby': 'basic-button',
-              }}
-            >
-              <MenuItem onClick={handleClose}><Link href="/bills/create" underline="none">Create Bill</Link></MenuItem>
-              <MenuItem onClick={handleClose}><Link href="/viewBills" underline="none"> View Bills</Link></MenuItem>
-            </Menu>
+
 
             {userName ?
               (

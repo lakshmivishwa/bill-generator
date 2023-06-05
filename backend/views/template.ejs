@@ -25,9 +25,8 @@
         text-align: left;
         padding-top: 5px;
         padding-bottom: 5px;
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
-        /* border-style: dashed; */
+        border-top: 1px dashed rgb(9, 9, 9);
+        border-bottom: 1px dashed rgb(9, 9, 9);
       }
       .wide-column {
         width: 60%;
@@ -99,7 +98,8 @@
       <div
         style="
           text-align: right;
-          border-top: 1px solid black;
+          border-top: 1px dashed rgb(9, 9, 9);
+
           margin-bottom: 2px;
         "
       >
@@ -110,7 +110,7 @@
       </div>
 
       <!-- Grand Total -->
-      <h3>Grand Total (RS) : <%= data.totalPrice %></h3>
+      <h3>Grand Total (RS) : <%= data.totalPrice+sgstAmount +cgstAmount%></h3>
 
       <p>FSSAI- 11519034000118</p>
     </div>
