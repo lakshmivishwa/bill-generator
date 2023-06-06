@@ -2,26 +2,21 @@ import * as React from 'react';
 import { Container, Grid, Card, CardContent, Typography, CardActions, Button } from '@mui/material';
 import styles from "./style";
 import { saveAs } from 'file-saver';
-import { ThemeProvider } from '@mui/material';
-import Theme from '../../Theme/Theme';
 import { useSelector } from 'react-redux';
 import axios from "axios";
 import { useEffect, useState } from 'react';
-import SignIn from '../../Component/SignInPage/signInForm';
+import Error from '../../Container/ErrorPage/ErrorPage';
 import { IoMdEye } from "react-icons/io";
 import { FcDownload } from "react-icons/fc";
 import { MdAddCircleOutline } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 
 export default function ViewBill() {
-  const navigate = useNavigate()
-  const loggedInUser = useSelector((state) => state.loggedInReducer);
-  console.log(loggedInUser);
-  let userName = loggedInUser.signIn.name;
-  console.log(userName);
+  const navigate = useNavigate();
 
-  const billDetails = useSelector((state) => state.billDetailReducer);
-  console.log(billDetails);
+  //checking that user is logged In or not
+  const loggedInUser = useSelector((state) => state.loggedInReducer);
+  let userName = loggedInUser.signIn.name;
 
   const [data, setData] = useState([]);
 
@@ -39,13 +34,13 @@ export default function ViewBill() {
 
     getData();
   }, []);
-  console.log(data);
 
-  async function printPdf(id) {
+  // printing bill pdf from list
+  async function printPdf(invoiceNumber) {
     await axios
-      .get(`http://localhost:4000/generatePdf/${id}`, { responseType: 'blob' })
+      .get(`http://localhost:4000/generatePdf/${invoiceNumber}`, { responseType: 'blob' })
       .then(response => {
-        saveAs(response.data, 'generated_pdf.pdf');
+        saveAs(response.data, `${invoiceNumber}.pdf`);
       })
       .catch(error => {
         // Handle any errors
@@ -54,30 +49,28 @@ export default function ViewBill() {
       });
   }
 
-  async function handleViewBill(id) {
+  // view pdf from list 
+  async function handleViewBill(invoiceNumber) {
     await axios
-      .get(`http://localhost:4000/generatePdf/${id}`)
+      .get(`http://localhost:4000/generatePdf/${invoiceNumber}`)
       .then(response => {
         console.log(response);
       })
       .catch(error => {
-        // Handle any errors
         console.error(error);
 
       });
   }
+
+  // create new bill
   function createBillHandler() {
     navigate("/bills/create")
-
   }
-
-  console.log(data);
 
   return (
     <div>
       {userName ?
         (<Container style={styles.Container}>
-          {/* <div> */}
           <ul>
             <div style={styles.Button} >
               <Button variant="outlined" color="success" onClick={createBillHandler} > Create New bill <MdAddCircleOutline size={20} color="success" /></Button>
@@ -115,7 +108,7 @@ export default function ViewBill() {
                   </Grid >
                   <Grid item xs={5} md={3} mt={3}>
                     <CardActions>
-                      <Button size="small" color="success" onClick={() => printPdf(item._id)} ><FcDownload size={23} title="download" /></Button>
+                      <Button size="small" color="success" onClick={() => printPdf(item.invoiceNumber)} ><FcDownload size={23} title="download" /></Button>
                       <Button size="small" color="success" onClick={() => handleViewBill(item._id)}><IoMdEye size={25} title="view" /></Button>
                     </CardActions>
                   </Grid>
@@ -123,9 +116,8 @@ export default function ViewBill() {
               </Card>
             ))}
           </ul>
-          {/* </div> */}
         </Container>)
-        : (<SignIn />)}
+        : (<Error />)}
 
     </div>
   );

@@ -29,7 +29,7 @@ const billdetails = async (req, res) => {
         // res.json({ data });
         // Render the EJS template
         const ejsTemplate = fs.readFileSync('views/bill.ejs', 'utf-8');
-        const html = ejs.render(ejsTemplate, {data});
+        const html = ejs.render(ejsTemplate, { data });
 
         // Configure the PDF options
         const pdfOptions = {
@@ -49,12 +49,29 @@ const billdetails = async (req, res) => {
                 throw err;
             }
 
-            // Set response headers for the PDF
-            res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', 'attachment; filename ="generated_pdf.pdf"');
+            // Define the file path to save the PDF
+            const filePath = `public/bills/${invoiceNumber}.pdf`;
 
-            // Pipe the PDF stream to the response
-            stream.pipe(res);
+            // Pipe the PDF stream to a file
+            const writeStream = fs.createWriteStream(filePath);
+            stream.pipe(writeStream);
+
+            writeStream.on('finish', () => {
+                console.log('PDF saved successfully');
+
+                // Set response headers for the PDF
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', `attachment; filename="${invoiceNumber}.pdf"`);
+
+                // Send the saved PDF file as the response
+                fs.createReadStream(filePath).pipe(res);
+            });
+
+            // Handle any errors while writing the PDF
+            writeStream.on('error', (error) => {
+                console.error('Failed to save PDF', error);
+                throw error;
+            });
         });
     } catch (error) {
         console.error('Failed to retrieve data from MongoDB', error);

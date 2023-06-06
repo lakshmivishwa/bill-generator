@@ -84,6 +84,7 @@ export default function NewCreateBill() {
         await axios.post(`http://localhost:4000/billdetails`,
             billData, { responseType: 'blob' })
             .then((response) => {
+                console.log(response);
                 saveAs(response.data, 'generated_pdf.pdf');
                 navigate("/viewBills")
             })
