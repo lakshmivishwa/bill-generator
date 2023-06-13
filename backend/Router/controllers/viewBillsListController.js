@@ -1,4 +1,4 @@
-const viewBillList = async (req, res) => {
+const viewBillListController = async (req, res) => {
     try {
         const collection = req.db.collection('bill_details');
         const data = await collection.find().toArray();
@@ -9,4 +9,4 @@ const viewBillList = async (req, res) => {
 
 }
 
-export { viewBillList };
+export { viewBillListController };

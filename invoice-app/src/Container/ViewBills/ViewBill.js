@@ -10,15 +10,18 @@ import { IoMdEye } from "react-icons/io";
 import { FcDownload } from "react-icons/fc";
 import { MdAddCircleOutline } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 export default function ViewBill() {
   const navigate = useNavigate();
-
   //checking that user is logged In or not
   const loggedInUser = useSelector((state) => state.loggedInReducer);
   let userName = loggedInUser.signIn.name;
 
   const [data, setData] = useState([]);
+  const [url, setUrl] = useState("");
+  const [openPopup, setOpenPopup] = useState(false); // State to control the popup visibility
 
   useEffect(() => {
     const getData = async () => {
@@ -41,6 +44,7 @@ export default function ViewBill() {
       .get(`http://localhost:4000/generatePdf/${invoiceNumber}`, { responseType: 'blob' })
       .then(response => {
         saveAs(response.data, `${invoiceNumber}.pdf`);
+
       })
       .catch(error => {
         // Handle any errors
@@ -48,18 +52,21 @@ export default function ViewBill() {
 
       });
   }
-
+  console.log(data);
   // view pdf from list 
   async function handleViewBill(invoiceNumber) {
-    await axios
-      .get(`http://localhost:4000/generatePdf/${invoiceNumber}`)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.error(error);
+    console.log(invoiceNumber);
+    try {
+      const response = await axios.get(`http://localhost:4000/viewPdf/${invoiceNumber}`, { responseType: 'blob' });
+      const file = new Blob([response.data], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(file);
+      setUrl(fileURL);
+      console.log(fileURL);
+      setOpenPopup(true);
+    } catch (error) {
+      console.error(error);
 
-      });
+    };
   }
 
   // create new bill
@@ -71,51 +78,65 @@ export default function ViewBill() {
     <div>
       {userName ?
         (<Container style={styles.Container}>
-          <ul>
-            <div style={styles.Button} >
-              <Button variant="outlined" color="success" onClick={createBillHandler} > Create New bill <MdAddCircleOutline size={20} color="success" /></Button>
-            </div>
-            {data.map(item => (
-              <Card sx={{ minWidth: 375 }} variant="outlined" style={styles.CardContainer}>
-                <Grid container spacing={2}>
-                  <Grid item xs={7} md={9}>
-                    <CardContent>
-                      <Typography variant="h6" component="div" color="primary.light" sx={{ fontFamily: 'Roboto', fontSize: '18px', fontWeight: 'bold' }} >
-                        {item.invoiceNumber}
-                      </Typography>
-                      <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '22px' }}>
-                        Date :-
-                      </Typography>
-                      <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '20px', fontWeight: 'bold' }}>
-                        {item.billDate}
-                      </Typography>
-                      <Typography>
-                        <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '22px' }} >
-                          Name :-
-                        </Typography>
-                        <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '20px', fontWeight: 'bold' }} >
-                          {item.billTo.clientName}
-                        </Typography>
-                      </Typography>
-                      <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '22px' }} >
-                        Bill Amount :-
-                      </Typography>
-                      <Typography variant="h6" component="span" sx={{ fontFamily: 'Roboto', fontSize: '20px', fontWeight: 'bold' }} >
-                        {item.totalPrice}
-                      </Typography>
+        
+          <div style={styles.Button} >
+            <Button variant="outlined" color="success" onClick={createBillHandler} > Create New bill <MdAddCircleOutline size={20} color="success" /></Button>
+          </div>
+          {data.map(item => (
 
-                    </CardContent>
-                  </Grid >
-                  <Grid item xs={5} md={3} mt={3}>
-                    <CardActions>
-                      <Button size="small" color="success" onClick={() => printPdf(item.invoiceNumber)} ><FcDownload size={23} title="download" /></Button>
-                      <Button size="small" color="success" onClick={() => handleViewBill(item._id)}><IoMdEye size={25} title="view" /></Button>
-                    </CardActions>
-                  </Grid>
+            <Card sx={{ minWidth: 275 }} variant="outlined" style={styles.CardContainer}>
+              <Grid container spacing={2}>
+                <Grid item xs={6} md={5}>
+                  <CardContent>
+                    <Typography variant="h6" component="div" color="primary.light" sx={{ fontSize: '18px', fontWeight: 'bold' }} >
+                      {item.invoiceNumber}
+                    </Typography>
+                    <Typography variant="h6" component="span" sx={{ fontSize: '22px' }}>
+                      Date :-
+                    </Typography>
+                    <Typography variant="h6" component="span" sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                      {item.billDate}
+                    </Typography>
+                    <Typography>
+                      <Typography variant="h6" component="span" sx={{ fontSize: '22px' }} >
+                        Name :-
+                      </Typography>
+                      <Typography variant="h6" component="span" sx={{ fontSize: '20px', fontWeight: 'bold' }} >
+                        {item.billTo.clientName}
+                      </Typography>
+                    </Typography>
+
+
+                  </CardContent>
                 </Grid >
-              </Card>
-            ))}
-          </ul>
+
+                <Grid item xs={5} md={4} mt={1}>
+                  <CardActions>
+                    <Typography variant="h6" component="span" sx={{ fontSize: '22px' }} >
+                      Bill Amount :-
+                    </Typography>
+                    <Typography variant="h6" component="span" sx={{ fontSize: '20px', fontWeight: 'bold' }} >
+                      {item.totalPrice}
+                    </Typography>
+                  </CardActions>
+                </Grid>
+
+                <Grid item xs={6} md={3} mt={3}>
+                  <CardActions>
+                    <Button size="small" color="success" onClick={() => printPdf(item.invoiceNumber)} ><FcDownload size={23} title="download" /></Button>
+                    <Button size="small" color="success" onClick={() => handleViewBill(item.invoiceNumber)}><IoMdEye size={25} title="view" /></Button>
+                  </CardActions>
+                </Grid>
+              </Grid >
+            </Card>
+          ))}
+
+          <Popup open={openPopup} onClose={() => setOpenPopup(false)}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+              <Button variant="outlined" color="secondary" onClick={() => setOpenPopup(false)}>Close</Button>
+              <iframe src={url} width="100%" height="600px" title="PDF Viewer" />
+            </div>
+          </Popup>
         </Container>)
         : (<Error />)}
 

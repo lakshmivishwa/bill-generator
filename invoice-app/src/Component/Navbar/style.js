@@ -5,7 +5,13 @@ const styles = {
         marginBottom: "100px"
     },
     BoxContainer: {
-        marginBottom: "150px"
+        marginBottom: "100px",
+        padding:"15px"
+
+    },
+    Button:{
+        textTransform: 'none',
+        // padding:"5px"
     }
 
 

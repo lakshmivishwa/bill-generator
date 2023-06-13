@@ -14,6 +14,7 @@ import { saveAs } from 'file-saver';
 import { useDispatch } from 'react-redux';
 import { billDetails } from '../../Redux/Actions/Action';
 import { requiredField, namePattern, emailPattern } from '../../Error';
+
 export default function NewCreateBill() {
 
     const currentDate = new Date();
@@ -122,7 +123,7 @@ export default function NewCreateBill() {
                             <Grid item xs={6} md={6}>
                                 <Typography mt={3} mb={2} variant="h6" component="h5">Bill To:-</Typography>
 
-                                <TextField fullWidth label="Who is this invoice to?"
+                                <TextField fullWidth label="Who is this invoice to?*"
                                     {...register('clientName', {
                                         required: requiredField,
                                         pattern: {
@@ -138,7 +139,7 @@ export default function NewCreateBill() {
                                     helperText={errors.clientName?.message}
                                 />
 
-                                <TextField name="clientEmail" fullWidth label="Email Address"
+                                <TextField name="clientEmail" fullWidth label="Email Address*"
                                     {...register('clientEmail', {
                                         required: requiredField,
                                         pattern: {
@@ -154,7 +155,7 @@ export default function NewCreateBill() {
                                     helperText={errors.clientEmail?.message}
                                 />
 
-                                <TextField name="clientContact" fullWidth label="Contact no"
+                                <TextField name="clientContact" fullWidth label="Contact No*"
                                     {...register('clientContact', {
                                         required: requiredField,
                                         minLength:
@@ -171,7 +172,7 @@ export default function NewCreateBill() {
                                     helperText={errors.clientContact?.message}
                                 />
 
-                                <TextField fullWidth label="Address"
+                                <TextField fullWidth label="Address*"
                                     {...register('clientAddress', {
                                         required: requiredField,
                                     })}
@@ -182,7 +183,7 @@ export default function NewCreateBill() {
                                     helperText={errors.clientAddress?.message}
                                 />
 
-                                <TextField name="clientCity" fullWidth label="City"
+                                <TextField name="clientCity" fullWidth label="City*"
                                     {...register('clientCity', {
                                         required: requiredField,
                                     })}
@@ -193,7 +194,7 @@ export default function NewCreateBill() {
                                     helperText={errors.clientCity?.message}
                                 />
 
-                                <TextField name="clientPin" fullWidth label=" Pin-code"
+                                <TextField name="clientPin" fullWidth label=" Pin-code*"
                                     {...register('clientPin', {
                                         required: requiredField,
                                         minLength:
@@ -212,7 +213,7 @@ export default function NewCreateBill() {
                                 />
 
 
-                                <TextField name="clientState" fullWidth label="State"
+                                <TextField name="clientState" fullWidth label="State*"
                                     {...register('clientState', {
                                         required: requiredField,
                                     })}
@@ -227,7 +228,7 @@ export default function NewCreateBill() {
                             <Grid item xs={6} md={6}>
                                 <Typography mt={3} mb={2} variant="h6" component="h5">Bill From:-</Typography>
 
-                                <TextField name="vendorName" fullWidth label="Who is this invoice from?"
+                                <TextField name="vendorName" fullWidth label="Who is this invoice from?*"
                                     {...register('vendorName', {
                                         required: requiredField,
                                         pattern: {
@@ -248,7 +249,7 @@ export default function NewCreateBill() {
 
                                 />
 
-                                <TextField name="vendorEmail" fullWidth label="Email Address"
+                                <TextField name="vendorEmail" fullWidth label="Email Address*"
                                     {...register('vendorEmail', {
                                         required: requiredField,
                                         pattern: {
@@ -269,7 +270,7 @@ export default function NewCreateBill() {
 
                                 />
 
-                                <TextField name="vendorContact" fullWidth label="Contact"
+                                <TextField name="vendorContact" fullWidth label="Contact No*"
                                     {...register('vendorContact', {
                                         required: requiredField,
                                         minLength:
@@ -292,7 +293,7 @@ export default function NewCreateBill() {
 
                                 />
 
-                                <TextField name="vendorAddress" fullWidth label="Address"
+                                <TextField name="vendorAddress" fullWidth label="Address*"
                                     {...register('vendorAddress', {
                                         required: requiredField,
                                     })}
@@ -309,7 +310,7 @@ export default function NewCreateBill() {
 
                                 />
 
-                                <TextField name="vendorCity" fullWidth label="City"
+                                <TextField name="vendorCity" fullWidth label="City*"
                                     {...register('vendorCity', {
                                         required: requiredField,
                                     })}
@@ -326,7 +327,7 @@ export default function NewCreateBill() {
 
                                 />
 
-                                <TextField name="vendorPincode" fullWidth label="Pin-code"
+                                <TextField name="vendorPincode" fullWidth label="Pin-code*"
                                     {...register('vendorPincode', {
                                         required: requiredField,
                                         minLength:
@@ -349,7 +350,7 @@ export default function NewCreateBill() {
                                     })}
                                 />
 
-                                <TextField name="vendorState" fullWidth label="State"
+                                <TextField name="vendorState" fullWidth label="State*"
                                     {...register('vendorState', {
                                         required: requiredField,
                                     })}
@@ -383,7 +384,7 @@ export default function NewCreateBill() {
                             <Grid item xs={12} md={5}>
                                 <Typography mt={4} mb={2} variant="h6" component="h5">Account Details:-</Typography>
 
-                                <TextField name="accounHolder" fullWidth label="Account Holder"
+                                <TextField name="accounHolder" fullWidth label="Account Holder*"
                                     {...register('accounHolder', {
                                         required: requiredField,
                                     })}
@@ -393,7 +394,7 @@ export default function NewCreateBill() {
                                     error={errors.accounHolder}
                                     helperText={errors.accounHolder?.message}
                                 />
-                                <TextField name="accountNumber" fullWidth label="Account Number"
+                                <TextField name="accountNumber" fullWidth label="Account Number*"
                                     {...register('accountNumber', {
                                         required: requiredField,
                                     })}
@@ -403,7 +404,7 @@ export default function NewCreateBill() {
                                     error={errors.accountNumber}
                                     helperText={errors.accountNumber?.message}
                                 />
-                                <TextField name="bankName" fullWidth label="Bank Name"
+                                <TextField name="bankName" fullWidth label="Bank Name*"
                                     {...register('bankName', {
                                         required: requiredField,
                                     })}
@@ -413,7 +414,7 @@ export default function NewCreateBill() {
                                     error={errors.bankName}
                                     helperText={errors.bankName?.message}
                                 />
-                                <TextField name="ifscCode" fullWidth label="IFSC Code"
+                                <TextField name="ifscCode" fullWidth label="IFSC Code*"
                                     {...register('ifscCode', {
                                         required: requiredField,
                                     })}
@@ -431,7 +432,7 @@ export default function NewCreateBill() {
                             <Grid item xs={12} md={5} mt={15} mb={2}>
                                 {/* <Card style={styles.NoteCardComponent} > */}
 
-                                < TextField name="notes" label="Notes"
+                                < TextField name="notes" label="Notes*"
                                     {...register('notes', {
                                         required: requiredField,
                                     })}

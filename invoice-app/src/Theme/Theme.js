@@ -4,13 +4,18 @@ export const Theme = createTheme({
 
     palette: {
         primary: {
-            main: '#19363f ',
-            light:"#0000ff"
-      
+            main: "#FFFFFF",
+        
+            // light: '#19363f ',
+            // light:"#0000ff"
+
         },
         secondary: {
             main: '#FFB6C1',
             light: "#00a39f",
+        },
+        success: {
+            main: "#19363f",
         },
         info: {
             main: '#097969',
@@ -22,8 +27,8 @@ export const Theme = createTheme({
     },
 
     typography: {
-        "fontFamily": `"Roboto", "Helvetica", "Arial", sans-serif`,
-        "fontSize": 14,
+        "fontFamily": "Poppins",
+        "fontSize": 18,
         "fontWeightLight": 300,
         "fontWeightRegular": 400,
         "fontWeightMedium": 500

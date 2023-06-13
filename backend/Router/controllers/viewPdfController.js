@@ -3,9 +3,10 @@ import ejs from 'ejs';
 import fs from 'fs';
 import pdf from 'html-pdf';
 
-const pdfControllerEjs = async (req, res) => {
+const viewPdfController = async (req, res) => {
     console.log(req);
     const invoiceNumber = req.params.id;
+    console.log(invoiceNumber);
     try {
         fs.readFile(`public/bills/${invoiceNumber}.pdf`, function (err, data) {
             res.contentType('application/pdf');
@@ -21,6 +22,7 @@ const pdfControllerEjs = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
+
 };
 
-export default pdfControllerEjs;
+export default viewPdfController;

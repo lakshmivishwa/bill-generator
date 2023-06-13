@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { RadioGroup, FormLabel, FormControlLabel, Card, Radio, FormControl, Link, Box, Typography, Container, Avatar, InputLabel } from '@mui/material';
+import { RadioGroup, FormLabel, FormControlLabel, Radio, FormControl, Link, Box, Typography, Container, Avatar, InputLabel } from '@mui/material';
 import styles from './style';
 import { useForm } from "react-hook-form"
 import { useNavigate } from 'react-router-dom';
@@ -46,10 +46,8 @@ function SignUp() {
 
 
     return (
-        // <Container component="main" maxWidth="xs">
-        <div style={styles.MainContainer}>
-            {/* <FormControl onSubmit={handleSubmit(onSubmit)}> */}
 
+        <div style={styles.MainContainer}>
             <Container component="main" maxWidth="sm" style={styles.Container}>
 
                 <Box
@@ -60,7 +58,6 @@ function SignUp() {
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        {/* <LockOutlinedIcon /> */}
                     </Avatar>
                     <Typography component="h1" variant="h5" color="primary">
                         SIGN UP

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { signIn } from '../../Redux/Actions/Action';
 import { TfiWrite } from "react-icons/tfi";
+import { BiMobileAlt } from "react-icons/bi";
 import Avatar from '@mui/material/Avatar';
 import styles from "./style";
 export default function Navbar() {
@@ -63,18 +64,28 @@ export default function Navbar() {
 
   return (
 
-    <Box sx={{ flexGrow: 1 }} style={styles.BoxContainer} >
+    <Box sx={{ flexGrow: 1 }} style={styles.BoxContainer}  >
       <AppBar  >
         <Container maxWidth="lg">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               <Button color="inherit"
+                style={styles.Button}
                 id="basic-button"
                 onClick={handleClick}>
                 <TfiWrite size={30} />
               </Button>
             </Typography>
             <Button
+              style={styles.Button}
+              color="inherit"
+              id="basic-button"
+              onClick={handleCreateBillsClick}
+            >
+              <BiMobileAlt />   Try Mobile App
+            </Button>
+            <Button
+              style={styles.Button}
               color="inherit"
               id="basic-button"
               onClick={handleCreateBillsClick}
@@ -82,6 +93,7 @@ export default function Navbar() {
               Create Bills
             </Button>
             <Button
+              style={styles.Button}
               color="inherit"
               id="basic-button"
               onClick={handleViewBillsClick}
@@ -95,6 +107,7 @@ export default function Navbar() {
             {userName ?
               (
                 <><Button
+
                   color="inherit"
                   id="basic-button"
                   aria-controls={userMenuOpen ? 'basic-menu' : undefined}
@@ -102,7 +115,7 @@ export default function Navbar() {
                   aria-expanded={userMenuOpen ? 'true' : undefined}
                   onClick={handleUserMenuClick}
                 >
-                  <Avatar sx={{ color: 'black' }}>{getFirstLetters(userName)}</Avatar>
+                  <Avatar sx={{ color: '' }}>{getFirstLetters(userName)}</Avatar>
                 </Button>
                   <Menu
                     id="basic-menu"
@@ -113,8 +126,8 @@ export default function Navbar() {
                       'aria-labelledby': 'basic-button',
                     }}
                   >
-                    <MenuItem onClick={() => { logout(); handleClose(); }}><Link underline="none"> Logout</Link></MenuItem>
-                  </Menu></>) : (<Button color="inherit" onClick={navigateToLogin}> Login</Button>)}
+                    <MenuItem onClick={() => { logout(); handleClose(); }}><Link underline="none" color="inherit"> Logout</Link></MenuItem>
+                  </Menu></>) : (<Button style={styles.Button} color="inherit" onClick={navigateToLogin}> Login</Button>)}
 
 
           </Toolbar>

@@ -18,6 +18,7 @@ const Homepage = () => {
                         <Typography variant="h3" color="secondary"> Create Your Invoice in Less than 2 Minutes</Typography>
                         <Typography variant="h4" color="secondary.light" > Built to save time and get you paid faster.</Typography>
                         <Button
+                            color="success"
                             type="submit"
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}

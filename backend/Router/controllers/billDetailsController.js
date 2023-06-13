@@ -13,7 +13,7 @@ function generateInvoiceNumber(vendorName) {
     return `${firstTwoChars}${date}${randomNumber}`;
 }
 
-const billdetails = async (req, res) => {
+const billdetailsController = async (req, res) => {
     const data = req.body;
     let lineItems = data.lineItems;
     let vendorName = data.billFrom.vendorName;
@@ -80,4 +80,4 @@ const billdetails = async (req, res) => {
 
 }
 
-export { billdetails };
+export { billdetailsController };
