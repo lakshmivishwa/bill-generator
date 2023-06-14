@@ -2,20 +2,35 @@
 const styles = {
 
     Image: {
-        margin: "30px",
-       
+        margin: "10px",
+
+    },
+    CardContainer: {
+        marginTop: "10px",
     },
 
     TitleContainer: {
-        textAlign: "center",
-        marginTop: "100px",
-        padding: "10px"
+        padding: "30px",
+
     },
     GridTitle: {
         justifyContent: "center",
         alignItems: "center",
+        // border: "1px solid grey"
+      
+    },
+    Features: {
         textAlign: "center",
-        marginTop: "100px"
+       
+    },
+    featuresData: {
+        marginTop: "80px"
+    },
+    Icon: {
+        border: "1px solid #00a39f",
+        borderRadius: "20px",
+        padding: "10px",
+        margin: "10px"
     }
 
 

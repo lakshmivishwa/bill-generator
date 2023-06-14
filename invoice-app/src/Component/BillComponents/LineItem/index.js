@@ -65,8 +65,6 @@ function Table({ tableData, deleteItem }) {
                             </tbody> : ""
                         }
 
-
-
                     </table>
                 </Grid>
             </Grid>

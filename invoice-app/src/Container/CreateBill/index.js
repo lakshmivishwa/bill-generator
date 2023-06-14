@@ -131,6 +131,7 @@ export default function NewCreateBill() {
                                             value: namePattern, message: "**Please enter full name **"
                                         }
                                     })}
+                                    color="success"
                                     autoComplete="off"
                                     margin="dense"
                                     size="small"
@@ -147,6 +148,7 @@ export default function NewCreateBill() {
                                             value: emailPattern, message: "**This is not a valid email**"
                                         }
                                     })}
+                                    color="success"
                                     autoComplete="off"
                                     margin="dense"
                                     size="small"
@@ -165,6 +167,7 @@ export default function NewCreateBill() {
                                             message: "**Contact number should be 10 digit**"
                                         }
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -176,6 +179,7 @@ export default function NewCreateBill() {
                                     {...register('clientAddress', {
                                         required: requiredField,
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -187,6 +191,7 @@ export default function NewCreateBill() {
                                     {...register('clientCity', {
                                         required: requiredField,
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -205,6 +210,7 @@ export default function NewCreateBill() {
                                         }
 
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -217,6 +223,7 @@ export default function NewCreateBill() {
                                     {...register('clientState', {
                                         required: requiredField,
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -236,6 +243,7 @@ export default function NewCreateBill() {
                                             value: namePattern, message: "**Please enter full name **"
                                         }
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -257,6 +265,7 @@ export default function NewCreateBill() {
                                             value: emailPattern, message: "**This is not a valid email**"
                                         }
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -280,6 +289,7 @@ export default function NewCreateBill() {
                                             message: "**Contact number should be 10 digit**"
                                         }
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -298,6 +308,7 @@ export default function NewCreateBill() {
                                         required: requiredField,
                                     })}
                                     margin="dense"
+                                    color="success"
                                     size="small"
                                     id="fullWidth"
                                     error={errors.vendorAddress}
@@ -314,6 +325,7 @@ export default function NewCreateBill() {
                                     {...register('vendorCity', {
                                         required: requiredField,
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -338,6 +350,7 @@ export default function NewCreateBill() {
                                         }
 
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -354,6 +367,7 @@ export default function NewCreateBill() {
                                     {...register('vendorState', {
                                         required: requiredField,
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -388,6 +402,7 @@ export default function NewCreateBill() {
                                     {...register('accounHolder', {
                                         required: requiredField,
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -398,6 +413,7 @@ export default function NewCreateBill() {
                                     {...register('accountNumber', {
                                         required: requiredField,
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -408,6 +424,7 @@ export default function NewCreateBill() {
                                     {...register('bankName', {
                                         required: requiredField,
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -418,6 +435,7 @@ export default function NewCreateBill() {
                                     {...register('ifscCode', {
                                         required: requiredField,
                                     })}
+                                    color="success"
                                     margin="dense"
                                     size="small"
                                     id="fullWidth"
@@ -436,6 +454,7 @@ export default function NewCreateBill() {
                                     {...register('notes', {
                                         required: requiredField,
                                     })}
+                                    color="success"
                                     multiline
                                     fullWidth
                                     id="fullWidth"
@@ -452,7 +471,7 @@ export default function NewCreateBill() {
 
                         <Grid container spacing={2} mb={2} mt={5}>
                             <Grid item xs={12} md={6}>
-                                <Button variant="contained" type="submit" >Create Bill</Button>
+                                <Button color="success" variant="contained" type="submit" >Create Bill</Button>
                             </Grid>
 
                         </Grid>

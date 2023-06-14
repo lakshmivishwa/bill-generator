@@ -78,7 +78,7 @@ export default function ViewBill() {
     <div>
       {userName ?
         (<Container style={styles.Container}>
-        
+
           <div style={styles.Button} >
             <Button variant="outlined" color="success" onClick={createBillHandler} > Create New bill <MdAddCircleOutline size={20} color="success" /></Button>
           </div>
@@ -88,7 +88,7 @@ export default function ViewBill() {
               <Grid container spacing={2}>
                 <Grid item xs={6} md={5}>
                   <CardContent>
-                    <Typography variant="h6" component="div" color="primary.light" sx={{ fontSize: '18px', fontWeight: 'bold' }} >
+                    <Typography variant="h6" component="div" color="secondary.light" sx={{ fontSize: '18px', fontWeight: 'bold' }} >
                       {item.invoiceNumber}
                     </Typography>
                     <Typography variant="h6" component="span" sx={{ fontSize: '22px' }}>
@@ -123,8 +123,8 @@ export default function ViewBill() {
 
                 <Grid item xs={6} md={3} mt={3}>
                   <CardActions>
-                    <Button size="small" color="success" onClick={() => printPdf(item.invoiceNumber)} ><FcDownload size={23} title="download" /></Button>
-                    <Button size="small" color="success" onClick={() => handleViewBill(item.invoiceNumber)}><IoMdEye size={25} title="view" /></Button>
+                    <Button size="small" onClick={() => printPdf(item.invoiceNumber)} ><FcDownload size={23} color="#FFB6C1" title="download" /></Button>
+                    <Button size="small" onClick={() => handleViewBill(item.invoiceNumber)}><IoMdEye size={25} color="#00a39f" title="view" /></Button>
                   </CardActions>
                 </Grid>
               </Grid >

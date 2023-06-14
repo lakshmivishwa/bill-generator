@@ -108,14 +108,14 @@ export default function Navbar() {
               (
                 <><Button
 
-                  color="inherit"
+                  color="success"
                   id="basic-button"
                   aria-controls={userMenuOpen ? 'basic-menu' : undefined}
                   aria-haspopup="true"
                   aria-expanded={userMenuOpen ? 'true' : undefined}
                   onClick={handleUserMenuClick}
                 >
-                  <Avatar sx={{ color: '' }}>{getFirstLetters(userName)}</Avatar>
+                  <Avatar sx={{ color: '#19363f', bgcolor: "white", width: 53, height: 53 }}>{getFirstLetters(userName)}</Avatar>
                 </Button>
                   <Menu
                     id="basic-menu"

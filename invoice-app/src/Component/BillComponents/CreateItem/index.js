@@ -59,6 +59,7 @@ function CreateItem({ addItem }) {
                     <Typography mt={3} mb={2} variant="h6" component="h5">Item</Typography>
                     <TextField name="itemName" fullWidth label="Item Name"
                         margin="dense"
+                        color="success"
                         size="small"
                         onChange={onValChange}
                         value={formObject.itemName}
@@ -70,6 +71,7 @@ function CreateItem({ addItem }) {
                     <TextField name="qty" fullWidth label="qty"
 
                         margin="dense"
+                        color="success"
                         size="small"
                         onChange={onValChange}
                         value={formObject.qty}
@@ -80,6 +82,7 @@ function CreateItem({ addItem }) {
                     <Typography mt={3} mb={2} variant="h6" component="h5">Rate</Typography>
                     <TextField name="rate" fullWidth label=" rate"
                         margin="dense"
+                        color="success"
                         size="small"
                         onChange={onValChange}
                         value={formObject.rate}
@@ -90,6 +93,7 @@ function CreateItem({ addItem }) {
                     <Typography mt={3} mb={2} variant="h6" component="h5">Price</Typography>
                     <TextField name="price" fullWidth label="Price"
                         margin="dense"
+                        color="success"
                         size="small"
                         value={formObject.price} />
 
@@ -99,6 +103,7 @@ function CreateItem({ addItem }) {
                     <TextField name="itemDescription" fullWidth label="item Description"
                         margin="dense"
                         size="small"
+                        color="success"
                         onChange={onValChange}
                         value={formObject.itemDescription}
 

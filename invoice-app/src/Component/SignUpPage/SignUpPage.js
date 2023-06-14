@@ -74,6 +74,7 @@ function SignUp() {
                                     value: namePattern, message: "**Please enter full name **"
                                 }
                             })}
+                            color="success"
                             error={errors.name}
                             helperText={errors.name?.message}
                             margin="normal"
@@ -87,11 +88,12 @@ function SignUp() {
                         />
                         {/* radio button for Gender */}
                         <div>
-                            <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+                            <FormLabel id="demo-row-radio-buttons-group-label" >Gender</FormLabel>
                             <RadioGroup
                                 defaultValue="female"
                                 row
                                 aria-labelledby="demo-row-radio-buttons-group-label"
+                                bgColor="success"
                             >
                                 <FormControlLabel id="1" value="female" control={<Radio />} label="Female" />
                                 <FormControlLabel id="2" value="male" control={<Radio />} label="Male" />
@@ -111,6 +113,7 @@ function SignUp() {
                                     message: "**Contact number should be 10 digit**"
                                 }
                             })}
+                            color="success"
                             error={errors.contact}
                             helperText={errors.contact?.message}
                             margin="normal"
@@ -131,7 +134,7 @@ function SignUp() {
                                     value: emailPattern, message: "**This is not a valid email**"
                                 }
                             })}
-
+                            color="success"
                             error={errors.email}
                             helperText={errors.email?.message}
                             margin="normal"
@@ -149,7 +152,7 @@ function SignUp() {
                                 required: requiredField,
 
                             })}
-
+                            color="success"
                             error={errors.address}
                             helperText={errors.address?.message}
                             margin="normal"
@@ -167,6 +170,7 @@ function SignUp() {
                                 required: requiredField,
 
                             })}
+                            color="success"
                             error={errors.city}
                             helperText={errors.city?.message}
                             margin="normal"
@@ -188,6 +192,7 @@ function SignUp() {
                                 }
 
                             })}
+                            color="success"
                             error={errors.pincode}
                             helperText={errors.pincode?.message}
                             margin="normal"
@@ -215,6 +220,7 @@ function SignUp() {
                                     message: "**Password cannot be exceed 10 characters**"
                                 }
                             })}
+                            color="success"
                             error={errors.password}
                             helperText={errors.password?.message}
                             margin="normal"
@@ -233,6 +239,7 @@ function SignUp() {
                                     value === password.current || "Please enter same as password"
                             }
                             )}
+                            color="success"
                             error={errors.confirmPassword}
                             helperText={errors.confirmPassword?.message}
                             margin="normal"
@@ -246,6 +253,7 @@ function SignUp() {
                         {/* Submit Button */}
 
                         <Button
+                            color="success"
                             type="submit"
                             fullWidth
                             variant="contained"

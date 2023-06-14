@@ -21,6 +21,10 @@ const styles = {
         size: "small",
         textAlign: "left"
     },
+    Link:{
+        color:"red",
+        // textDecoration:"none"
+    }
 
 };
 

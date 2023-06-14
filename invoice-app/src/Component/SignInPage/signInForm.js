@@ -13,7 +13,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { signIn } from '../../Redux/Actions/Action';
 import { useDispatch } from 'react-redux';
-
+import styles from './style';
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -68,6 +68,7 @@ export default function SignIn() {
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
+                        color="success"
                         margin="normal"
                         required
                         fullWidth
@@ -78,6 +79,7 @@ export default function SignIn() {
                         autoFocus
                     />
                     <TextField
+                        color="success"
                         margin="normal"
                         required
                         fullWidth
@@ -92,6 +94,7 @@ export default function SignIn() {
                         label="Remember me"
                     />
                     <Button
+                        color="success"
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -101,13 +104,13 @@ export default function SignIn() {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
+                            <Link href="#" variant="body2" style={styles.Link}>
                                 Forgot password?
                             </Link>
                         </Grid>
-                        <Grid item>
-                            <Link href="signup" variant="body2">
-                                {"Don't have an account? Sign Up"}
+                        <Grid item >
+                            <Link href="signup" variant="body2" style={styles.Link} >
+                                Don't have an account? Sign Up
                             </Link>
                         </Grid>
                     </Grid>
