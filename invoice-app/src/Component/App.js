@@ -15,6 +15,7 @@ console.log(theme);
 function App() {
   return (
     <ThemeProvider theme={theme}>
+
       <Navbar />
       <Routes>
         <Route path="/" element={<Homepage />} />

@@ -31,7 +31,7 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
   const [billsMenuOpen, setBillsMenuOpen] = React.useState(false);
-
+  console.log(billsMenuOpen);
   const handleUserMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
     setUserMenuOpen(true);
@@ -63,77 +63,78 @@ export default function Navbar() {
   }
 
   return (
-
-    <Box sx={{ flexGrow: 1 }} style={styles.BoxContainer}  >
-      <AppBar  >
-        <Container maxWidth="lg">
-          <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <Button color="inherit"
-                style={styles.Button}
-                id="basic-button"
-                onClick={handleClick}>
-                <TfiWrite size={30} />
-              </Button>
-            </Typography>
-            <Button
-              style={styles.Button}
-              color="inherit"
-              id="basic-button"
-              onClick={handleCreateBillsClick}
-            >
-              <BiMobileAlt />   Try Mobile App
-            </Button>
-            <Button
-              style={styles.Button}
-              color="inherit"
-              id="basic-button"
-              onClick={handleCreateBillsClick}
-            >
-              Create Bills
-            </Button>
-            <Button
-              style={styles.Button}
-              color="inherit"
-              id="basic-button"
-              onClick={handleViewBillsClick}
-
-            >
-              View Bills
-            </Button>
-
-
-
-            {userName ?
-              (
-                <><Button
-
-                  color="success"
+    <div data-testid="navbar-component">
+      <Box sx={{ flexGrow: 1 }} style={styles.BoxContainer}  >
+        <AppBar  >
+          <Container maxWidth="lg">
+            <Toolbar>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Button color="inherit"
+                  style={styles.Button}
                   id="basic-button"
-                  aria-controls={userMenuOpen ? 'basic-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={userMenuOpen ? 'true' : undefined}
-                  onClick={handleUserMenuClick}
-                >
-                  <Avatar sx={{ color: '#19363f', bgcolor: "white", width: 53, height: 53 }}>{getFirstLetters(userName)}</Avatar>
+                  onClick={handleClick}>
+                  <TfiWrite size={30} />
                 </Button>
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={userMenuOpen}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      'aria-labelledby': 'basic-button',
-                    }}
+              </Typography>
+              <Button
+                style={styles.Button}
+                color="inherit"
+                id="basic-button"
+                onClick={handleCreateBillsClick}
+              >
+                <BiMobileAlt />   Try Mobile App
+              </Button>
+              <Button
+                style={styles.Button}
+                color="inherit"
+                id="basic-button"
+                onClick={handleCreateBillsClick}
+              >
+                Create Bills
+              </Button>
+              <Button
+                style={styles.Button}
+                color="inherit"
+                id="basic-button"
+                onClick={handleViewBillsClick}
+
+              >
+                View Bills
+              </Button>
+
+
+
+              {userName ?
+                (
+                  <><Button
+
+                    color="success"
+                    id="basic-button"
+                    aria-controls={userMenuOpen ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={userMenuOpen ? 'true' : undefined}
+                    onClick={handleUserMenuClick}
                   >
-                    <MenuItem onClick={() => { logout(); handleClose(); }}><Link underline="none" color="inherit"> Logout</Link></MenuItem>
-                  </Menu></>) : (<Button style={styles.Button} color="inherit" onClick={navigateToLogin}> Login</Button>)}
+                    <Avatar sx={{ color: '#19363f', bgcolor: "white", width: 53, height: 53 }}>{getFirstLetters(userName)}</Avatar>
+                  </Button>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={userMenuOpen}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                      }}
+                    >
+                      <MenuItem onClick={() => { logout(); handleClose(); }}><Link underline="none" color="inherit"> Logout</Link></MenuItem>
+                    </Menu></>) : (<Button style={styles.Button} color="inherit" onClick={navigateToLogin}> Login</Button>)}
 
 
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </Box>
+            </Toolbar>
+          </Container>
+        </AppBar>
+      </Box>
+    </div>
 
   );
 }
