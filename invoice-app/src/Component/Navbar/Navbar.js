@@ -8,7 +8,9 @@ import { TfiWrite } from "react-icons/tfi";
 import { BiMobileAlt } from "react-icons/bi";
 import Avatar from '@mui/material/Avatar';
 import styles from "./style";
+
 export default function Navbar() {
+
   const dispatch = useDispatch();
 
   const loggedInUser = useSelector((state) => state.loggedInReducer);
@@ -82,7 +84,7 @@ export default function Navbar() {
                 id="basic-button"
                 onClick={handleCreateBillsClick}
               >
-                <BiMobileAlt />   Try Mobile App
+                <BiMobileAlt /> Try Mobile App
               </Button>
               <Button
                 style={styles.Button}

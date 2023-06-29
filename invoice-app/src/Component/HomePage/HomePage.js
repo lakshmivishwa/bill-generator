@@ -16,7 +16,7 @@ const Homepage = () => {
     }
 
     return (
-        <Container maxWidth="lg">
+        <Container maxWidth="lg" >
             <Grid container spacing={0} mt={10} mb={3}>
                 <Grid item xs={12} md={6} style={styles.GridTitle}>
                     <div style={styles.TitleContainer}>

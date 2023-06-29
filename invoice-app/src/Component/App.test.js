@@ -1,24 +1,15 @@
-
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from "./App"
-
+import App from './App';
+import store from '../Redux/Store';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
 
-const initialState = { output: 10 };
-    const mockStore = configureStore();
-    let store;
-
-test("App component renders successfully", () => {
-    
-    
-    store = mockStore(initialState);
-    const { getByText } = render(
+test('renders App component', () => {
+    render(
         <Provider store={store}>
             <App />
-        </Provider>
-    );
+        </Provider>)
+    const navbarElement = screen.getByTestId('navbar-component');
+    expect(navbarElement).toBeInTheDocument();
 
-    const element = screen.getByTestId("navbar-component");
-    expect(element).toBeInTheDocument();
 });

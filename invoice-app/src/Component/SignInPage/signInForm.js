@@ -10,11 +10,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { signIn } from '../../Redux/Actions/Action';
 import { useDispatch } from 'react-redux';
 import styles from './style';
-function Copyright(props) {
+
+function Copyright(props, { onUserAdd }) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
@@ -26,12 +27,10 @@ function Copyright(props) {
         </Typography>
     );
 }
-export default function SignIn() {
+export default function SignIn({ onUserAdd }) {
+    // const navigate = useNavigate()
 
     const dispatch = useDispatch();
-
-    const navigate = useNavigate()
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         const newData = new FormData(event.currentTarget);
@@ -39,14 +38,18 @@ export default function SignIn() {
             email: newData.get('email'),
             password: newData.get('password'),
         };
+        ;
+
         console.log(loginData);
+        // onUserAdd(loginData.email,loginData.password )
+
         await axios.post(`http://localhost:4000/signin`,
             loginData)
             .then((response) => {
                 let user = response.data.response
                 console.log(user);
                 dispatch(signIn(user))
-                navigate("/bills/create")
+                // navigate("/bills/create")
             })
     };
 
@@ -68,6 +71,7 @@ export default function SignIn() {
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
+                    data-testid="my-textbox2"
                         color="success"
                         margin="normal"
                         required
@@ -79,6 +83,7 @@ export default function SignIn() {
                         autoFocus
                     />
                     <TextField
+                    data-testid="my-textbox2"
                         color="success"
                         margin="normal"
                         required
